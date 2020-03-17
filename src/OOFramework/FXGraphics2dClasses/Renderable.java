@@ -1,4 +1,4 @@
-package MainPackage;
+package OOFramework.FXGraphics2dClasses;
 
 import org.jfree.fx.FXGraphics2D;
 

@@ -1,5 +1,6 @@
 package MainPackage;
 
+import OOFramework.FXGraphics2dClasses.Renderable;
 import OOFramework.FrameworkProgram;
 import OOFramework.StandardObject;
 import javafx.scene.canvas.Canvas;

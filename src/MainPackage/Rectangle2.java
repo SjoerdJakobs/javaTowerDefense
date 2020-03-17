@@ -1,5 +1,6 @@
 package MainPackage;
 
+import OOFramework.FXGraphics2dClasses.Renderable;
 import OOFramework.FrameworkProgram;
 import OOFramework.StandardObject;
 import javafx.scene.canvas.Canvas;
@@ -8,7 +9,6 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
-import static OOFramework.Modules.CONSTANTS.CANVAS_HEIGHT;
 import static OOFramework.Modules.CONSTANTS.CANVAS_WIDTH;
 
 public class Rectangle2 extends StandardObject
