@@ -67,7 +67,10 @@ public class GridManager extends StandardObject
             {
                 if(j == 10)
                 {
-                    BFS.SetWall(i,j);
+                    if(i != 31)
+                    {
+                        BFS.SetWall(i,j);
+                    }
                 }
                 else if(j == 24)
                 {
