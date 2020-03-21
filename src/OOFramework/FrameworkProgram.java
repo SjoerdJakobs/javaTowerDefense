@@ -51,6 +51,9 @@ public abstract class FrameworkProgram extends Application
         this.graphics2D = new FXGraphics2D(canvas.getGraphicsContext2D());
         this.stage.setScene(new Scene(new Group(canvas)));
         this.stage.setTitle(TITLE);
+        this.stage.setMaximized(true);
+        //this.stage.setFullScreen(true);
+        //this.stage.setResizable(false);
         this.stage.show();
         Init();
 

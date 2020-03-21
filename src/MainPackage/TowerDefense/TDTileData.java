@@ -1,7 +1,11 @@
 package MainPackage.TowerDefense;
 
 import OOFramework.Maths.Vector2;
-import javafx.scene.image.Image;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 public class TDTileData
 {
@@ -21,9 +25,9 @@ public class TDTileData
     public boolean isBackGround;
     public boolean shouldDraw;
 
-    private Image tileArt;
+    public Image tileArt;
 
-    public TDTileData(Vector2 gridPos)
+    public TDTileData(Vector2 gridPos, TileArtEnum tileArtType)
     {
         this.gridPos            = gridPos;
         this.hasTower           = false;
@@ -35,5 +39,32 @@ public class TDTileData
         this.movementVariable   = 1;
         this.isBackGround       = true;
         this.shouldDraw         = true;
+
+        SetImage(tileArtType);
+    }
+
+    public void SetImage(TileArtEnum tileArtType)
+    {
+        File pathToFile;
+        switch (tileArtType)
+        {
+            case ROAD:
+                pathToFile = new File("C:\\stack\\JavaProjecten\\javaTowerDefense\\assets\\tile014.png");
+                break;
+            case WATER:
+                pathToFile = new File("C:\\stack\\JavaProjecten\\javaTowerDefense\\assets\\tile028.png");
+                break;
+            case GROUND:
+                pathToFile = new File("C:\\stack\\JavaProjecten\\javaTowerDefense\\assets\\tile001.png");
+                break;
+            default:
+                pathToFile = new File("C:\\stack\\JavaProjecten\\javaTowerDefense\\assets\\Default.png");
+                break;
+        }
+        try {
+            tileArt = ImageIO.read(pathToFile);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 }

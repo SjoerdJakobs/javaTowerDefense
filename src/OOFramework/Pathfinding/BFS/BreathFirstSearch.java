@@ -33,12 +33,12 @@ public class BreathFirstSearch
         }
     }
 
-    public Queue<BFSTile> nextList;
+    public Queue<BFSTile> nextQueue;
     public void Addroute(int x, int y, String route)
     {
         if(IsInGrid(x,y))
         {
-            nextList = new LinkedList<BFSTile>();
+            nextQueue = new LinkedList<BFSTile>();
 
             tileMap[x][y].isDestination = true;
             tileMap[x][y].routes.put(route, new Vector2(0,0));
@@ -46,9 +46,9 @@ public class BreathFirstSearch
 
             CheckNonDiagonalNeighbours(x,y,route);
 
-            while (!nextList.isEmpty())
+            while (!nextQueue.isEmpty())
             {
-                final BFSTile checkTile = nextList.poll();
+                final BFSTile checkTile = nextQueue.poll();
                 CheckNonDiagonalNeighbours((int)checkTile.gridPos.x,(int)checkTile.gridPos.y,route);
             }
 
@@ -84,7 +84,7 @@ public class BreathFirstSearch
             {
                 checkTile.routes.put(route, new Vector2(0,-1));
                 checkTile.hasBeenSet = true;
-                nextList.add(checkTile);
+                nextQueue.add(checkTile);
             }
         }
 
@@ -95,7 +95,7 @@ public class BreathFirstSearch
             {
                 checkTile.routes.put(route, new Vector2(-1,0));
                 checkTile.hasBeenSet = true;
-                nextList.add(checkTile);
+                nextQueue.add(checkTile);
             }
         }
 
@@ -106,7 +106,7 @@ public class BreathFirstSearch
             {
                 checkTile.routes.put(route, new Vector2(0, 1));
                 checkTile.hasBeenSet = true;
-                nextList.add(checkTile);
+                nextQueue.add(checkTile);
             }
         }
 
@@ -117,7 +117,7 @@ public class BreathFirstSearch
             {
                 checkTile.routes.put(route, new Vector2(1, 0));
                 checkTile.hasBeenSet = true;
-                nextList.add(checkTile);
+                nextQueue.add(checkTile);
             }
         }
     }

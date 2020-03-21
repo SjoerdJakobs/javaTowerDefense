@@ -11,10 +11,10 @@ public class Main
 {
     public static void main(String[] args)
     {
-        //Program program = new Program();
-        //launch(Program.class);
-        ExampleBFS exampleBFS = new ExampleBFS();
-        exampleBFS.ShowBFS();
+        Program program = new Program();
+        launch(Program.class);
+        //ExampleBFS exampleBFS = new ExampleBFS();
+        //exampleBFS.ShowBFS();
     }
 }
 

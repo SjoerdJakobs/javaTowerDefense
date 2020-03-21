@@ -4,6 +4,7 @@ import OOFramework.Maths.Vector2;
 import java.util.HashMap;
 
 public class BFSTile {
+
     public Vector2 gridPos;
     public Vector2 mapPos;
     public HashMap<String, Vector2> routes;

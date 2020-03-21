@@ -15,6 +15,10 @@ public class ExampleBFS {
         }
         for (int i =0; i<24; i++)
         {
+            BFS.SetWall(0+i, 22);
+        }
+        for (int i =0; i<24; i++)
+        {
             BFS.SetWall(13, 1+i);
         }
 
@@ -29,25 +33,25 @@ public class ExampleBFS {
                 if(BFS.getTileMap()[i][j].isWall)
                 {
                     System.out.print("H ");
+                }
+                else if(BFS.getTileMap()[i][j].routes.get("route0") == null)
+                {
+                    System.out.print("o ");
                 }else if(BFS.getTileMap()[i][j].routes.get("route0").IsZero())
                 {
                     System.out.print("X ");
-                }else if(BFS.getTileMap()[i][j].routes.get("route0").x == 1)
+                }else if(BFS.getTileMap()[i][j].routes.get("route0").x ==  1)
                 {
                     System.out.print("> ");
                 }else if(BFS.getTileMap()[i][j].routes.get("route0").x == -1)
                 {
                     System.out.print("< ");
-                }else if(BFS.getTileMap()[i][j].routes.get("route0").y == 1)
+                }else if(BFS.getTileMap()[i][j].routes.get("route0").y ==  1)
                 {
                     System.out.print("v ");
                 }else if(BFS.getTileMap()[i][j].routes.get("route0").y == -1)
                 {
                     System.out.print("^ ");
-                }
-                else
-                {
-                    System.out.print("o ");
                 }
             }
         }
@@ -63,25 +67,24 @@ public class ExampleBFS {
                 if(BFS.getTileMap()[i][j].isWall)
                 {
                     System.out.print("H ");
+                }else if(BFS.getTileMap()[i][j].routes.get("route1") == null)
+                {
+                    System.out.print("o ");
                 }else if(BFS.getTileMap()[i][j].routes.get("route1").IsZero())
                 {
                     System.out.print("X ");
-                }else if(BFS.getTileMap()[i][j].routes.get("route1").x == 1)
+                }else if(BFS.getTileMap()[i][j].routes.get("route1").x ==  1)
                 {
                     System.out.print("> ");
                 }else if(BFS.getTileMap()[i][j].routes.get("route1").x == -1)
                 {
                     System.out.print("< ");
-                }else if(BFS.getTileMap()[i][j].routes.get("route1").y == 1)
+                }else if(BFS.getTileMap()[i][j].routes.get("route1").y ==  1)
                 {
                     System.out.print("v ");
                 }else if(BFS.getTileMap()[i][j].routes.get("route1").y == -1)
                 {
                     System.out.print("^ ");
-                }
-                else
-                {
-                    System.out.print("o ");
                 }
             }
         }

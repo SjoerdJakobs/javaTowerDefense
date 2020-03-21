@@ -1,36 +1,31 @@
 package MainPackage;
 
-import OOFramework.ExampleClasses.ExampleStudent;
+import MainPackage.TowerDefense.Debug.DebugDrawer;
+import MainPackage.TowerDefense.GridManager;
+import OOFramework.FXGraphics2dClasses.Rectangle;
 import OOFramework.FrameworkProgram;
 import javafx.stage.Stage;
-import org.jfree.fx.FXGraphics2D;
 
-import java.awt.*;
 import java.util.ArrayList;
 
-import static OOFramework.Modules.CONSTANTS.CANVAS_HEIGHT;
-import static OOFramework.Modules.CONSTANTS.CANVAS_WIDTH;
 import static javafx.application.Application.launch;
 
 public class Program extends FrameworkProgram
 {
+    private DebugDrawer debugDrawer;
 
     @Override
     public void start(Stage stage) throws Exception {
         super.start(stage);
-
+        debugDrawer = new DebugDrawer(this);
+        GridManager gridManager = new GridManager(this,this);
     }
 
-    private ArrayList<Rectangle> rects = new ArrayList<Rectangle>();
+    private ArrayList<OOFramework.FXGraphics2dClasses.Rectangle> rects = new ArrayList<Rectangle>();
     @Override
     protected void Init() {
         super.Init();
-        timeScale = 1;
-        Rectangle2 r = new Rectangle2(this,graphics2D,CANVAS_WIDTH/2,CANVAS_HEIGHT/2);
-        for(int i = 0; i<200;i++)
-        {
-            rects.add(new Rectangle(this,graphics2D,((int)(Math.random()*2100))-100,(int)(Math.random()*1080)));
-        }
+
     }
 
     @Override
@@ -42,5 +37,10 @@ public class Program extends FrameworkProgram
     @Override
     protected void ExitProgram() {
         super.ExitProgram();
+    }
+
+    public DebugDrawer getDebugDrawer()
+    {
+        return debugDrawer;
     }
 }
