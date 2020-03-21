@@ -37,6 +37,17 @@ public class Renderable
         tx.translate(position.getX(), position.getY());
         tx.rotate(rotation);
         tx.scale(scale,scale);
+        tx.translate(-16, -16);
+        return tx;
+    }
+
+    public AffineTransform getTransform(int xOfset, int yOfset)
+    {
+        AffineTransform tx = new AffineTransform();
+        tx.translate(position.getX(), position.getY());
+        tx.rotate(rotation);
+        tx.scale(scale,scale);
+        tx.translate(-xOfset, -yOfset);
         return tx;
     }
 

@@ -75,9 +75,20 @@ public class GridManager extends StandardObject
                 }
             }
         }
+
         for (int i = 0; i < 11; i++) {
             BFS.SetWall(30,10+i);
         }
+        for (int i = 0; i < 11; i++) {
+            BFS.SetWall(15,13+i);
+        }
+        for (int i = 0; i < 9; i++) {
+            BFS.SetWall(16+i,13);
+        }
+        for (int i = 0; i < 9; i++) {
+            BFS.SetWall(21+i,20);
+        }
+
         BFS.Addroute(61,17,"route0");
         DebugDrawer.StartDebugFBS(BFS.getTileMap(),"route0");
     }
