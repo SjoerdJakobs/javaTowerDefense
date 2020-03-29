@@ -3,6 +3,7 @@ package MainPackage;
 //import static javafx.application.Application.launch;
 
 import OOFramework.ExampleClasses.ExampleBFS;
+import OOFramework.Maths.Vector2;
 import OOFramework.Pathfinding.BFS.BreathFirstSearch;
 
 import static javafx.application.Application.launch;

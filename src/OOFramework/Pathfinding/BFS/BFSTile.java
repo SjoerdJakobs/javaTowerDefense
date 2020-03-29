@@ -7,6 +7,7 @@ public class BFSTile {
 
     public Vector2 gridPos;
     public Vector2 mapPos;
+    public int tilesFromTarget;
     public HashMap<String, Vector2> routes;
 
     public boolean isWall;

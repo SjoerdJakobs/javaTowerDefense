@@ -15,6 +15,36 @@ public final class Vector2
         this.y = y;
     }
 
+    public Vector2 Add(Vector2 v)
+    {
+        return new Vector2(this.x + v.x, this.y + v.y);
+    }
+
+    public static Vector2 Add(Vector2 v1, Vector2 v2)
+    {
+        return new Vector2(v1.x + v2.x, v1.y + v2.y);
+    }
+
+    public Vector2 MultiplyByInt(int m)
+    {
+        return new Vector2(this.x*m,this.y*m);
+    }
+
+    public static Vector2 MultiplyByInt(Vector2 v, int m)
+    {
+        return new Vector2(v.x*m,v.y*m);
+    }
+
+    public Vector2 MultiplyByDouble(double m)
+    {
+        return new Vector2(this.x*m,this.y*m);
+    }
+
+    public static Vector2 MultiplyByDouble(Vector2 v, double m)
+    {
+        return new Vector2(v.x*m,v.y*m);
+    }
+
     public final boolean IsZero()
     {
         return (this.x == 0 && this.y == 0);

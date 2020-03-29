@@ -52,7 +52,7 @@ public class Rectangle
 
     public void ImageDraw(Graphics2D graphics2D)
     {
-        ASSERT_MSG.ASSERT_MSG(true, "dont forget to fix the centering problem");
+        //ASSERT_MSG.ASSERT_MSG(true, "dont forget to fix the centering problem");
         graphics2D.drawImage(art,square2D.getTransform(xSizeOffset, ySizeOffset),null);
     }
 

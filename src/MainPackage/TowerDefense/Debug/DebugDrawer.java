@@ -1,5 +1,8 @@
 package MainPackage.TowerDefense.Debug;
 
+import OOFramework.Collision2D.Colliders.BoxCollider;
+import OOFramework.Collision2D.Colliders.CircleCollider;
+import OOFramework.Collision2D.Colliders.Collider2D;
 import OOFramework.FXGraphics2dClasses.Rectangle;
 import OOFramework.FrameworkProgram;
 import OOFramework.Pathfinding.BFS.BFSTile;
@@ -7,6 +10,8 @@ import OOFramework.StandardObject;
 import org.jfree.fx.FXGraphics2D;
 
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import static OOFramework.Modules.CONSTANTS.DEBUG_MODE;
@@ -14,13 +19,6 @@ import static OOFramework.Modules.CONSTANTS.DEBUG_MODE;
 public class DebugDrawer extends StandardObject
 {
     private FXGraphics2D graphics2D;
-
-    //BFS debugging
-    private static boolean debugBFS = false;
-    private static BFSTile bfsGrid[][];
-    private static ArrayList<Rectangle> debugBFSPath;
-    private static ArrayList<Rectangle> debugBFSWall;
-    ///////////////
 
     public DebugDrawer(FrameworkProgram frameworkProgram)
     {
@@ -30,7 +28,14 @@ public class DebugDrawer extends StandardObject
             this.setActive(false);
         }
         graphics2D = frameworkProgram.getGraphics2D();
+
     }
+
+    //BFS debugging
+    private static boolean debugBFS = false;
+    private static BFSTile bfsGrid[][];
+    private static ArrayList<Rectangle> debugBFSPath;
+    private static ArrayList<Rectangle> debugBFSWall;
 
     public static void StartDebugFBS(BFSTile bfsGrid[][], String routeName)
     {
@@ -45,7 +50,7 @@ public class DebugDrawer extends StandardObject
             {
                 if(bfsGrid[i][j].isWall)
                 {
-                    Rectangle rect = new Rectangle(-4 + i*32, j*32,32,32, 0);
+                    Rectangle rect = new Rectangle(16 + i*32, 12+j*32,32,32, 0);
                     rect.setRectangleColor(Color.RED);
                     debugBFSWall.add(rect);
                 }
@@ -54,30 +59,41 @@ public class DebugDrawer extends StandardObject
                     Rectangle rect;
                     if(bfsGrid[i][j].routes.get(routeName).x ==  1)
                     {
-                        rect = new Rectangle(-20 + i*32, -16+ j*32,32,32, 0);
+                        rect = new Rectangle(16 + i*32, 12+ j*32,32,32, 0);
                         //System.out.print("> ");
                     }else if(bfsGrid[i][j].routes.get(routeName).x == -1)
                     {
-                        rect = new Rectangle(-20 + i*32, -16+ j*32, 32,32,3.12f);
+                        rect = new Rectangle(16 + i*32, 12+ j*32, 32,32,3.12f);
                         //System.out.print("< ");
                     }else if(bfsGrid[i][j].routes.get(routeName).y ==  1)
                     {
-                        rect = new Rectangle(-20 + i*32, -16+ j*32, 32,32,1.56f);//1.56
+                        rect = new Rectangle(16 + i*32, 12+ j*32, 32,32,1.56f);//1.56
                         //System.out.print("v ");
                     }else if(bfsGrid[i][j].routes.get(routeName).y == -1)
                     {
-                        rect = new Rectangle(-20 + i*32, -16+ j*32, 32,32,4.7f);
+                        rect = new Rectangle(16 + i*32, 12+ j*32, 32,32,4.7f);
                         //System.out.print("^ ");
                     }
                     else
                     {
-                        rect = new Rectangle(-20 + i*32, -16+ j*32,32,32, 0);
+                        rect = new Rectangle(-64, -64,32,32, 0);
                     }
                     rect.SetImageByFilePath("C:\\stack\\JavaProjecten\\javaTowerDefense\\assets\\arrow.png");
                     debugBFSPath.add(rect);
                 }
             }
         }
+    }
+    ///////////////
+
+
+    private static boolean debugCollision = false;
+    private static ArrayList<Collider2D> colliders2D;
+
+    public static void DebugCollision(ArrayList<Collider2D> colliders)
+    {
+        debugCollision = true;
+        colliders2D = colliders;
     }
 
     @Override
@@ -88,16 +104,57 @@ public class DebugDrawer extends StandardObject
         {
             if(debugBFS)
             {
+                graphics2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
                 for(Rectangle r : debugBFSPath)
                 {
-                    graphics2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
                     r.ImageDraw(graphics2D);
                 }
                 for(Rectangle r : debugBFSWall)
                 {
-                    graphics2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
                     r.Draw(graphics2D);
                 }
+            }
+
+            if(debugCollision)
+            {
+                graphics2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+                for (Collider2D col : colliders2D)
+                {
+                    switch (col.getColliderType())
+                    {
+                        case CIRCLE_COLLIDER:
+                            //circle = new Circle(256, 256,256,0);
+                            CircleCollider ccol = (CircleCollider) col;
+                            Ellipse2D ellipse2D = new Ellipse2D.Double(ccol.getPos().x - ccol.radius ,ccol.getPos().y - ccol.radius, ccol.radius*2,ccol.radius*2);
+                            if(ccol.getIsColliding())
+                            {
+                                graphics2D.setColor(Color.red);
+                            }
+                            else
+                            {
+                                graphics2D.setColor(Color.black);
+                            }
+                            graphics2D.draw(ellipse2D);
+                            break;
+                        case BOX_COLLIDER:
+                            BoxCollider bcol = (BoxCollider) col;
+                            Rectangle2D rectangle2D = new Rectangle2D.Double(bcol.getPos().x - bcol.width*0.5 ,bcol.getPos().y - bcol.height*0.5, bcol.width,bcol.height);
+                            if(bcol.getIsColliding())
+                            {
+                                graphics2D.setColor(Color.red);
+                            }
+                            else
+                            {
+                                graphics2D.setColor(Color.black);
+                            }
+                            graphics2D.draw(rectangle2D);
+                            break;
+                        default:
+                            System.out.println("hmmm");
+                            break;
+                    }
+                }
+                graphics2D.setColor(Color.black);
             }
         }
     }

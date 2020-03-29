@@ -21,11 +21,6 @@ public class Renderable
         this.scale = scale;
     }
 
-    public void draw(FXGraphics2D g2d)
-    {
-        g2d.draw(getTransformedShape());
-    }
-
     public Shape getTransformedShape()
     {
         return getTransform().createTransformedShape(shape);
@@ -37,7 +32,6 @@ public class Renderable
         tx.translate(position.getX(), position.getY());
         tx.rotate(rotation);
         tx.scale(scale,scale);
-        tx.translate(-16, -16);
         return tx;
     }
 

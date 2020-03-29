@@ -111,7 +111,7 @@ public abstract class BaseObject
 
     public void setActivated(boolean activated)
     {
-        ASSERT_MSG.ASSERT_MSG(true,"setActivated should generally not be used, if you want to set this object to inactive use setActive instead");
+        //ASSERT_MSG.ASSERT_MSG(true,"setActivated should generally not be used, if you want to set this object to inactive use setActive instead");
         this.activated.set(activated);
     }
 
