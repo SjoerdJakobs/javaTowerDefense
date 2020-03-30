@@ -78,7 +78,7 @@ public class DebugDrawer extends StandardObject
                     {
                         rect = new Rectangle(-64, -64,32,32, 0);
                     }
-                    rect.SetImageByFilePath("C:\\stack\\JavaProjecten\\javaTowerDefense\\assets\\arrow.png");
+                    rect.SetImageByFilePath("assets/arrow.png");
                     debugBFSPath.add(rect);
                 }
             }

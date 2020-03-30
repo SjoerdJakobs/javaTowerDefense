@@ -1,12 +1,9 @@
 package MainPackage;
 
+import MainPackage.TowerDefense.*;
 import MainPackage.TowerDefense.Debug.BoxCollisionTestObject;
 import MainPackage.TowerDefense.Debug.CircleCollisionTestObject;
 import MainPackage.TowerDefense.Debug.DebugDrawer;
-import MainPackage.TowerDefense.EnemyUnit;
-import MainPackage.TowerDefense.SpawnBlock;
-import MainPackage.TowerDefense.TargetCircle;
-import MainPackage.TowerDefense.GridManager;
 import OOFramework.Collision2D.CollisionSystem;
 import OOFramework.FXGraphics2dClasses.Rectangle;
 import OOFramework.FrameworkProgram;
@@ -51,6 +48,15 @@ public class Program extends FrameworkProgram
 
         //object respongsible for spawning the enemy units
         spawnBlockObject = new SpawnBlock(this,new Vector2(32, 492), 64,608);
+
+        PlaceTowerBlock placeTowerBlock0 = new PlaceTowerBlock(new Vector2(496, 556), 64,450);
+        PlaceTowerBlock placeTowerBlock1 = new PlaceTowerBlock(new Vector2(641, 348), 224,32);
+
+        PlaceTowerBlock placeTowerBlock2 = new PlaceTowerBlock(new Vector2(992, 428), 96,450);
+        PlaceTowerBlock placeTowerBlock3 = new PlaceTowerBlock(new Vector2(831, 605), 224,96);
+
+        PlaceTowerBlock placeTowerBlock4 = new PlaceTowerBlock(new Vector2(1266, 556), 64,450);
+        PlaceTowerBlock placeTowerBlock5 = new PlaceTowerBlock(new Vector2(1411, 348), 224,32);
 
         //EnemyUnit unit = new EnemyUnit(this,new Vector2(32, 492),10,26,100,5,0.25,"route0");
 

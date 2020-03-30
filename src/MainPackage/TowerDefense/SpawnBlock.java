@@ -50,10 +50,10 @@ public class SpawnBlock extends StandardObject
     {
         super.MainLoop(deltaTime);
         spawnTimer += deltaTime;
-        if(spawnTimer >= 1)
+        if(spawnTimer >= 0.3)
         {
             SpawnUnit();
-            spawnTimer -= 1;
+            spawnTimer -= 0.3;
         }
     }
 

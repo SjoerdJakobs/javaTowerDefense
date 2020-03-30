@@ -24,7 +24,7 @@ public class Circle
         this.radius = radius;
         this.xPos = xPos;
         this.yPos = yPos;
-        SetImageByFilePath("C:\\stack\\JavaProjecten\\javaTowerDefense\\assets\\Default.png");
+        SetImageByFilePath("assets/Default.png");
     }
 
     public void SetImageByFilePath(String filePath)

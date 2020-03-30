@@ -23,7 +23,7 @@ public class Rectangle
         this.square2D = new Renderable(new Rectangle2D.Double(-(xSize/2),-(ySize/2),xSize,ySize), new Point2D.Double(xPos,yPos), rotation, 1);
         this.xSizeOffset = xSize/2;
         this.ySizeOffset = ySize/2;
-        SetImageByFilePath("C:\\stack\\JavaProjecten\\javaTowerDefense\\assets\\Default.png");
+        SetImageByFilePath("assets/Default.png");
     }
 
     public void SetImageByFilePath(String filePath)

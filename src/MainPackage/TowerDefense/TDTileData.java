@@ -49,16 +49,16 @@ public class TDTileData
         switch (tileArtType)
         {
             case ROAD:
-                pathToFile = new File("C:\\stack\\JavaProjecten\\javaTowerDefense\\assets\\tile014.png");
+                pathToFile = new File("assets/tile014.png");
                 break;
             case WATER:
-                pathToFile = new File("C:\\stack\\JavaProjecten\\javaTowerDefense\\assets\\tile028.png");
+                pathToFile = new File("assets/tile028.png");
                 break;
             case GROUND:
-                pathToFile = new File("C:\\stack\\JavaProjecten\\javaTowerDefense\\assets\\tile001.png");
+                pathToFile = new File("assets/tile001.png");
                 break;
             default:
-                pathToFile = new File("C:\\stack\\JavaProjecten\\javaTowerDefense\\assets\\Default.png");
+                pathToFile = new File("assets/Default.png");
                 break;
         }
         try {
