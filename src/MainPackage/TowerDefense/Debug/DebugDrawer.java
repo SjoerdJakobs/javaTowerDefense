@@ -59,19 +59,19 @@ public class DebugDrawer extends StandardObject
                     Rectangle rect;
                     if(bfsGrid[i][j].routes.get(routeName).x ==  1)
                     {
-                        rect = new Rectangle(16 + i*32, 12+ j*32,32,32, 0);
+                        rect = new Rectangle(16 + i*32, 12+ j*32,32,32, 0);//0° × π/180
                         //System.out.print("> ");
                     }else if(bfsGrid[i][j].routes.get(routeName).x == -1)
                     {
-                        rect = new Rectangle(16 + i*32, 12+ j*32, 32,32,3.12f);
+                        rect = new Rectangle(16 + i*32, 12+ j*32, 32,32,3.14159f);//180° × π/180
                         //System.out.print("< ");
                     }else if(bfsGrid[i][j].routes.get(routeName).y ==  1)
                     {
-                        rect = new Rectangle(16 + i*32, 12+ j*32, 32,32,1.56f);//1.56
+                        rect = new Rectangle(16 + i*32, 12+ j*32, 32,32,1.5708f);//90° × π/180
                         //System.out.print("v ");
                     }else if(bfsGrid[i][j].routes.get(routeName).y == -1)
                     {
-                        rect = new Rectangle(16 + i*32, 12+ j*32, 32,32,4.7f);
+                        rect = new Rectangle(16 + i*32, 12+ j*32, 32,32,4.71239f);//270° × π/180
                         //System.out.print("^ ");
                     }
                     else

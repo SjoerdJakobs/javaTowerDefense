@@ -25,6 +25,8 @@ public class EnemyUnit extends StandardObject
     private double radius;
     private Circle circle;
     private Vector2 direction;
+    private Vector2 avoidUnitAdjustment;
+    private Vector2 avoidWallAdjustment;
     private String routeName;
 
     private BFSTile[][] movementGrid;
@@ -47,6 +49,10 @@ public class EnemyUnit extends StandardObject
         this.routeName =    routeName;
         this.turnDelay =    turnDelay;
 
+        direction = new Vector2();
+        avoidUnitAdjustment = new Vector2();
+        avoidWallAdjustment = new Vector2();
+
         //this is all the collision code you need to set it up/
         this.collider = new CircleCollider(pos,radius);      //
         this.collider.collisionCallback = this::OnCollision; //
@@ -60,26 +66,45 @@ public class EnemyUnit extends StandardObject
         AlignWithGridPos(100);
     }
 
+    private boolean hasAllteredDirection = false;
     private double alignCounter = 0;
     public void AlignWithGridPos(double deltaTime)
     {
         nextGridPosX = (int)Math.floor(pos.x/32);
         nextGridPosY = (int)Math.floor((pos.y+4)/32);
 
-        if(nextGridPosY != gridPosY || gridPosX != nextGridPosX)
+        if(nextGridPosY != gridPosY || gridPosX != nextGridPosX|| hasAllteredDirection)
         {
             alignCounter += deltaTime;
-            if(alignCounter > turnDelay)
+            if(alignCounter >= turnDelay)
             {
                 gridPosY = nextGridPosY;
                 gridPosX = nextGridPosX;
+                hasAllteredDirection = false;
                 alignCounter = 0;
             }
         }
     }
 
+    int iii = 0;
+
     public void OnCollision(Collider2D other)
     {
+        if(other.getColliderTag() == ColliderTag.ENEMY_UNIT)
+        {
+            avoidUnitAdjustment = this.pos.subtract(other.getPos());
+            avoidUnitAdjustment.Normalize();
+            hasAllteredDirection = true;
+            alignCounter = turnDelay;
+            System.out.println("yaaaaa"+iii);
+            iii++;
+        }
+        else
+        {
+            System.out.println("hmmm"+iii);
+            iii++;
+            avoidUnitAdjustment = new Vector2();
+        }
         if(other.getColliderTag() == ColliderTag.TARGET)
         {
             setShouldDestruct(true);
@@ -89,10 +114,15 @@ public class EnemyUnit extends StandardObject
     @Override
     protected void MainLoop(double deltaTime)
     {
-        this.pos = pos.Add(movementGrid[gridPosX][gridPosY].routes.get(routeName).MultiplyByDouble((deltaTime*movSpeed)));
-        circle.getCircle2D().setPosition(new Point2D.Double(pos.x,pos.y));
-        collider.setPos(pos);
-        AlignWithGridPos(deltaTime);
+        if(movementGrid[gridPosX][gridPosY].routes.get(routeName) != null) {
+            direction = movementGrid[gridPosX][gridPosY].routes.get(routeName).Add(avoidUnitAdjustment.Add(avoidWallAdjustment));
+            direction.Normalize();
+            this.pos = this.pos.Add(direction.MultiplyByDouble((deltaTime*movSpeed)));
+            circle.getCircle2D().setPosition(new Point2D.Double(pos.x,pos.y));
+            collider.setPos(pos);
+            AlignWithGridPos(deltaTime);
+            direction = new Vector2();
+        }
     }
 
     @Override

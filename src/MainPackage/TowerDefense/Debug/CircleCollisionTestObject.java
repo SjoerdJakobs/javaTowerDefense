@@ -29,7 +29,7 @@ public class CircleCollisionTestObject extends StandardObject
         //this is all the collision code you need to set it up
         this.collider = new CircleCollider(pos,radius);     //
         this.collider.collisionCallback = this::OnCollision;//
-        this.collider.setColliderTag(ColliderTag.TEST);     //
+        this.collider.setColliderTag(ColliderTag.ENEMY_UNIT);     //
         //////////////////////////////////////////////////////
 
         this.circle = new Circle((int)pos.x, (int)pos.y, (int)radius,0);

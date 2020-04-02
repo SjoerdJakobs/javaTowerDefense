@@ -63,7 +63,7 @@ public class Program extends FrameworkProgram
 
         //2 test classes
         CircleCollisionTestObject circleCollisionTestObject1 = new CircleCollisionTestObject(this,new Vector2(600,500), 100, true);
-        BoxCollisionTestObject boxCollisionTestObject1 = new BoxCollisionTestObject(this,new Vector2(600,500), 100,100, false);
+        //BoxCollisionTestObject boxCollisionTestObject1 = new BoxCollisionTestObject(this,new Vector2(600,500), 100,100, false);
         //BoxCollisionTestObject boxCollisionTestObject2 = new BoxCollisionTestObject(this,new Vector2(600,500), 100,100, true);
 
     }

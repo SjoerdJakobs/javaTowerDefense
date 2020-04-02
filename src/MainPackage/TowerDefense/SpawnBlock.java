@@ -17,6 +17,7 @@ public class SpawnBlock extends StandardObject
 {
     private BoxCollider collider;
     private Vector2     pos;
+    private Vector2     posFromCorner;
     private double      width;
     private double      height;
     private boolean     atMouse;
@@ -28,13 +29,14 @@ public class SpawnBlock extends StandardObject
     {
         super(frameworkProgram, false, true, true, true, 2000, 1000);
         this.pos = pos;
+        this.posFromCorner = new Vector2(this.pos.x - width*0.5, this.pos.y - height*0.5);
         this.width = width;
         this.height = height;
 
         //this is all the collision code you need to set it up
-        this.collider = new BoxCollider(pos,width,height);  //
-        this.collider.collisionCallback = this::OnCollision;//
-        this.collider.setColliderTag(ColliderTag.SPAWN_BOX);//
+        //this.collider = new BoxCollider(pos,width,height);  //
+        //this.collider.collisionCallback = this::OnCollision;//
+        //this.collider.setColliderTag(ColliderTag.SPAWN_BOX);//
         //////////////////////////////////////////////////////
 
         this.rectangle = new Rectangle((int)pos.x, (int)pos.y, (int)width,(int)height,0);
@@ -42,24 +44,31 @@ public class SpawnBlock extends StandardObject
         rectangle.setRectangleColor(Color.green);
 
         spawnedUnits = new ArrayList<>();
+
+        SpawnUnit();
     }
 
     private double spawnTimer = 0;
+    private double spawnDelay = 0.5;
     @Override
     protected void MainLoop(double deltaTime)
     {
         super.MainLoop(deltaTime);
-        spawnTimer += deltaTime;
-        if(spawnTimer >= 0.3)
+        //spawnTimer += deltaTime;
+        if(spawnTimer >= spawnDelay)
         {
+            //SpawnUnit();
+            //SpawnUnit();
             SpawnUnit();
-            spawnTimer -= 0.3;
+            spawnTimer -= spawnDelay;
         }
     }
 
     private void SpawnUnit()
     {
-        spawnedUnits.add(new EnemyUnit(getFrameworkProgram(),new Vector2(32, 492),10,26,100,5,0.15,"route0"));
+        double newX = (this.posFromCorner.x + 15) + ((Math.random() * (width-15)));
+        double newY = (this.posFromCorner.y + 15) + ((Math.random() * (height-20)));
+        spawnedUnits.add(new EnemyUnit(getFrameworkProgram(),new Vector2(newX, newY),10,26,100,5,0.15,"route0"));
     }
 
     @Override
