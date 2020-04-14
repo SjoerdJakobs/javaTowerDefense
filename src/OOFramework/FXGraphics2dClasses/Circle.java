@@ -51,6 +51,14 @@ public class Circle
         graphics2D.draw(circle2D.getTransformedShape());
     }
 
+    public void FilledDrawWithLine(Graphics2D graphics2D, Color lineColor)
+    {
+        graphics2D.setColor(circleColor);
+        graphics2D.fill(circle2D.getTransformedShape());
+        graphics2D.setColor(lineColor);
+        graphics2D.draw(circle2D.getTransformedShape());
+    }
+
     public void ImageDraw(Graphics2D graphics2D)
     {
         //ASSERT_MSG.ASSERT_MSG(true, "dont forget to fix the centering problem");

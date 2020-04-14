@@ -30,18 +30,20 @@ public class EnemyUnit extends StandardObject
     private String routeName;
 
     private BFSTile[][] movementGrid;
-
+    private boolean startCheckingForWallCollision;
     private int health;
     private int movSpeed;
     private int damage;
+    private double size;
 
     public EnemyUnit(FrameworkProgram frameworkProgram, Vector2 spawnPos, int health, int size, int movSpeed, int damage, double turnDelay, String routeName)
     {
-        super(frameworkProgram, false, true, true, true, 1500, 1000);
+        super(frameworkProgram, false, true, true, true, 1500, 1100);
 
         //get get get get get :p
         this.movementGrid = Program.getProgramInstance().getGridManager().getBFS().getTileMap();
         this.pos =          spawnPos;
+        this.size =         size;
         this.radius =       size*0.5;
         this.health =       health;
         this.movSpeed =     movSpeed;
@@ -80,30 +82,93 @@ public class EnemyUnit extends StandardObject
             {
                 gridPosY = nextGridPosY;
                 gridPosX = nextGridPosX;
+                if(gridPosX < 0)
+                {
+                    gridPosX = 0;
+                }
+                if(gridPosY < 0)
+                {
+                    gridPosY = 0;
+                }
                 hasAllteredDirection = false;
                 alignCounter = 0;
             }
         }
     }
 
-    int iii = 0;
+    public void AvoidWalls()
+    {
+        nextGridPosX = (int)Math.floor(pos.x/32);
+        nextGridPosY = (int)Math.floor((pos.y+4)/32);
+        avoidWallAdjustment = new Vector2();
+        BFSTile T =  movementGrid[nextGridPosX][nextGridPosY];
+        if(T.hasWalToTheLeft)
+        {
+            if(pos.x < nextGridPosX*32 + size*0.6)
+            {
+                avoidWallAdjustment = avoidWallAdjustment.Add(new Vector2(20,0));
+            }
+        }
+        if(T.hasWalToTheRight)
+        {
+            if(pos.x > nextGridPosX*32+ size*0.6)
+            {
+                avoidWallAdjustment =avoidWallAdjustment.Add(new Vector2(-20,0));
+            }
+        }
+        if(T.hasWalBelow)
+        {
+            if(pos.y > nextGridPosY*32+ size*0.6)
+            {
+                avoidWallAdjustment =avoidWallAdjustment.Add(new Vector2(0,-20));
+            }
+        }
+        if(T.hasWalAbove)
+        {
+            if(pos.y < nextGridPosY*32+ size*0.6)
+            {
+                avoidWallAdjustment =avoidWallAdjustment.Add(new Vector2(0,20));
+            }
+        }
+        if(T.hasWalToTheBottomLeft)
+        {
+            if(pos.x < nextGridPosX*32 + size*0.6 && pos.y > nextGridPosY*32+ size*0.6)
+            {
+                avoidWallAdjustment = avoidWallAdjustment.Add(new Vector2(10,-10));
+            }
+        }
+        if(T.hasWalToTheBottomRight)
+        {
+            if(pos.x > nextGridPosX*32+ size*0.6&& pos.y > nextGridPosY*32+ size*0.6)
+            {
+                avoidWallAdjustment =avoidWallAdjustment.Add(new Vector2(-10,-10));
+            }
+        }
+        if(T.hasWalToTheTopLeft)
+        {
+            if(pos.y > nextGridPosY*32+ size*0.6 && pos.y < nextGridPosY*32+ size*0.6)
+            {
+                avoidWallAdjustment =avoidWallAdjustment.Add(new Vector2(10,10));
+            }
+        }
+        if(T.hasWalToTheTopRight)
+        {
+            if(pos.x > nextGridPosX*32+ size*0.6 && pos.y < nextGridPosY*32+ size*0.6)
+            {
+                avoidWallAdjustment =avoidWallAdjustment.Add(new Vector2(-10,10));
+            }
+        }
+    }
 
     public void OnCollision(Collider2D other)
     {
         if(other.getColliderTag() == ColliderTag.ENEMY_UNIT)
         {
             avoidUnitAdjustment = this.pos.subtract(other.getPos());
-            avoidUnitAdjustment.Normalize();
+            avoidUnitAdjustment.NormalizeThis();
+            avoidUnitAdjustment.MultiplyThisByDouble(2);
             hasAllteredDirection = true;
-            alignCounter = turnDelay;
-            System.out.println("yaaaaa"+iii);
-            iii++;
-        }
-        else
-        {
-            System.out.println("hmmm"+iii);
-            iii++;
-            avoidUnitAdjustment = new Vector2();
+            alignCounter += turnDelay*0.5;
         }
         if(other.getColliderTag() == ColliderTag.TARGET)
         {
@@ -114,14 +179,17 @@ public class EnemyUnit extends StandardObject
     @Override
     protected void MainLoop(double deltaTime)
     {
+        AvoidWalls();
         if(movementGrid[gridPosX][gridPosY].routes.get(routeName) != null) {
+
             direction = movementGrid[gridPosX][gridPosY].routes.get(routeName).Add(avoidUnitAdjustment.Add(avoidWallAdjustment));
-            direction.Normalize();
+            direction.NormalizeThis();
             this.pos = this.pos.Add(direction.MultiplyByDouble((deltaTime*movSpeed)));
             circle.getCircle2D().setPosition(new Point2D.Double(pos.x,pos.y));
             collider.setPos(pos);
             AlignWithGridPos(deltaTime);
             direction = new Vector2();
+            avoidUnitAdjustment = new Vector2();
         }
     }
 
@@ -129,7 +197,7 @@ public class EnemyUnit extends StandardObject
     protected void RenderLoop(double deltaTime)
     {
         getFrameworkProgram().getGraphics2D().setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
-        circle.FilledDraw(getFrameworkProgram().getGraphics2D());
+        circle.FilledDrawWithLine(getFrameworkProgram().getGraphics2D(), Color.black);
     }
 
     @Override

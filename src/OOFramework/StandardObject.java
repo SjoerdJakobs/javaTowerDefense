@@ -63,7 +63,6 @@ public abstract class StandardObject extends BaseObject
     protected void RemoveFromLists()
     {
         super.RemoveFromLists();
-
         if (usesInput) {
             getFrameworkProgram().getInputObjectsToBeRemoved().add(this);
             getFrameworkProgram().setShouldRemoveFromInputList(true);
@@ -84,6 +83,7 @@ public abstract class StandardObject extends BaseObject
     @Override
     protected void AddToLists()
     {
+        super.AddToLists();
         if (usesInput) {
             getFrameworkProgram().getInputObjectsToBeAdded().add(this);
             getFrameworkProgram().setShouldAddToInputList(true);

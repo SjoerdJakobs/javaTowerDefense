@@ -45,7 +45,7 @@ public class SpawnBlock extends StandardObject
 
         spawnedUnits = new ArrayList<>();
 
-        SpawnUnit();
+        //SpawnUnit();
     }
 
     private double spawnTimer = 0;
@@ -54,11 +54,11 @@ public class SpawnBlock extends StandardObject
     protected void MainLoop(double deltaTime)
     {
         super.MainLoop(deltaTime);
-        //spawnTimer += deltaTime;
+        spawnTimer += deltaTime;
         if(spawnTimer >= spawnDelay)
         {
             //SpawnUnit();
-            //SpawnUnit();
+            SpawnUnit();
             SpawnUnit();
             spawnTimer -= spawnDelay;
         }

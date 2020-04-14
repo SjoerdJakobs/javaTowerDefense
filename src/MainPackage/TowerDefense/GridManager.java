@@ -4,7 +4,7 @@ import MainPackage.Program;
 import MainPackage.TowerDefense.Debug.DebugDrawer;
 import OOFramework.FrameworkProgram;
 import OOFramework.Maths.Vector2;
-import OOFramework.Pathfinding.BFS.BreathFirstSearch;
+import OOFramework.Pathfinding.BFS.BreathFirstSearchT2;
 import OOFramework.StandardObject;
 
 import java.awt.*;
@@ -17,13 +17,13 @@ public class GridManager extends StandardObject
     private BufferedImage mapImage;
     private Graphics2D graphics2D;
 
-    private BreathFirstSearch BFS;
+    private BreathFirstSearchT2 BFS;
 
     public GridManager(FrameworkProgram frameworkProgram, Program program)
     {
         super(frameworkProgram, false, true, true, true, 10, 100);
         this.graphics2D = frameworkProgram.getGraphics2D();
-        this.BFS = new BreathFirstSearch();
+        this.BFS = new BreathFirstSearchT2();
         LoadMap();
     }
 
@@ -125,6 +125,7 @@ public class GridManager extends StandardObject
                 imageGraphics.drawImage(mapData[i][j].tileArt, (i * 32), (-4 + j * 32), null);
             }
         }
+
         BFS.CreateTileGrid(60,34);
         for(int i = 0; i < 60; i++)
         {
@@ -214,7 +215,7 @@ public class GridManager extends StandardObject
         graphics2D.drawImage(mapImage, 0, 0, null);
     }
 
-    public BreathFirstSearch getBFS()
+    public BreathFirstSearchT2 getBFS()
     {
         return BFS;
     }

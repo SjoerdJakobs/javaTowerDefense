@@ -1,12 +1,12 @@
 package OOFramework.ExampleClasses;
 
-import OOFramework.Pathfinding.BFS.BreathFirstSearch;
+import OOFramework.Pathfinding.BFS.BreathFirstSearchT2;
 
 public class ExampleBFS {
 
     public void ShowBFS()
     {
-        BreathFirstSearch BFS = new BreathFirstSearch();
+        BreathFirstSearchT2 BFS = new BreathFirstSearchT2();
         BFS.CreateTileGrid(25,25);
 
         for (int i =0; i<12; i++)
@@ -23,7 +23,7 @@ public class ExampleBFS {
         }
 
         BFS.Addroute(10,12,"route0");
-        BFS.Addroute(19,17,"route1");
+        //BFS.Addroute(19,17,"route1");
 
         for (int j = 0; j < 25; j++)
         {
@@ -58,7 +58,7 @@ public class ExampleBFS {
 
         System.out.println("");
         System.out.println("");
-
+/*
         for (int j = 0; j < 25; j++)
         {
             System.out.println("");
@@ -88,5 +88,6 @@ public class ExampleBFS {
                 }
             }
         }
+ */
     }
 }
