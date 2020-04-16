@@ -106,56 +106,56 @@ public class EnemyUnit extends StandardObject
         {
             if(pos.x < nextGridPosX*32 + size*0.6)
             {
-                avoidWallAdjustment = avoidWallAdjustment.Add(new Vector2(20,0));
+                avoidWallAdjustment.AddToThis(new Vector2(20,0));
             }
         }
         if(T.hasWalToTheRight)
         {
             if(pos.x > nextGridPosX*32+ size*0.6)
             {
-                avoidWallAdjustment =avoidWallAdjustment.Add(new Vector2(-20,0));
+                avoidWallAdjustment.AddToThis(new Vector2(-20,0));
             }
         }
         if(T.hasWalBelow)
         {
             if(pos.y > nextGridPosY*32+ size*0.6)
             {
-                avoidWallAdjustment =avoidWallAdjustment.Add(new Vector2(0,-20));
+                avoidWallAdjustment.AddToThis(new Vector2(0,-20));
             }
         }
         if(T.hasWalAbove)
         {
             if(pos.y < nextGridPosY*32+ size*0.6)
             {
-                avoidWallAdjustment =avoidWallAdjustment.Add(new Vector2(0,20));
+                avoidWallAdjustment.AddToThis(new Vector2(0,20));
             }
         }
         if(T.hasWalToTheBottomLeft)
         {
             if(pos.x < nextGridPosX*32 + size*0.6 && pos.y > nextGridPosY*32+ size*0.6)
             {
-                avoidWallAdjustment = avoidWallAdjustment.Add(new Vector2(10,-10));
+                avoidWallAdjustment.AddToThis(new Vector2(10,-10));
             }
         }
         if(T.hasWalToTheBottomRight)
         {
             if(pos.x > nextGridPosX*32+ size*0.6&& pos.y > nextGridPosY*32+ size*0.6)
             {
-                avoidWallAdjustment =avoidWallAdjustment.Add(new Vector2(-10,-10));
+                avoidWallAdjustment.AddToThis(new Vector2(-10,-10));
             }
         }
         if(T.hasWalToTheTopLeft)
         {
             if(pos.y > nextGridPosY*32+ size*0.6 && pos.y < nextGridPosY*32+ size*0.6)
             {
-                avoidWallAdjustment =avoidWallAdjustment.Add(new Vector2(10,10));
+                avoidWallAdjustment.AddToThis(new Vector2(10,10));
             }
         }
         if(T.hasWalToTheTopRight)
         {
             if(pos.x > nextGridPosX*32+ size*0.6 && pos.y < nextGridPosY*32+ size*0.6)
             {
-                avoidWallAdjustment =avoidWallAdjustment.Add(new Vector2(-10,10));
+                avoidWallAdjustment.AddToThis(new Vector2(-10,10));
             }
         }
     }
@@ -164,11 +164,11 @@ public class EnemyUnit extends StandardObject
     {
         if(other.getColliderTag() == ColliderTag.ENEMY_UNIT)
         {
-            avoidUnitAdjustment = this.pos.subtract(other.getPos());
-            avoidUnitAdjustment.NormalizeThis();
-            avoidUnitAdjustment.MultiplyThisByDouble(2);
-            hasAllteredDirection = true;
-            alignCounter += turnDelay*0.5;
+            //avoidUnitAdjustment = this.pos.subtract(other.getPos());
+            //avoidUnitAdjustment.NormalizeThis();
+            //avoidUnitAdjustment.MultiplyThisByDouble(2);
+            //hasAllteredDirection = true;
+            //alignCounter += turnDelay*0.5;
         }
         if(other.getColliderTag() == ColliderTag.TARGET)
         {
@@ -182,7 +182,7 @@ public class EnemyUnit extends StandardObject
         AvoidWalls();
         if(movementGrid[gridPosX][gridPosY].routes.get(routeName) != null) {
 
-            direction = movementGrid[gridPosX][gridPosY].routes.get(routeName).Add(avoidUnitAdjustment.Add(avoidWallAdjustment));
+            direction = movementGrid[gridPosX][gridPosY].routes.get(routeName).Add(avoidWallAdjustment);//.Add(avoidUnitAdjustment.Add(avoidWallAdjustment));
             direction.NormalizeThis();
             this.pos = this.pos.Add(direction.MultiplyByDouble((deltaTime*movSpeed)));
             circle.getCircle2D().setPosition(new Point2D.Double(pos.x,pos.y));

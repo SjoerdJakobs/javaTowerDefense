@@ -68,7 +68,7 @@ public class SpawnBlock extends StandardObject
     {
         double newX = (this.posFromCorner.x + 15) + ((Math.random() * (width-15)));
         double newY = (this.posFromCorner.y + 15) + ((Math.random() * (height-20)));
-        spawnedUnits.add(new EnemyUnit(getFrameworkProgram(),new Vector2(newX, newY),10,26,100,5,0.15,"route0"));
+        spawnedUnits.add(new EnemyUnit(getFrameworkProgram(),new Vector2(newX, newY),10,26,100,5,0.25,"route0"));
     }
 
     @Override
