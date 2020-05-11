@@ -77,6 +77,11 @@ public abstract class FrameworkProgram extends Application
                     last = now;
                 Run(graphics2D);
                 last = now;
+                if(!isRunning())
+                {
+                    stop();
+                    System.exit(0);
+                }
             }
         }.start();
     }
@@ -109,14 +114,18 @@ public abstract class FrameworkProgram extends Application
 
         //input uses the unscaledDeltaTime since this loop should not be used for program logic
         for (StandardObject object : inputObjects) {
-            object.InputLoop(unscaledDeltaTime);
+            if(!this.paused.get()) {
+                object.InputLoop(unscaledDeltaTime);
+            }
         }
 
         for (PriorityGroup group : mainGroups)
         {
-            for (StandardObject object : group.standardObjects)
-            {
-                object.MainLoop(deltaTime);
+            if(!this.paused.get()) {
+                for (StandardObject object : group.standardObjects)
+                {
+                    object.MainLoop(deltaTime);
+                }
             }
         }
 
@@ -259,14 +268,19 @@ public abstract class FrameworkProgram extends Application
     }
 
 
-    public AtomicBoolean isRunning()
+    public boolean isRunning()
     {
-        return running;
+        return running.get();
     }
 
-    public AtomicBoolean isPaused()
+    public boolean isPaused()
     {
-        return paused;
+        return paused.get();
+    }
+
+    public void setPaused(boolean setPaused)
+    {
+        this.paused.set(setPaused);
     }
 
     public Canvas getCanvas() {

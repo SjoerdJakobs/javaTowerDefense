@@ -14,7 +14,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
-import static OOFramework.Modules.CONSTANTS.DEBUG_MODE;
+import static OOFramework.Modules.CONSTANTS.*;
 
 public class DebugDrawer extends StandardObject
 {
@@ -36,65 +36,52 @@ public class DebugDrawer extends StandardObject
     private static ArrayList<Rectangle> debugBFSPath;
     private static ArrayList<Rectangle> debugBFSWall;
 
-    public static void StartDebugFBS(BFSTile bfsGrid[][], String routeName)
+    public static void StartDebugBFS(BFSTile bfsGrid[][], String routeName)
     {
-        bfsGrid = bfsGrid;
-        debugBFS = true;
-        debugBFSPath = new ArrayList<Rectangle>();
-        debugBFSWall = new ArrayList<Rectangle>();
+        if(DEBUG_BFS) {
+            bfsGrid = bfsGrid;
+            debugBFS = true;
+            debugBFSPath = new ArrayList<Rectangle>();
+            debugBFSWall = new ArrayList<Rectangle>();
 
-        for (int i = 0; i < bfsGrid.length; i++)
-        {
-            for (int j = 0; j < bfsGrid[0].length; j++)
-            {
-                if(bfsGrid[i][j].isWall)
-                {
-                    Rectangle rect = new Rectangle(16 + i*32, 12+j*32,32,32, 0);
-                    rect.setRectangleColor(Color.RED);
-                    debugBFSWall.add(rect);
-                }
-                else if(bfsGrid[i][j].routes.containsKey(routeName))
-                {
-                    Rectangle rect;
-                    if(bfsGrid[i][j].routes.get(routeName).x ==  1 && bfsGrid[i][j].routes.get(routeName).y ==  0)
-                    {
-                        rect = new Rectangle(16 + i*32, 12+ j*32,32,32, 0);//0° × π/180
-                        //System.out.print("> ");
-                    }else if(bfsGrid[i][j].routes.get(routeName).x == -1 && bfsGrid[i][j].routes.get(routeName).y ==  0)
-                    {
-                        rect = new Rectangle(16 + i*32, 12+ j*32, 32,32,3.14159f);//180° × π/180
-                        //System.out.print("< ");
-                    }else if(bfsGrid[i][j].routes.get(routeName).y ==  1 && bfsGrid[i][j].routes.get(routeName).x ==  0)
-                    {
-                        rect = new Rectangle(16 + i*32, 12+ j*32, 32,32,1.5708f);//90° × π/180
-                        //System.out.print("v ");
-                    }else if(bfsGrid[i][j].routes.get(routeName).y == -1 && bfsGrid[i][j].routes.get(routeName).x ==  0)
-                    {
-                        rect = new Rectangle(16 + i*32, 12+ j*32, 32,32,4.71239f);//270° × π/180
-                        //System.out.print("^ ");
-                    }else if(bfsGrid[i][j].routes.get(routeName).x ==  1 && bfsGrid[i][j].routes.get(routeName).y ==  1)
-                    {
-                        rect = new Rectangle(16 + i*32, 12+ j*32,32,32, 0.785398f);//45° × π/180
-                        //System.out.print("> ");
-                    }else if(bfsGrid[i][j].routes.get(routeName).x == -1 && bfsGrid[i][j].routes.get(routeName).y ==  1)
-                    {
-                        rect = new Rectangle(16 + i*32, 12+ j*32, 32,32,2.35619f);//135° × π/180
-                        //System.out.print("< ");
-                    }else if(bfsGrid[i][j].routes.get(routeName).y ==  -1 && bfsGrid[i][j].routes.get(routeName).x ==  1)
-                    {
-                        rect = new Rectangle(16 + i*32, 12+ j*32, 32,32,5.49779f);//315° × π/180
-                        //System.out.print("v ");
-                    }else if(bfsGrid[i][j].routes.get(routeName).y == -1 && bfsGrid[i][j].routes.get(routeName).x ==  -1)
-                    {
-                        rect = new Rectangle(16 + i*32, 12+ j*32, 32,32,3.92699f);//225° × π/180
-                        //System.out.print("^ ");
+            for (int i = 0; i < bfsGrid.length; i++) {
+                for (int j = 0; j < bfsGrid[0].length; j++) {
+                    if (bfsGrid[i][j].isWall) {
+                        Rectangle rect = new Rectangle(16 + i * 32, 12 + j * 32, 32, 32, 0);
+                        rect.setRectangleColor(Color.RED);
+                        debugBFSWall.add(rect);
+                    } else if (bfsGrid[i][j].routes.containsKey(routeName)) {
+                        Rectangle rect;
+                        if (bfsGrid[i][j].routes.get(routeName).x == 1 && bfsGrid[i][j].routes.get(routeName).y == 0) {
+                            rect = new Rectangle(16 + i * 32, 12 + j * 32, 32, 32, 0);//0° × π/180
+                            //System.out.print("> ");
+                        } else if (bfsGrid[i][j].routes.get(routeName).x == -1 && bfsGrid[i][j].routes.get(routeName).y == 0) {
+                            rect = new Rectangle(16 + i * 32, 12 + j * 32, 32, 32, 3.14159f);//180° × π/180
+                            //System.out.print("< ");
+                        } else if (bfsGrid[i][j].routes.get(routeName).y == 1 && bfsGrid[i][j].routes.get(routeName).x == 0) {
+                            rect = new Rectangle(16 + i * 32, 12 + j * 32, 32, 32, 1.5708f);//90° × π/180
+                            //System.out.print("v ");
+                        } else if (bfsGrid[i][j].routes.get(routeName).y == -1 && bfsGrid[i][j].routes.get(routeName).x == 0) {
+                            rect = new Rectangle(16 + i * 32, 12 + j * 32, 32, 32, 4.71239f);//270° × π/180
+                            //System.out.print("^ ");
+                        } else if (bfsGrid[i][j].routes.get(routeName).x == 1 && bfsGrid[i][j].routes.get(routeName).y == 1) {
+                            rect = new Rectangle(16 + i * 32, 12 + j * 32, 32, 32, 0.785398f);//45° × π/180
+                            //System.out.print("> ");
+                        } else if (bfsGrid[i][j].routes.get(routeName).x == -1 && bfsGrid[i][j].routes.get(routeName).y == 1) {
+                            rect = new Rectangle(16 + i * 32, 12 + j * 32, 32, 32, 2.35619f);//135° × π/180
+                            //System.out.print("< ");
+                        } else if (bfsGrid[i][j].routes.get(routeName).y == -1 && bfsGrid[i][j].routes.get(routeName).x == 1) {
+                            rect = new Rectangle(16 + i * 32, 12 + j * 32, 32, 32, 5.49779f);//315° × π/180
+                            //System.out.print("v ");
+                        } else if (bfsGrid[i][j].routes.get(routeName).y == -1 && bfsGrid[i][j].routes.get(routeName).x == -1) {
+                            rect = new Rectangle(16 + i * 32, 12 + j * 32, 32, 32, 3.92699f);//225° × π/180
+                            //System.out.print("^ ");
+                        } else {
+                            rect = new Rectangle(-64, -64, 32, 32, 0);
+                        }
+                        rect.SetImageByFilePath("assets/arrow.png");
+                        debugBFSPath.add(rect);
                     }
-                    else
-                    {
-                        rect = new Rectangle(-64, -64,32,32, 0);
-                    }
-                    rect.SetImageByFilePath("assets/arrow.png");
-                    debugBFSPath.add(rect);
                 }
             }
         }
@@ -107,8 +94,10 @@ public class DebugDrawer extends StandardObject
 
     public static void DebugCollision(ArrayList<Collider2D> colliders)
     {
-        debugCollision = true;
-        colliders2D = colliders;
+        if(DEBUG_COLLISION) {
+            debugCollision = true;
+            colliders2D = colliders;
+        }
     }
 
     @Override

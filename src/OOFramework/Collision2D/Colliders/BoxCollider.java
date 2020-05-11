@@ -83,10 +83,10 @@ public class BoxCollider extends Collider2D
     @Override
     public boolean ContainsPoint(Vector2 point)
     {
-        return (point.x >= this.pos.x - this.width*0.5 &&
-                point.x <= this.pos.x + this.width*0.5 &&
-                point.y >= this.pos.y - this.height*0.5 &&
-                point.y <= this.pos.y + this.height*0.5);
+        return (point.x >= this.getLeft() &&
+                point.x <= this.getRight() &&
+                point.y >= this.getTop() &&
+                point.y <= this.getBottom());
     }
 
     @Override
@@ -96,18 +96,18 @@ public class BoxCollider extends Collider2D
     }
 
     public double getLeft() {
-        return this.pos.x - this.width / 2;
+        return this.pos.x - this.width *0.5;
     }
 
     public double  getRight() {
-        return this.pos.x + this.width / 2;
+        return this.pos.x + this.width *0.5;
     }
 
     public double  getTop() {
-        return this.pos.y - this.height / 2;
+        return this.pos.y - this.height *0.5;
     }
 
     public double  getBottom() {
-        return this.pos.y + this.height / 2;
+        return this.pos.y + this.height *0.5;
     }
 }

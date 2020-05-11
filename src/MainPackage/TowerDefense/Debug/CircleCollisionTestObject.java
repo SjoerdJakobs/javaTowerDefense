@@ -10,6 +10,7 @@ import OOFramework.StandardObject;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class CircleCollisionTestObject extends StandardObject
 {
@@ -35,6 +36,7 @@ public class CircleCollisionTestObject extends StandardObject
         this.circle = new Circle((int)pos.x, (int)pos.y, (int)radius,0);
         circle.getCircle2D().setPosition(new Point2D.Double(pos.x,pos.y));
         circle.setCircleColor(Color.orange);
+
         if(atMouse)
         {
             frameworkProgram.getCanvas().setOnMouseDragged(e ->

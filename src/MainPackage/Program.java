@@ -49,6 +49,7 @@ public class Program extends FrameworkProgram
         //object respongsible for spawning the enemy units
         spawnBlockObject = new SpawnBlock(this,new Vector2(32, 492), 64,608);
 
+        //
         PlaceTowerBlock placeTowerBlock0 = new PlaceTowerBlock(new Vector2(496, 556), 64,450);
         PlaceTowerBlock placeTowerBlock1 = new PlaceTowerBlock(new Vector2(641, 348), 224,32);
 
@@ -62,7 +63,7 @@ public class Program extends FrameworkProgram
 
 
         //2 test classes
-        CircleCollisionTestObject circleCollisionTestObject1 = new CircleCollisionTestObject(this,new Vector2(600,500), 100, true);
+        //CircleCollisionTestObject circleCollisionTestObject1 = new CircleCollisionTestObject(this,new Vector2(600,500), 100, true);
         //BoxCollisionTestObject boxCollisionTestObject1 = new BoxCollisionTestObject(this,new Vector2(600,500), 100,100, false);
         //BoxCollisionTestObject boxCollisionTestObject2 = new BoxCollisionTestObject(this,new Vector2(600,500), 100,100, true);
 

@@ -50,7 +50,7 @@ public class ExampleProgram extends FrameworkProgram
      * NOTE: this is the very last thing you do before you exit the program.
      */
     @Override
-    protected void ExitProgram()
+    public void ExitProgram()
     {
         super.ExitProgram();
     }

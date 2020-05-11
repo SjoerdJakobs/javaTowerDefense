@@ -205,7 +205,7 @@ public class GridManager extends StandardObject
 
         BFS.Addroute(59,17,"route0");
 
-        DebugDrawer.StartDebugFBS(BFS.getTileMap(),"route0");
+        DebugDrawer.StartDebugBFS(BFS.getTileMap(),"route0");
     }
 
     @Override

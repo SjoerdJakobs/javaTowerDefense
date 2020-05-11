@@ -62,7 +62,8 @@ public class TargetCircle extends StandardObject
             if (health > 19) {
                 this.collider.radius = radius;
             } else if (health <= 0) {
-                System.exit(0);
+                Program.getProgramInstance().ExitProgram();
+                //System.exit(0);
             }
         }
     }

@@ -9,4 +9,7 @@ public final class CONSTANTS
     public static final long UPDATE_PERIOD_NSEC = 1000000000L / UPDATES_PER_SEC;  // nanoseconds
 
     public static final boolean DEBUG_MODE = true;
+    public static final boolean DEBUG_COLLISION = true;
+    public static final boolean DEBUG_BFS = true;
+    public static final boolean DEBUG_ASTAR= true;
 }

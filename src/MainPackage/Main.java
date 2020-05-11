@@ -25,8 +25,8 @@ public class Main
         System.out.println(v4.GetMagnitude());
         */
 
-        ExampleBFS bfs = new ExampleBFS();
-        bfs.ShowBFS();
+        //ExampleBFS bfs = new ExampleBFS();
+        //bfs.ShowBFS();
         Program program = new Program();
         launch(Program.class);
         //ExampleBFS exampleBFS = new ExampleBFS();
