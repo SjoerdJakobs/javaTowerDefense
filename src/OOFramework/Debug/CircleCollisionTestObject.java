@@ -1,4 +1,4 @@
-package MainPackage.TowerDefense.Debug;
+package OOFramework.Debug;
 
 import OOFramework.Collision2D.Colliders.CircleCollider;
 import OOFramework.Collision2D.Colliders.Collider2D;

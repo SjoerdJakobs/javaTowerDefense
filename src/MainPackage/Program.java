@@ -1,18 +1,12 @@
 package MainPackage;
 
 import MainPackage.TowerDefense.*;
-import MainPackage.TowerDefense.Debug.BoxCollisionTestObject;
-import MainPackage.TowerDefense.Debug.CircleCollisionTestObject;
-import MainPackage.TowerDefense.Debug.DebugDrawer;
+import OOFramework.Debug.DebugDrawer;
 import OOFramework.Collision2D.CollisionSystem;
-import OOFramework.FXGraphics2dClasses.Rectangle;
 import OOFramework.FrameworkProgram;
 import OOFramework.Maths.Vector2;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-
-import static OOFramework.Modules.CONSTANTS.*;
 import static javafx.application.Application.launch;
 
 public class Program extends FrameworkProgram

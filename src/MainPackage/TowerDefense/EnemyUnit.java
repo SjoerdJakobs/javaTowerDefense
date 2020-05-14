@@ -197,7 +197,7 @@ public class EnemyUnit extends StandardObject
     protected void RenderLoop(double deltaTime)
     {
         getFrameworkProgram().getGraphics2D().setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
-        circle.FilledDrawWithLine(getFrameworkProgram().getGraphics2D(), Color.black);
+        circle.FilledDraw(getFrameworkProgram().getGraphics2D());
     }
 
     @Override

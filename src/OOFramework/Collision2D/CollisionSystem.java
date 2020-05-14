@@ -1,7 +1,6 @@
 package OOFramework.Collision2D;
 
-import MainPackage.TowerDefense.Debug.DebugDrawer;
-import OOFramework.BaseObject;
+import OOFramework.Debug.DebugDrawer;
 import OOFramework.Collision2D.Colliders.Collider2D;
 import OOFramework.FrameworkProgram;
 import OOFramework.Modules.ASSERT_MSG;

@@ -42,8 +42,6 @@ public abstract class FrameworkProgram extends Application
     private boolean shouldRemoveFromMainGroup = false;
     private boolean shouldRemoveFromRenderGroup = false;
 
-
-
     //deltatime influenced by timeScale and if the program is paused or not
     private double deltaTime = 0;
     //the current scale for delata time, 2 would speed everything up and 0.5 would slow everything down
@@ -404,6 +402,26 @@ public abstract class FrameworkProgram extends Application
     public void setShouldRemoveFromRenderGroup(boolean shouldRemoveFromRenderGroup)
     {
         this.shouldRemoveFromRenderGroup = shouldRemoveFromRenderGroup;
+    }
+
+    public double getDeltaTime()
+    {
+        return deltaTime;
+    }
+
+    public double getTimeScale()
+    {
+        return timeScale;
+    }
+
+    public void setTimeScale(double timeScale)
+    {
+        this.timeScale = timeScale;
+    }
+
+    public double getUnscaledDeltaTime()
+    {
+        return unscaledDeltaTime;
     }
 }
 

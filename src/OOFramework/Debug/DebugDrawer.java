@@ -1,4 +1,4 @@
-package MainPackage.TowerDefense.Debug;
+package OOFramework.Debug;
 
 import OOFramework.Collision2D.Colliders.BoxCollider;
 import OOFramework.Collision2D.Colliders.CircleCollider;
@@ -19,6 +19,16 @@ import static OOFramework.Modules.CONSTANTS.*;
 public class DebugDrawer extends StandardObject
 {
     private FXGraphics2D graphics2D;
+    private FrameworkProgram frameworkProgram;
+
+    public  float updateInterval = 0.5F;
+
+    private float accum   = 0; // FPS accumulated over the interval
+    private int   frames  = 0; // Frames drawn over the interval
+    private float timeleft;    // Left time for current interval
+    private float fps = 0f;
+
+    Font font = new Font("Serif", Font.PLAIN, 24);
 
     public DebugDrawer(FrameworkProgram frameworkProgram)
     {
@@ -28,7 +38,34 @@ public class DebugDrawer extends StandardObject
             this.setActive(false);
         }
         graphics2D = frameworkProgram.getGraphics2D();
+        this.frameworkProgram = frameworkProgram;
+        timeleft = updateInterval;
     }
+
+
+    @Override
+    protected void MainLoop(double deltaTime)
+    {
+        super.MainLoop(deltaTime);
+        if(DEBUG_FPS)
+        {
+            timeleft -= deltaTime;
+            accum += deltaTime;
+            frames++;
+
+            // Interval ended - update GUI text and start new interval
+            if (timeleft <= 0.0) {
+                // display two fractional digits (f2 format)
+                fps = 1 / (accum / frames);
+
+                timeleft = updateInterval;
+                accum = 0.0F;
+                frames = 0;
+            }
+        }
+    }
+
+
 
     //BFS debugging
     private static boolean debugBFS = false;
@@ -106,6 +143,27 @@ public class DebugDrawer extends StandardObject
         super.RenderLoop(deltaTime);
         if(DEBUG_MODE)
         {
+            if(DEBUG_FPS)
+            {
+                graphics2D.setFont(font);
+
+                FontMetrics fontMetrics = graphics2D.getFontMetrics();
+                if (fps < 10) {
+                    graphics2D.setColor(Color.red);
+                }
+                else if (fps < 30)
+                {
+                    graphics2D.setColor(Color.yellow);
+                }
+                else
+                {
+                    graphics2D.setColor(Color.green);
+                }
+
+                graphics2D.drawString( String.format("%.02f", fps) + " FPS", CANVAS_WIDTH-114, 10+fontMetrics.getAscent());
+            }
+
+
             if(debugBFS)
             {
                 graphics2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));

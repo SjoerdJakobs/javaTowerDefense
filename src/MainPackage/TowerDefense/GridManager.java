@@ -1,7 +1,7 @@
 package MainPackage.TowerDefense;
 
 import MainPackage.Program;
-import MainPackage.TowerDefense.Debug.DebugDrawer;
+import OOFramework.Debug.DebugDrawer;
 import OOFramework.FrameworkProgram;
 import OOFramework.Maths.Vector2;
 import OOFramework.Pathfinding.BFS.BreathFirstSearchT2;

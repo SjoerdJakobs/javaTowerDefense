@@ -46,17 +46,19 @@ public class Circle
 
     public void FilledDraw(Graphics2D graphics2D)
     {
+        Shape shape = circle2D.getTransformedShape();
         graphics2D.setColor(circleColor);
-        graphics2D.fill(circle2D.getTransformedShape());
-        graphics2D.draw(circle2D.getTransformedShape());
+        graphics2D.fill(shape);
+        graphics2D.draw(shape);
     }
 
     public void FilledDrawWithLine(Graphics2D graphics2D, Color lineColor)
     {
+        Shape shape = circle2D.getTransformedShape();
         graphics2D.setColor(circleColor);
-        graphics2D.fill(circle2D.getTransformedShape());
+        graphics2D.fill(shape);
         graphics2D.setColor(lineColor);
-        graphics2D.draw(circle2D.getTransformedShape());
+        graphics2D.draw(shape);
     }
 
     public void ImageDraw(Graphics2D graphics2D)
