@@ -1,13 +1,9 @@
 package OOFramework;
 
-import OOFramework.FrameworkProgram;
-import OOFramework.Modules.ASSERT_MSG;
-
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
-public abstract class BaseObject
-{
+public abstract class BaseObject {
     /**
      * should this object be active
      */
@@ -28,8 +24,7 @@ public abstract class BaseObject
      */
     private final AtomicReference<FrameworkProgram> frameworkProgram = new AtomicReference<FrameworkProgram>();
 
-    protected BaseObject(FrameworkProgram frameworkProgram, boolean startsActivated)
-    {
+    protected BaseObject(FrameworkProgram frameworkProgram, boolean startsActivated) {
         //System.out.println("base");
         this.frameworkProgram.set(frameworkProgram);
         this.setShouldDestruct(false);
@@ -51,8 +46,7 @@ public abstract class BaseObject
      * this is called when the object gets created
      * after the constructor but before the awake and the loops
      */
-    protected void Start()
-    {
+    protected void Start() {
 
     }
 
@@ -62,8 +56,7 @@ public abstract class BaseObject
      * if the object is created inactive awake will run when the object is set to active which happens right after the program loops
      * Awake will run every time the object goes from inactive to active
      */
-    protected void Awake()
-    {
+    protected void Awake() {
 
     }
 
@@ -71,67 +64,55 @@ public abstract class BaseObject
      * this is called when the object gets set to inactive
      * Sleep will run every time the object goes from active to inactive which happens right after the program loops
      */
-    protected void Sleep()
-    {
+    protected void Sleep() {
 
     }
 
-    protected void RemoveFromLists()
-    {
+    protected void RemoveFromLists() {
 
     }
 
-    protected void AddToLists()
-    {
+    protected void AddToLists() {
 
     }
 
-    protected void Destroy()
-    {
+    protected void Destroy() {
         this.RemoveFromLists();
     }
 
 
     //beyond this point just getters/setters
 
-    public boolean isActive()
-    {
+    public boolean isActive() {
         return this.active.get();
     }
 
-    public void setActive(boolean m_active)
-    {
+    public void setActive(boolean m_active) {
         this.active.set(m_active);
     }
 
-    public boolean isActivated()
-    {
+    public boolean isActivated() {
         return this.activated.get();
     }
 
-    public void setActivated(boolean activated)
-    {
+    public void setActivated(boolean activated) {
         //ASSERT_MSG.ASSERT_MSG(true,"setActivated should generally not be used, if you want to set this object to inactive use setActive instead");
         this.activated.set(activated);
     }
 
-    public boolean ShouldDestruct()
-    {
+    public boolean ShouldDestruct() {
         return this.shouldDestruct.get();
     }
 
-    public void setShouldDestruct(boolean shouldDestruct)
-    {
+    public void setShouldDestruct(boolean shouldDestruct) {
         this.shouldDestruct.set(shouldDestruct);
     }
 
-    public FrameworkProgram getFrameworkProgram()
-    {
+    public FrameworkProgram getFrameworkProgram() {
         return this.frameworkProgram.get();
     }
 
-    public void setFrameworkProgram(FrameworkProgram frameworkProgram)
-    {
+    public void setFrameworkProgram(FrameworkProgram frameworkProgram) {
         this.frameworkProgram.set(frameworkProgram);
     }
 }

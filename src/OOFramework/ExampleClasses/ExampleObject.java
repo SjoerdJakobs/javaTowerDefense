@@ -1,9 +1,9 @@
 package OOFramework.ExampleClasses;
+
 import OOFramework.FrameworkProgram;
 import OOFramework.StandardObject;
 
-public class ExampleObject extends StandardObject
-{
+public class ExampleObject extends StandardObject {
     /**
      * happens at: when this object is made
      * how often: once
@@ -84,8 +84,7 @@ public class ExampleObject extends StandardObject
      * execution order: 6
      */
     @Override
-    protected void Sleep()
-    {
+    protected void Sleep() {
         super.Sleep();
     }
 

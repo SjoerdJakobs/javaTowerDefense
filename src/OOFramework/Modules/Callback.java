@@ -1,6 +1,5 @@
 package OOFramework.Modules;
 
-public interface Callback
-{
+public interface Callback {
     void run();
 }

@@ -1,7 +1,6 @@
 package MainPackage.TowerDefense;
 
-public enum TileArtEnum
-{
+public enum TileArtEnum {
     GROUND,
     WATER,
     ROAD;

@@ -1,40 +1,49 @@
 package OOFramework;
 
+import MainPackage.Program;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import org.jfree.fx.FXGraphics2D;
 
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static OOFramework.Modules.CONSTANTS.*;
 
-public abstract class FrameworkProgram extends Application
+public abstract class FrameworkProgram extends Application implements EventHandler<KeyEvent>
 {
     private final AtomicBoolean running = new AtomicBoolean(false);
-    private final AtomicBoolean paused  = new AtomicBoolean(false);
+    private final AtomicBoolean paused = new AtomicBoolean(false);
 
     private final AtomicReference<ArrayList<BaseObject>> objects = new AtomicReference<>(new ArrayList<BaseObject>());
-
     private final AtomicReference<ArrayList<RunnableObject>> runnableObjects = new AtomicReference<>(new ArrayList<RunnableObject>());
 
-    private ArrayList<StandardObject> inputObjects  = new ArrayList<StandardObject>();
+    //the current scale for delata time, 2 would speed everything up and 0.5 would slow everything down
+    protected double timeScale = 1;
+    protected Stage stage;
+    protected Canvas canvas;
+    protected FXGraphics2D graphics2D;
+    long lastTime = System.nanoTime();
+
+    private ArrayList<StandardObject> inputObjects = new ArrayList<StandardObject>();
     private ArrayList<PriorityGroup> mainGroups = new ArrayList<PriorityGroup>();
     private ArrayList<PriorityGroup> renderGroups = new ArrayList<PriorityGroup>();
-
     private ArrayList<StandardObject> inputObjectsToBeAdded = new ArrayList<StandardObject>();
     private ArrayList<StandardObject> mainObjectsToBeAdded = new ArrayList<StandardObject>();
     private ArrayList<StandardObject> renderObjectsToBeAdded = new ArrayList<StandardObject>();
     private boolean shouldAddToInputList = false;
     private boolean shouldAddToMainGroup = false;
     private boolean shouldAddToRenderGroup = false;
-
     private ArrayList<StandardObject> inputObjectsToBeRemoved = new ArrayList<StandardObject>();
     private ArrayList<StandardObject> mainObjectsToBeRemoved = new ArrayList<StandardObject>();
     private ArrayList<StandardObject> renderObjectsToBeRemoved = new ArrayList<StandardObject>();
@@ -42,20 +51,20 @@ public abstract class FrameworkProgram extends Application
     private boolean shouldRemoveFromMainGroup = false;
     private boolean shouldRemoveFromRenderGroup = false;
 
+
     //deltatime influenced by timeScale and if the program is paused or not
     private double deltaTime = 0;
-    //the current scale for delata time, 2 would speed everything up and 0.5 would slow everything down
-    protected double timeScale = 1;
-
     //deltatime that will always give the time between frames
     private double unscaledDeltaTime = 0;
 
-    protected Stage stage;
-    protected Canvas canvas;
-    protected FXGraphics2D graphics2D;
+    private static FrameworkProgram programInstance;
+    public static FrameworkProgram getProgramInstance() {
+        return programInstance;
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        this.programInstance = this;
         this.stage = primaryStage;
         this.canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
         this.graphics2D = new FXGraphics2D(canvas.getGraphicsContext2D());
@@ -65,18 +74,24 @@ public abstract class FrameworkProgram extends Application
         //this.stage.setFullScreen(true);
         //this.stage.setResizable(false);
         this.stage.show();
+        stage.getScene().setOnKeyPressed(this);
+
+
+        //addKeyListener( keyboard );
+        //canvas.addKeyListener( keyboard );
+
         Init();
 
         new AnimationTimer() {
             long last = -1;
+
             @Override
             public void handle(long now) {
                 if (last == -1)
                     last = now;
                 Run(graphics2D);
                 last = now;
-                if(!isRunning())
-                {
+                if (!isRunning()) {
                     stop();
                     System.exit(0);
                 }
@@ -84,22 +99,16 @@ public abstract class FrameworkProgram extends Application
         }.start();
     }
 
-
-
-
-    long lastTime = System.nanoTime();
-
-    public void Run(FXGraphics2D g2d)
-    {
+    public void Run(FXGraphics2D g2d) {
 
         /**
          * calculate deltatime
          */
         long time = System.nanoTime();
         unscaledDeltaTime = (((double) (time - lastTime) / 1000_000_000));//the true delta time in seconds
-        if(this.paused.get()) {
+        if (this.paused.get()) {
             deltaTime = 0;
-        }else {
+        } else {
             deltaTime = unscaledDeltaTime * timeScale;//scaled delta time in seconds
         }
         lastTime = time;
@@ -112,16 +121,14 @@ public abstract class FrameworkProgram extends Application
 
         //input uses the unscaledDeltaTime since this loop should not be used for program logic
         for (StandardObject object : inputObjects) {
-            if(!this.paused.get()) {
+            if (!this.paused.get()) {
                 object.InputLoop(unscaledDeltaTime);
             }
         }
 
-        for (PriorityGroup group : mainGroups)
-        {
-            if(!this.paused.get()) {
-                for (StandardObject object : group.standardObjects)
-                {
+        for (PriorityGroup group : mainGroups) {
+            if (!this.paused.get()) {
+                for (StandardObject object : group.standardObjects) {
                     object.MainLoop(deltaTime);
                 }
             }
@@ -129,12 +136,10 @@ public abstract class FrameworkProgram extends Application
 
         //clear screen
         g2d.setBackground(Color.white);
-        g2d.clearRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
+        g2d.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
-        for (PriorityGroup group : renderGroups)
-        {
-            for (StandardObject object : group.standardObjects)
-            {
+        for (PriorityGroup group : renderGroups) {
+            for (StandardObject object : group.standardObjects) {
                 object.RenderLoop(deltaTime);
             }
         }
@@ -156,24 +161,24 @@ public abstract class FrameworkProgram extends Application
             }
         }
 
-        if(shouldAddToInputList) {
-            for(StandardObject ro : inputObjectsToBeAdded) {
+        if (shouldAddToInputList) {
+            for (StandardObject ro : inputObjectsToBeAdded) {
                 inputObjects.add(ro);
             }
             inputObjectsToBeAdded.clear();
             shouldAddToInputList = false;
         }
 
-        if(shouldRemoveFromInputList) {
-            for(StandardObject ro : inputObjectsToBeRemoved) {
+        if (shouldRemoveFromInputList) {
+            for (StandardObject ro : inputObjectsToBeRemoved) {
                 inputObjects.remove(ro);
             }
             inputObjectsToBeRemoved.clear();
             shouldRemoveFromInputList = false;
         }
 
-        if(shouldAddToMainGroup) {
-            for(StandardObject ro : mainObjectsToBeAdded) {
+        if (shouldAddToMainGroup) {
+            for (StandardObject ro : mainObjectsToBeAdded) {
                 boolean hasGroup = false;
                 for (PriorityGroup group : mainGroups) {
                     if (group.priorityNr == ro.getObjectPriority()) {
@@ -192,8 +197,8 @@ public abstract class FrameworkProgram extends Application
             shouldAddToMainGroup = false;
         }
 
-        if(shouldRemoveFromMainGroup) {
-            for(StandardObject ro : mainObjectsToBeRemoved) {
+        if (shouldRemoveFromMainGroup) {
+            for (StandardObject ro : mainObjectsToBeRemoved) {
                 for (PriorityGroup group : mainGroups) {
                     if (group.priorityNr == ro.getObjectPriority()) {
                         group.standardObjects.remove(ro);
@@ -205,8 +210,8 @@ public abstract class FrameworkProgram extends Application
             shouldRemoveFromMainGroup = false;
         }
 
-        if(shouldAddToRenderGroup) {
-            for(StandardObject ro : renderObjectsToBeAdded) {
+        if (shouldAddToRenderGroup) {
+            for (StandardObject ro : renderObjectsToBeAdded) {
                 boolean hasGroup = false;
                 for (PriorityGroup group : renderGroups) {
                     if (group.priorityNr == ro.getRenderPriority()) {
@@ -225,8 +230,8 @@ public abstract class FrameworkProgram extends Application
             shouldAddToRenderGroup = false;
         }
 
-        if(shouldRemoveFromRenderGroup) {
-            for(StandardObject ro : renderObjectsToBeRemoved) {
+        if (shouldRemoveFromRenderGroup) {
+            for (StandardObject ro : renderObjectsToBeRemoved) {
                 for (PriorityGroup group : renderGroups) {
                     if (group.priorityNr == ro.getRenderPriority()) {
                         group.standardObjects.remove(ro);
@@ -245,39 +250,37 @@ public abstract class FrameworkProgram extends Application
         }
     }
 
-    private void UpdateLists()
+    protected void Handle(KeyEvent event)
     {
 
     }
 
-    protected void Init()
-    {
+    private void UpdateLists() {
+
+    }
+
+    protected void Init() {
         running.set(true);
     }
 
-    protected void AddToLoop()
-    {
+    protected void AddToLoop() {
 
     }
 
-    protected void ExitProgram()
-    {
+    protected void ExitProgram() {
         running.set(false);
     }
 
 
-    public boolean isRunning()
-    {
+    public boolean isRunning() {
         return running.get();
     }
 
-    public boolean isPaused()
-    {
+    public boolean isPaused() {
         return paused.get();
     }
 
-    public void setPaused(boolean setPaused)
-    {
+    public void setPaused(boolean setPaused) {
         this.paused.set(setPaused);
     }
 
@@ -289,139 +292,120 @@ public abstract class FrameworkProgram extends Application
         return graphics2D;
     }
 
-    public AtomicReference<ArrayList<BaseObject>> getObjects()
-    {
+    public AtomicReference<ArrayList<BaseObject>> getObjects() {
         return objects;
     }
 
-    public AtomicReference<ArrayList<RunnableObject>> getRunnableObjects()
-    {
+    public AtomicReference<ArrayList<RunnableObject>> getRunnableObjects() {
         return runnableObjects;
     }
 
-    public ArrayList<StandardObject> getInputObjects()
-    {
+    public ArrayList<StandardObject> getInputObjects() {
         return inputObjects;
     }
 
-    public ArrayList<PriorityGroup> getMainGroups()
-    {
+    public ArrayList<PriorityGroup> getMainGroups() {
         return mainGroups;
     }
 
-    public ArrayList<PriorityGroup> getRenderGroups()
-    {
+    public ArrayList<PriorityGroup> getRenderGroups() {
         return renderGroups;
     }
 
-    public ArrayList<StandardObject> getInputObjectsToBeAdded()
-    {
+    public ArrayList<StandardObject> getInputObjectsToBeAdded() {
         return inputObjectsToBeAdded;
     }
 
-    public ArrayList<StandardObject> getMainObjectsToBeAdded()
-    {
+    public ArrayList<StandardObject> getMainObjectsToBeAdded() {
         return mainObjectsToBeAdded;
     }
 
-    public ArrayList<StandardObject> getRenderObjectsToBeAdded()
-    {
+    public ArrayList<StandardObject> getRenderObjectsToBeAdded() {
         return renderObjectsToBeAdded;
     }
 
-    public boolean isShouldAddToInputList()
-    {
+    public boolean isShouldAddToInputList() {
         return shouldAddToInputList;
     }
 
-    public void setShouldAddToInputList(boolean shouldAddToInputList)
-    {
+    public void setShouldAddToInputList(boolean shouldAddToInputList) {
         this.shouldAddToInputList = shouldAddToInputList;
     }
 
-    public boolean isShouldAddToMainGroup()
-    {
+    public Stage getStage() {
+        return stage;
+    }
+
+    public boolean isShouldAddToMainGroup() {
         return shouldAddToMainGroup;
     }
 
-    public void setShouldAddToMainGroup(boolean shouldAddToMainGroup)
-    {
+    public void setShouldAddToMainGroup(boolean shouldAddToMainGroup) {
         this.shouldAddToMainGroup = shouldAddToMainGroup;
     }
 
-    public boolean isShouldAddToRenderGroup()
-    {
+    public boolean isShouldAddToRenderGroup() {
         return shouldAddToRenderGroup;
     }
 
-    public void setShouldAddToRenderGroup(boolean shouldAddToRenderGroup)
-    {
+    public void setShouldAddToRenderGroup(boolean shouldAddToRenderGroup) {
         this.shouldAddToRenderGroup = shouldAddToRenderGroup;
     }
 
-    public ArrayList<StandardObject> getInputObjectsToBeRemoved()
-    {
+    public ArrayList<StandardObject> getInputObjectsToBeRemoved() {
         return inputObjectsToBeRemoved;
     }
 
-    public ArrayList<StandardObject> getMainObjectsToBeRemoved()
-    {
+    public ArrayList<StandardObject> getMainObjectsToBeRemoved() {
         return mainObjectsToBeRemoved;
     }
 
-    public ArrayList<StandardObject> getRenderObjectsToBeRemoved()
-    {
+    public ArrayList<StandardObject> getRenderObjectsToBeRemoved() {
         return renderObjectsToBeRemoved;
     }
 
-    public boolean isShouldRemoveFromInputList()
-    {
+    public boolean isShouldRemoveFromInputList() {
         return shouldRemoveFromInputList;
     }
 
-    public void setShouldRemoveFromInputList(boolean shouldRemoveFromInputList)
-    {
+    public void setShouldRemoveFromInputList(boolean shouldRemoveFromInputList) {
         this.shouldRemoveFromInputList = shouldRemoveFromInputList;
     }
 
-    public boolean isShouldRemoveFromMainGroup()
-    {
+    public boolean isShouldRemoveFromMainGroup() {
         return shouldRemoveFromMainGroup;
     }
 
-    public void setShouldRemoveFromMainGroup(boolean shouldRemoveFromMainGroup)
-    {
+    public void setShouldRemoveFromMainGroup(boolean shouldRemoveFromMainGroup) {
         this.shouldRemoveFromMainGroup = shouldRemoveFromMainGroup;
     }
 
-    public boolean isShouldRemoveFromRenderGroup()
-    {
+    public boolean isShouldRemoveFromRenderGroup() {
         return shouldRemoveFromRenderGroup;
     }
 
-    public void setShouldRemoveFromRenderGroup(boolean shouldRemoveFromRenderGroup)
-    {
+    public void setShouldRemoveFromRenderGroup(boolean shouldRemoveFromRenderGroup) {
         this.shouldRemoveFromRenderGroup = shouldRemoveFromRenderGroup;
     }
 
-    public double getDeltaTime()
-    {
+    public double getDeltaTime() {
         return deltaTime;
     }
 
-    public double getTimeScale()
-    {
+    public double getTimeScale() {
         return timeScale;
     }
 
-    public void setTimeScale(double timeScale)
-    {
+    public void setTimeScale(double timeScale) {
         this.timeScale = timeScale;
     }
 
-    public double getUnscaledDeltaTime()
-    {
+    public double getUnscaledDeltaTime() {
         return unscaledDeltaTime;
     }
+
+    //public KeyboardInputAWT getKeyboard() {
+    //    return keyboard;
+    //}
 }
 

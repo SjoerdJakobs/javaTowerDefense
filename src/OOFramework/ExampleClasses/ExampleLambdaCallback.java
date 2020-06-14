@@ -5,8 +5,7 @@ import OOFramework.Modules.Callback;
 /**
  * the class which holds the callback and where the callback actualy can be called from
  */
-public class ExampleLambdaCallback
-{
+public class ExampleLambdaCallback {
     /**
      * create the callback.
      * if this callback gets called, anything that is in it will also be called
@@ -14,15 +13,13 @@ public class ExampleLambdaCallback
      */
     public Callback callback;
 
-    private void test()
-    {
+    private void test() {
         callback.run();
     }
 }
 
 
-class AddMethodToCallBack
-{
+class AddMethodToCallBack {
     /**
      * you need to have an instance of the class which holds the callback.
      * often you want an instance that already exists and it will be given to you
@@ -30,21 +27,19 @@ class AddMethodToCallBack
      */
     ExampleLambdaCallback lambdaCallbackClass = new ExampleLambdaCallback();
 
-    AddMethodToCallBack()
-    {
+    AddMethodToCallBack() {
         /**
          * you need to add the method that you want to the callback
          * we do this with a lambda
          * if there is already a method in the callback and you put a new one in to it
          * it will just replace the old one
          */
-        lambdaCallbackClass.callback = () ->{
+        lambdaCallbackClass.callback = () -> {
             thisMethodGetsPutInTheCallback();
         };
     }
 
-    void thisMethodGetsPutInTheCallback()
-    {
+    void thisMethodGetsPutInTheCallback() {
         System.out.println("hi");
     }
 }

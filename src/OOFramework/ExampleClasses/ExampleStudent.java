@@ -5,35 +5,32 @@ import OOFramework.StandardObject;
 import OOFramework.statemachine.StateID;
 import OOFramework.statemachine.StateMachine;
 
-public class ExampleStudent extends StandardObject
-{
+public class ExampleStudent extends StandardObject {
     /**
      * this var will hold the statemachine for the student ai, this is yet to be instantiated
      */
     private StateMachine StudentStateMachine;
     /**
-     *how much does this student need to pee
+     * how much does this student need to pee
      */
     private double peeValue = 0;
 
     /**
-     *when does this student need to go to thw toilet
+     * when does this student need to go to thw toilet
      */
     private double peeThreshold = 5;
 
     /**
      * decide which loops are used and give the main framework to this object
      */
-    public ExampleStudent(FrameworkProgram frameworkProgram, boolean usesInput, boolean usesMain, boolean usesRenderer, boolean startsActivated)
-    {
+    public ExampleStudent(FrameworkProgram frameworkProgram, boolean usesInput, boolean usesMain, boolean usesRenderer, boolean startsActivated) {
         super(frameworkProgram, usesInput, usesMain, usesRenderer, startsActivated);
     }
 
     /**
      * decide which loops are used and give the main framework to this object
      */
-    public ExampleStudent(FrameworkProgram frameworkProgram, double peeThreshold)
-    {
+    public ExampleStudent(FrameworkProgram frameworkProgram, double peeThreshold) {
         super(frameworkProgram, false, true, true, true);
         this.peeThreshold = peeThreshold;
     }
@@ -42,8 +39,7 @@ public class ExampleStudent extends StandardObject
      * this is the first thing that gets called after its constructor
      */
     @Override
-    protected void Start()
-    {
+    protected void Start() {
         super.Start();
         /**
          * make a new statemachine, essentially the base of the ai for this student
@@ -64,14 +60,12 @@ public class ExampleStudent extends StandardObject
     }
 
     @Override
-    protected void Awake()
-    {
+    protected void Awake() {
         super.Awake();
     }
 
     @Override
-    protected void MainLoop(double deltaTime)
-    {
+    protected void MainLoop(double deltaTime) {
         //deltatime is time inbetween frames and already gets given
         super.MainLoop(deltaTime);
         /**
@@ -81,23 +75,19 @@ public class ExampleStudent extends StandardObject
     }
 
     //getters and setters below here
-    public double getPeeValue()
-    {
+    public double getPeeValue() {
         return peeValue;
     }
 
-    public void setPeeValue(double peeValue)
-    {
+    public void setPeeValue(double peeValue) {
         this.peeValue = peeValue;
     }
 
-    public StateMachine getStudentStateMachine()
-    {
+    public StateMachine getStudentStateMachine() {
         return StudentStateMachine;
     }
 
-    public void setStudentStateMachine(StateMachine studentStateMachine)
-    {
+    public void setStudentStateMachine(StateMachine studentStateMachine) {
         StudentStateMachine = studentStateMachine;
     }
 

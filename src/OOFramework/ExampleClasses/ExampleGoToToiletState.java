@@ -3,12 +3,11 @@ package OOFramework.ExampleClasses;
 import OOFramework.statemachine.State;
 import OOFramework.statemachine.StateID;
 
-public class ExampleGoToToiletState extends State
-{
+public class ExampleGoToToiletState extends State {
+    double timer = 0;
     private ExampleStudent Student;
 
-    public ExampleGoToToiletState(ExampleStudent exampleStudent)
-    {
+    public ExampleGoToToiletState(ExampleStudent exampleStudent) {
         /**
          * make sure that"ExampleGoToToiletState" is added in the class StateID
          */
@@ -20,8 +19,7 @@ public class ExampleGoToToiletState extends State
      * this function gets called when you enter the state and gets called before the loops
      */
     @Override
-    protected void enter()
-    {
+    protected void enter() {
         super.enter();
         System.out.println("lets go to the toilet");
     }
@@ -31,40 +29,35 @@ public class ExampleGoToToiletState extends State
      * this function gets called every program cycle
      */
     @Override
-    protected void checkForStateSwitch()
-    {
+    protected void checkForStateSwitch() {
         super.checkForStateSwitch();
-        if(Student.getPeeValue()<= 0)
-        {
+        if (Student.getPeeValue() <= 0) {
             Student.setPeeValue(0);
             stateMachine.SetState(StateID.ExampleGoToLessonState);
         }
     }
 
-    double timer = 0;
     /**
      * this function gets called after the start, awake and checkForStateSwitch function but before the leave function.
      * this function gets called every program cycle
      */
     @Override
-    protected void logic()
-    {
+    protected void logic() {
         super.logic();
         //deltatime is time inbetween frames
         timer += stateMachine.getDeltaTime();
-        if(timer >= 1) {
+        if (timer >= 1) {
             System.out.println("iam in or going to the toilet");
             timer = 0;
         }
-        Student.setPeeValue(Student.getPeeValue() - stateMachine.getDeltaTime()*3);
+        Student.setPeeValue(Student.getPeeValue() - stateMachine.getDeltaTime() * 3);
     }
 
     /**
      * this function gets called when you leave this state and after all other functions
      */
     @Override
-    protected void leave()
-    {
+    protected void leave() {
         super.leave();
         System.out.println("going to 'going to lesson state'");
     }

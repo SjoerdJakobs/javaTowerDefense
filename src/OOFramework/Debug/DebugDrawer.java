@@ -5,6 +5,7 @@ import OOFramework.Collision2D.Colliders.CircleCollider;
 import OOFramework.Collision2D.Colliders.Collider2D;
 import OOFramework.FXGraphics2dClasses.Rectangle;
 import OOFramework.FrameworkProgram;
+import OOFramework.InputHandling.MouseInput;
 import OOFramework.Pathfinding.BFS.BFSTile;
 import OOFramework.StandardObject;
 import org.jfree.fx.FXGraphics2D;
@@ -16,66 +17,49 @@ import java.util.ArrayList;
 
 import static OOFramework.Modules.CONSTANTS.*;
 
-public class DebugDrawer extends StandardObject
-{
+public class DebugDrawer extends StandardObject {
+    //BFS debugging
+    private static boolean debugBFS = false;
+    private static BFSTile bfsGrid[][];
+    private static ArrayList<Rectangle> debugBFSPath;
+    private static ArrayList<Rectangle> debugBFSWall;
+    private static boolean debugCollision = false;
+    private static ArrayList<Collider2D> colliders2D;
+    public float updateInterval = 0.5F;
+
+    private Font font = new Font("Serif", Font.PLAIN, 24);
     private FXGraphics2D graphics2D;
     private FrameworkProgram frameworkProgram;
-
-    public  float updateInterval = 0.5F;
-
-    private float accum   = 0; // FPS accumulated over the interval
-    private int   frames  = 0; // Frames drawn over the interval
+    private float accum = 0; // FPS accumulated over the interval
+    private int frames = 0; // Frames drawn over the interval
     private float timeleft;    // Left time for current interval
     private float fps = 0f;
 
-    Font font = new Font("Serif", Font.PLAIN, 24);
+    private static DebugDrawer INSTANCE = null;
+    public static DebugDrawer getInstance() {
+        if (INSTANCE == null) {
+            synchronized (DebugDrawer.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = new DebugDrawer(FrameworkProgram.getProgramInstance());
+                }
+            }
+        }
+        return INSTANCE;
+    }
 
-    public DebugDrawer(FrameworkProgram frameworkProgram)
-    {
+    private DebugDrawer(FrameworkProgram frameworkProgram) {
         super(frameworkProgram, true, true, true, true, 10000, 10000);
-        if(!DEBUG_MODE)
-        {
+        if (!DEBUG_MODE) {
             this.setActive(false);
         }
         graphics2D = frameworkProgram.getGraphics2D();
         this.frameworkProgram = frameworkProgram;
         timeleft = updateInterval;
     }
+    ///////////////
 
-
-    @Override
-    protected void MainLoop(double deltaTime)
-    {
-        super.MainLoop(deltaTime);
-        if(DEBUG_FPS)
-        {
-            timeleft -= deltaTime;
-            accum += deltaTime;
-            frames++;
-
-            // Interval ended - update GUI text and start new interval
-            if (timeleft <= 0.0) {
-                // display two fractional digits (f2 format)
-                fps = 1 / (accum / frames);
-
-                timeleft = updateInterval;
-                accum = 0.0F;
-                frames = 0;
-            }
-        }
-    }
-
-
-
-    //BFS debugging
-    private static boolean debugBFS = false;
-    private static BFSTile bfsGrid[][];
-    private static ArrayList<Rectangle> debugBFSPath;
-    private static ArrayList<Rectangle> debugBFSWall;
-
-    public static void StartDebugBFS(BFSTile bfsGrid[][], String routeName)
-    {
-        if(DEBUG_BFS) {
+    public static void StartDebugBFS(BFSTile bfsGrid[][], String routeName) {
+        if (DEBUG_BFS) {
             bfsGrid = bfsGrid;
             debugBFS = true;
             debugBFSPath = new ArrayList<Rectangle>();
@@ -116,97 +100,92 @@ public class DebugDrawer extends StandardObject
                         } else {
                             rect = new Rectangle(-64, -64, 32, 32, 0);
                         }
-                        rect.SetImageByFilePath("assets/arrow.png");
+                        rect.SetImageByFilePath("resources/images/arrow.png");
                         debugBFSPath.add(rect);
                     }
                 }
             }
         }
     }
-    ///////////////
 
-
-    private static boolean debugCollision = false;
-    private static ArrayList<Collider2D> colliders2D;
-
-    public static void DebugCollision(ArrayList<Collider2D> colliders)
-    {
-        if(DEBUG_COLLISION) {
+    public static void DebugCollision(ArrayList<Collider2D> colliders) {
+        if (DEBUG_COLLISION) {
             debugCollision = true;
             colliders2D = colliders;
         }
     }
 
     @Override
-    protected void RenderLoop(double deltaTime)
-    {
+    protected void MainLoop(double deltaTime) {
+        super.MainLoop(deltaTime);
+        if (DEBUG_FPS) {
+            timeleft -= deltaTime;
+            accum += deltaTime;
+            frames++;
+
+            // Interval ended - update GUI text and start new interval
+            if (timeleft <= 0.0) {
+                // display two fractional digits (f2 format)
+                fps = 1 / (accum / frames);
+
+                timeleft = updateInterval;
+                accum = 0.0F;
+                frames = 0;
+            }
+        }
+    }
+
+    @Override
+    protected void RenderLoop(double deltaTime) {
         super.RenderLoop(deltaTime);
-        if(DEBUG_MODE)
-        {
-            if(DEBUG_FPS)
-            {
+        if (DEBUG_MODE) {
+            if (DEBUG_FPS) {
                 graphics2D.setFont(font);
 
                 FontMetrics fontMetrics = graphics2D.getFontMetrics();
                 if (fps < 10) {
                     graphics2D.setColor(Color.red);
-                }
-                else if (fps < 30)
-                {
+                } else if (fps < 30) {
                     graphics2D.setColor(Color.yellow);
-                }
-                else
-                {
+                } else {
                     graphics2D.setColor(Color.green);
                 }
 
-                graphics2D.drawString( String.format("%.02f", fps) + " FPS", CANVAS_WIDTH-114, 10+fontMetrics.getAscent());
+                graphics2D.drawString(String.format("%.02f", fps) + " FPS", CANVAS_WIDTH - 114, 10 + fontMetrics.getAscent());
             }
 
 
-            if(debugBFS)
-            {
+            if (debugBFS) {
                 graphics2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
-                for(Rectangle r : debugBFSPath)
-                {
+                for (Rectangle r : debugBFSPath) {
                     r.ImageDraw(graphics2D);
                 }
-                for(Rectangle r : debugBFSWall)
-                {
+                for (Rectangle r : debugBFSWall) {
                     r.Draw(graphics2D);
                 }
             }
 
-            if(debugCollision)
-            {
+            if (debugCollision) {
                 graphics2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
-                for (Collider2D col : colliders2D)
-                {
-                    switch (col.getColliderType())
-                    {
+                for (Collider2D col : colliders2D) {
+                    switch (col.getColliderType()) {
                         case CIRCLE_COLLIDER:
                             //circle = new Circle(256, 256,256,0);
                             CircleCollider ccol = (CircleCollider) col;
-                            Ellipse2D ellipse2D = new Ellipse2D.Double(ccol.getPos().x - ccol.radius ,ccol.getPos().y - ccol.radius, ccol.radius*2,ccol.radius*2);
-                            if(ccol.getIsColliding())
-                            {
+                            Ellipse2D ellipse2D = new Ellipse2D.Double(ccol.getPos().x - ccol.radius, ccol.getPos().y - ccol.radius, ccol.radius * 2, ccol.radius * 2);
+                            if (ccol.getIsColliding()) {
                                 graphics2D.setColor(Color.red);
-                            }
-                            else
-                            {
+                            } else {
                                 graphics2D.setColor(Color.black);
                             }
                             graphics2D.draw(ellipse2D);
                             break;
                         case BOX_COLLIDER:
                             BoxCollider bcol = (BoxCollider) col;
-                            Rectangle2D rectangle2D = new Rectangle2D.Double(bcol.getPos().x - bcol.width*0.5 ,bcol.getPos().y - bcol.height*0.5, bcol.width,bcol.height);
-                            if(bcol.getIsColliding())
-                            {
+                            Rectangle2D rectangle2D = new Rectangle2D.Double(bcol.getPos().x - bcol.width * 0.5, bcol.getPos().y - bcol.height * 0.5, bcol.width, bcol.height);
+                            if (bcol.getIsColliding()) {
                                 graphics2D.setColor(Color.red);
-                            }
-                            else
-                            {
+                            } else {
                                 graphics2D.setColor(Color.black);
                             }
                             graphics2D.draw(rectangle2D);

@@ -1,7 +1,5 @@
 package OOFramework.ReadWriteData;
 
-import java.util.ArrayList;
-
 //https://dzone.com/articles/java-singletons-using-enum
 public enum SavedData {
     INSTANCE;

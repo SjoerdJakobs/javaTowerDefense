@@ -1,7 +1,6 @@
 package OOFramework.statemachine;
 
-public enum StateID
-{
+public enum StateID {
     NullStateID,
     ExampleState,
     ExampleGoToToiletState,

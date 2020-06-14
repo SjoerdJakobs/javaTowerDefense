@@ -13,8 +13,7 @@ import OOFramework.StandardObject;
 import java.awt.*;
 import java.awt.geom.Point2D;
 
-public class TargetCircle extends StandardObject
-{
+public class TargetCircle extends StandardObject {
     private int health;
 
 
@@ -25,35 +24,32 @@ public class TargetCircle extends StandardObject
     private Circle circle;
     private Rectangle rectangle;
 
-    public TargetCircle(FrameworkProgram frameworkProgram, Vector2 pos, double radius)
-    {
+    public TargetCircle(FrameworkProgram frameworkProgram, Vector2 pos, double radius) {
         super(frameworkProgram, false, false, true, true, 2000, 1000);
         this.pos = pos;
         this.radius = radius;
         this.fullRadius = radius;
-        this.health = (int)radius;
+        this.health = (int) radius;
 
         //this is all the collision code you need to set it up
-        this.collider = new CircleCollider(pos,radius);     //
+        this.collider = new CircleCollider(pos, radius);     //
         this.collider.collisionCallback = this::OnCollision;//
         this.collider.setColliderTag(ColliderTag.TARGET);   //
         //////////////////////////////////////////////////////
 
-        this.circle = new Circle((int)pos.x, (int)pos.y, (int)radius,0);
-        circle.getCircle2D().setPosition(new Point2D.Double(pos.x,pos.y));
+        this.circle = new Circle((int) pos.x, (int) pos.y, (int) radius, 0);
+        circle.getCircle2D().setPosition(new Point2D.Double(pos.x, pos.y));
         circle.setCircleColor(Color.red);
     }
 
     @Override
-    protected void RenderLoop(double deltaTime)
-    {
+    protected void RenderLoop(double deltaTime) {
         getFrameworkProgram().getGraphics2D().setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
         circle.FilledDraw(getFrameworkProgram().getGraphics2D());
     }
 
-    public void OnCollision(Collider2D other)
-    {
-        if(other.getColliderTag() == ColliderTag.ENEMY_UNIT) {
+    public void OnCollision(Collider2D other) {
+        if (other.getColliderTag() == ColliderTag.ENEMY_UNIT) {
             EnemyUnit enemy = (EnemyUnit) other.getOwnerObject();
             health -= enemy.getDamage();
             this.radius = health;

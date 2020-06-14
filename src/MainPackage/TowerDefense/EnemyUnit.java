@@ -13,8 +13,7 @@ import OOFramework.StandardObject;
 import java.awt.*;
 import java.awt.geom.Point2D;
 
-public class EnemyUnit extends StandardObject
-{
+public class EnemyUnit extends StandardObject {
     private CircleCollider collider;
     private Vector2 pos;
     private int gridPosX = 0;
@@ -35,59 +34,52 @@ public class EnemyUnit extends StandardObject
     private int movSpeed;
     private int damage;
     private double size;
-
-    public EnemyUnit(FrameworkProgram frameworkProgram, Vector2 spawnPos, int health, int size, int movSpeed, int damage, double turnDelay, String routeName)
-    {
+    private boolean hasAllteredDirection = false;
+    private double alignCounter = 0;
+    public EnemyUnit(FrameworkProgram frameworkProgram, Vector2 spawnPos, int health, int size, int movSpeed, int damage, double turnDelay, String routeName) {
         super(frameworkProgram, false, true, true, true, 1500, 1100);
 
         //get get get get get :p
         this.movementGrid = Program.getProgramInstance().getGridManager().getBFS().getTileMap();
-        this.pos =          spawnPos;
-        this.size =         size;
-        this.radius =       size*0.5;
-        this.health =       health;
-        this.movSpeed =     movSpeed;
-        this.damage =       damage;
-        this.routeName =    routeName;
-        this.turnDelay =    turnDelay;
+        this.pos = spawnPos;
+        this.size = size;
+        this.radius = size * 0.5;
+        this.health = health;
+        this.movSpeed = movSpeed;
+        this.damage = damage;
+        this.routeName = routeName;
+        this.turnDelay = turnDelay;
 
         direction = new Vector2();
         avoidUnitAdjustment = new Vector2();
         avoidWallAdjustment = new Vector2();
 
         //this is all the collision code you need to set it up/
-        this.collider = new CircleCollider(pos,radius);      //
+        this.collider = new CircleCollider(pos, radius);      //
         this.collider.collisionCallback = this::OnCollision; //
         this.collider.setColliderTag(ColliderTag.ENEMY_UNIT);//
         this.collider.setOwnerObject(this);                  //
         ///////////////////////////////////////////////////////
 
-        this.circle = new Circle((int)pos.x, (int)pos.y, (int)radius,0);
-        circle.getCircle2D().setPosition(new Point2D.Double(pos.x,pos.y));
+        this.circle = new Circle((int) pos.x, (int) pos.y, (int) radius, 0);
+        circle.getCircle2D().setPosition(new Point2D.Double(pos.x, pos.y));
         circle.setCircleColor(Color.yellow);
         AlignWithGridPos(100);
     }
 
-    private boolean hasAllteredDirection = false;
-    private double alignCounter = 0;
-    public void AlignWithGridPos(double deltaTime)
-    {
-        nextGridPosX = (int)Math.floor(pos.x/32);
-        nextGridPosY = (int)Math.floor((pos.y+4)/32);
+    public void AlignWithGridPos(double deltaTime) {
+        nextGridPosX = (int) Math.floor(pos.x / 32);
+        nextGridPosY = (int) Math.floor((pos.y + 4) / 32);
 
-        if(nextGridPosY != gridPosY || gridPosX != nextGridPosX|| hasAllteredDirection)
-        {
+        if (nextGridPosY != gridPosY || gridPosX != nextGridPosX || hasAllteredDirection) {
             alignCounter += deltaTime;
-            if(alignCounter >= turnDelay)
-            {
+            if (alignCounter >= turnDelay) {
                 gridPosY = nextGridPosY;
                 gridPosX = nextGridPosX;
-                if(gridPosX < 0)
-                {
+                if (gridPosX < 0) {
                     gridPosX = 0;
                 }
-                if(gridPosY < 0)
-                {
+                if (gridPosY < 0) {
                     gridPosY = 0;
                 }
                 hasAllteredDirection = false;
@@ -96,96 +88,75 @@ public class EnemyUnit extends StandardObject
         }
     }
 
-    public void AvoidWalls()
-    {
-        nextGridPosX = (int)Math.floor(pos.x/32);
-        nextGridPosY = (int)Math.floor((pos.y+4)/32);
+    public void AvoidWalls() {
+        nextGridPosX = (int) Math.floor(pos.x / 32);
+        nextGridPosY = (int) Math.floor((pos.y + 4) / 32);
         avoidWallAdjustment = new Vector2();
-        BFSTile T =  movementGrid[nextGridPosX][nextGridPosY];
-        if(T.hasWalToTheLeft)
-        {
-            if(pos.x < nextGridPosX*32 + size*0.6)
-            {
-                avoidWallAdjustment.AddToThis(new Vector2(20,0));
+        BFSTile T = movementGrid[nextGridPosX][nextGridPosY];
+        if (T.hasWalToTheLeft) {
+            if (pos.x < nextGridPosX * 32 + size * 0.6) {
+                avoidWallAdjustment.AddToThis(new Vector2(20, 0));
             }
         }
-        if(T.hasWalToTheRight)
-        {
-            if(pos.x > nextGridPosX*32+ size*0.6)
-            {
-                avoidWallAdjustment.AddToThis(new Vector2(-20,0));
+        if (T.hasWalToTheRight) {
+            if (pos.x > nextGridPosX * 32 + size * 0.6) {
+                avoidWallAdjustment.AddToThis(new Vector2(-20, 0));
             }
         }
-        if(T.hasWalBelow)
-        {
-            if(pos.y > nextGridPosY*32+ size*0.6)
-            {
-                avoidWallAdjustment.AddToThis(new Vector2(0,-20));
+        if (T.hasWalBelow) {
+            if (pos.y > nextGridPosY * 32 + size * 0.6) {
+                avoidWallAdjustment.AddToThis(new Vector2(0, -20));
             }
         }
-        if(T.hasWalAbove)
-        {
-            if(pos.y < nextGridPosY*32+ size*0.6)
-            {
-                avoidWallAdjustment.AddToThis(new Vector2(0,20));
+        if (T.hasWalAbove) {
+            if (pos.y < nextGridPosY * 32 + size * 0.6) {
+                avoidWallAdjustment.AddToThis(new Vector2(0, 20));
             }
         }
-        if(T.hasWalToTheBottomLeft)
-        {
-            if(pos.x < nextGridPosX*32 + size*0.6 && pos.y > nextGridPosY*32+ size*0.6)
-            {
-                avoidWallAdjustment.AddToThis(new Vector2(10,-10));
+        if (T.hasWalToTheBottomLeft) {
+            if (pos.x < nextGridPosX * 32 + size * 0.6 && pos.y > nextGridPosY * 32 + size * 0.6) {
+                avoidWallAdjustment.AddToThis(new Vector2(10, -10));
             }
         }
-        if(T.hasWalToTheBottomRight)
-        {
-            if(pos.x > nextGridPosX*32+ size*0.6&& pos.y > nextGridPosY*32+ size*0.6)
-            {
-                avoidWallAdjustment.AddToThis(new Vector2(-10,-10));
+        if (T.hasWalToTheBottomRight) {
+            if (pos.x > nextGridPosX * 32 + size * 0.6 && pos.y > nextGridPosY * 32 + size * 0.6) {
+                avoidWallAdjustment.AddToThis(new Vector2(-10, -10));
             }
         }
-        if(T.hasWalToTheTopLeft)
-        {
-            if(pos.y > nextGridPosY*32+ size*0.6 && pos.y < nextGridPosY*32+ size*0.6)
-            {
-                avoidWallAdjustment.AddToThis(new Vector2(10,10));
+        if (T.hasWalToTheTopLeft) {
+            if (pos.y > nextGridPosY * 32 + size * 0.6 && pos.y < nextGridPosY * 32 + size * 0.6) {
+                avoidWallAdjustment.AddToThis(new Vector2(10, 10));
             }
         }
-        if(T.hasWalToTheTopRight)
-        {
-            if(pos.x > nextGridPosX*32+ size*0.6 && pos.y < nextGridPosY*32+ size*0.6)
-            {
-                avoidWallAdjustment.AddToThis(new Vector2(-10,10));
+        if (T.hasWalToTheTopRight) {
+            if (pos.x > nextGridPosX * 32 + size * 0.6 && pos.y < nextGridPosY * 32 + size * 0.6) {
+                avoidWallAdjustment.AddToThis(new Vector2(-10, 10));
             }
         }
     }
 
-    public void OnCollision(Collider2D other)
-    {
-        if(other.getColliderTag() == ColliderTag.ENEMY_UNIT)
-        {
+    public void OnCollision(Collider2D other) {
+        if (other.getColliderTag() == ColliderTag.ENEMY_UNIT) {
             //avoidUnitAdjustment = this.pos.subtract(other.getPos());
             //avoidUnitAdjustment.NormalizeThis();
             //avoidUnitAdjustment.MultiplyThisByDouble(2);
             //hasAllteredDirection = true;
             //alignCounter += turnDelay*0.5;
         }
-        if(other.getColliderTag() == ColliderTag.TARGET)
-        {
+        if (other.getColliderTag() == ColliderTag.TARGET) {
             setShouldDestruct(true);
         }
     }
 
     @Override
-    protected void MainLoop(double deltaTime)
-    {
+    protected void MainLoop(double deltaTime) {
         AvoidWalls();
-        if(movementGrid[gridPosX][gridPosY].routes.get(routeName) != null) {
+        if (movementGrid[gridPosX][gridPosY].routes.get(routeName) != null) {
 
             direction = movementGrid[gridPosX][gridPosY].routes.get(routeName).Add(avoidWallAdjustment);//.Add(avoidUnitAdjustment.Add(avoidWallAdjustment));
             direction.NormalizeThis();
-            this.pos = this.pos.Add(direction.MultiplyByDouble((deltaTime*movSpeed)));
-            circle.getCircle2D().setPosition(new Point2D.Double(pos.x,pos.y));
+            this.pos = this.pos.Add(direction.MultiplyByDouble((deltaTime * movSpeed)));
+            circle.getCircle2D().setPosition(new Point2D.Double(pos.x, pos.y));
             collider.setPos(pos);
             AlignWithGridPos(deltaTime);
             direction = new Vector2();
@@ -194,86 +165,70 @@ public class EnemyUnit extends StandardObject
     }
 
     @Override
-    protected void RenderLoop(double deltaTime)
-    {
+    protected void RenderLoop(double deltaTime) {
         getFrameworkProgram().getGraphics2D().setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
         circle.FilledDraw(getFrameworkProgram().getGraphics2D());
     }
 
     @Override
-    protected void Destroy()
-    {
+    protected void Destroy() {
         super.Destroy();
         collider.OnDestroy();
     }
 
-    public CircleCollider getCollider()
-    {
+    public CircleCollider getCollider() {
         return collider;
     }
 
-    public void setCollider(CircleCollider collider)
-    {
+    public void setCollider(CircleCollider collider) {
         this.collider = collider;
     }
 
-    public Vector2 getPos()
-    {
+    public Vector2 getPos() {
         return pos;
     }
 
-    public void setPos(Vector2 pos)
-    {
+    public void setPos(Vector2 pos) {
         this.pos = pos;
     }
 
-    public double getRadius()
-    {
+    public double getRadius() {
         return radius;
     }
 
-    public void setRadius(double radius)
-    {
+    public void setRadius(double radius) {
         this.radius = radius;
     }
 
-    public int getDamage()
-    {
+    public int getDamage() {
         return damage;
     }
 
-    public void setDamage(int damage)
-    {
+    public void setDamage(int damage) {
         this.damage = damage;
     }
 
-    public int getMovSpeed()
-    {
+    public int getMovSpeed() {
         return movSpeed;
     }
 
-    public void setMovSpeed(int movSpeed)
-    {
+    public void setMovSpeed(int movSpeed) {
         this.movSpeed = movSpeed;
     }
 
-    public int getHealth()
-    {
+    public int getHealth() {
         return health;
     }
 
-    public void setHealth(int health)
-    {
+    public void setHealth(int health) {
         this.health = health;
     }
 
-    public Circle getCircle()
-    {
+    public Circle getCircle() {
         return circle;
     }
 
-    public void setCircle(Circle circle)
-    {
+    public void setCircle(Circle circle) {
         this.circle = circle;
     }
 }

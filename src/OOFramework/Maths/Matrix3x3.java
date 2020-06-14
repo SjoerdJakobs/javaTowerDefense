@@ -1,5 +1,4 @@
 package OOFramework.Maths;
 
-public class Matrix3x3
-{
+public class Matrix3x3 {
 }

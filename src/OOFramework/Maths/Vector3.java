@@ -1,7 +1,6 @@
 package OOFramework.Maths;
 
-public final class Vector3
-{
+public final class Vector3 {
     public double x;
     public double z;
     public double y;

@@ -1,6 +1,7 @@
 package OOFramework.Pathfinding.BFS;
 
 import OOFramework.Maths.Vector2;
+
 import java.util.HashMap;
 
 public class BFSTile {
@@ -26,8 +27,7 @@ public class BFSTile {
     public boolean hasWalAbove;
     public boolean hasWalBelow;
 
-    public BFSTile(Vector2 gridPos, boolean isWall)
-    {
+    public BFSTile(Vector2 gridPos, boolean isWall) {
         routes = new HashMap<String, Vector2>();
         this.gridPos = gridPos;
         this.isWall = isWall;
@@ -38,8 +38,7 @@ public class BFSTile {
         this.goingTo = new Vector2();
     }
 
-    public int getTilesFromTarget()
-    {
+    public int getTilesFromTarget() {
         return tilesFromTarget;
     }
 }

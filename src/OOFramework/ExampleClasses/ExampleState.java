@@ -3,34 +3,28 @@ package OOFramework.ExampleClasses;
 import OOFramework.statemachine.State;
 import OOFramework.statemachine.StateID;
 
-public class ExampleState extends State
-{
-    public ExampleState()
-    {
+public class ExampleState extends State {
+    public ExampleState() {
         super(StateID.ExampleState);
     }
 
     @Override
-    protected void enter()
-    {
+    protected void enter() {
         super.enter();
     }
 
     @Override
-    protected void checkForStateSwitch()
-    {
+    protected void checkForStateSwitch() {
         super.checkForStateSwitch();
     }
 
     @Override
-    protected void logic()
-    {
+    protected void logic() {
         super.logic();
     }
 
     @Override
-    protected void leave()
-    {
+    protected void leave() {
         super.leave();
     }
 }
