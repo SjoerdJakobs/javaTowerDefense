@@ -8,7 +8,7 @@ public final class CONSTANTS {
     public static final long UPDATE_PERIOD_NSEC = 1000000000L / UPDATES_PER_SEC;  // nanoseconds
 
     public static final String STANDARD_SAVE_FILE_PATH = "OOFSaveFile";
-    public static final String STANDARD_SOUND_FILENAME_PREFIX = "sounds\\";
+    public static final String STANDARD_SOUND_FILENAME_PREFIX = "sounds/";
     public static final String STANDARD_IMAGE_FILENAME_PREFIX = "/images/";
 
     public static final boolean DEBUG_MODE = true;

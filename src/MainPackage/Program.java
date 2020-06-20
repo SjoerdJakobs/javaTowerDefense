@@ -20,6 +20,7 @@ public class Program extends FrameworkProgram
 {
     private MouseInput mouseInput;
     private KeyboardInput keyboardInput;
+    private TowerDefenseDebug towerDefenseDebug;
     private DebugDrawer debugDrawer;
     private GridManager gridManager;
     private CollisionSystem collisionSystem;
@@ -37,7 +38,7 @@ public class Program extends FrameworkProgram
     public void start(Stage stage) throws Exception {
         super.start(stage);
         programInstance = this;
-        SoundPlayer.Loop("BensoundFunnysong.wav", 0.65f);
+        //SoundPlayer.Loop("bensoundFunnysong.wav", 0.65f);
 
         //used by other classes to get mouse input
         mouseInput = MouseInput.getInstance();
@@ -48,38 +49,31 @@ public class Program extends FrameworkProgram
         //used by other classes for drawing their debugging;
         debugDrawer = DebugDrawer.getInstance();
 
+        //used by other classes for drawing their debugging but only the project specific things
+        towerDefenseDebug = TowerDefenseDebug.getInstance();
+
         //creates the map and movement grid
-        //gridManager = new GridManager(this,this);
+        gridManager = new GridManager(this,this);
 
         //this manages all the collisions
         collisionSystem = CollisionSystem.getInstance();
 
         //the target which the units will have to kill, also has the health bar in it
-        /*targetCircleObject = new TargetCircle(this,new Vector2(1904,556), 150);
+        targetCircleObject = new TargetCircle(new Vector2(1904,556), 150);
 
         //object respongsible for spawning the enemy units
-        spawnBlockObject = new SpawnBlock(this,new Vector2(32, 492), 64,608);
+        spawnBlockObject = new SpawnBlock(new Vector2(32, 492), 64,608);
 
         //this handles placing and buying towers
         towerMenu = new TowerMenu();
 
-        towerIcon = new TowerIcon(this,towerMenu,new Vector2(960,900));
-
-
-        //
-        PlaceTowerBlock placeTowerBlock0 = new PlaceTowerBlock(new Vector2(496, 556), 15,401);
-        PlaceTowerBlock placeTowerBlock1 = new PlaceTowerBlock(new Vector2(641, 348), 175,1);
-
-        PlaceTowerBlock placeTowerBlock2 = new PlaceTowerBlock(new Vector2(992, 428), 96,450);
-        PlaceTowerBlock placeTowerBlock3 = new PlaceTowerBlock(new Vector2(831, 605), 224,96);
-
-        PlaceTowerBlock placeTowerBlock4 = new PlaceTowerBlock(new Vector2(1266, 556), 64,450);
-        PlaceTowerBlock placeTowerBlock5 = new PlaceTowerBlock(new Vector2(1411, 348), 224,32);
+        towerIcon = new TowerIcon(towerMenu,new Vector2(960,900));
 
 
         //EnemyUnit unit = new EnemyUnit(this,new Vector2(32, 492),10,26,100,5,0.25,"route0");
-        */
 
+
+        /*
         //2 test classes
         //CircleCollisionTestObject circleCollisionTestObject1 = new CircleCollisionTestObject(this,new Vector2(600,500), 100, true);
         BoxCollisionTestObject boxCollisionTestObject0 = new BoxCollisionTestObject(this, new Vector2(1000, CANVAS_HEIGHT - 1250), 500, 40, false);
@@ -90,9 +84,9 @@ public class Program extends FrameworkProgram
         //BoxCollisionTestObject wallLeft = new BoxCollisionTestObject(this,new Vector2(0,CANVAS_HEIGHT/2), 50,CANVAS_HEIGHT, false);
         //BoxCollisionTestObject wallRight = new BoxCollisionTestObject(this,new Vector2(CANVAS_WIDTH,CANVAS_HEIGHT/2), 50,CANVAS_HEIGHT, false);
 
-        CharacterCube testObj = new CharacterCube(this, new Vector2(CANVAS_WIDTH / 2, CANVAS_HEIGHT - 250), 100, 100);
+        CharacterCube testObj = new CharacterCube(new Vector2(CANVAS_WIDTH / 2, CANVAS_HEIGHT - 250), 100, 100);
         //BoxCollisionTestObject boxCollisionTestObject2 = new BoxCollisionTestObject(this,new Vector2(600,500), 100,100, true);
-
+        */
     }
 
     @Override
@@ -112,40 +106,16 @@ public class Program extends FrameworkProgram
         super.ExitProgram();
     }
 
-    public DebugDrawer getDebugDrawer() {
-        return debugDrawer;
-    }
-
     public GridManager getGridManager() {
         return gridManager;
-    }
-
-    public void setGridManager(GridManager gridManager) {
-        this.gridManager = gridManager;
-    }
-
-    public CollisionSystem getCollisionSystem() {
-        return collisionSystem;
-    }
-
-    public void setCollisionSystem(CollisionSystem collisionSystem) {
-        this.collisionSystem = collisionSystem;
     }
 
     public TargetCircle getTargetCircleObject() {
         return targetCircleObject;
     }
 
-    public void setTargetCircleObject(TargetCircle targetCircleObject) {
-        this.targetCircleObject = targetCircleObject;
-    }
-
     public SpawnBlock getSpawnBlockObject() {
         return spawnBlockObject;
-    }
-
-    public void setSpawnBlockObject(SpawnBlock spawnBlockObject) {
-        this.spawnBlockObject = spawnBlockObject;
     }
 
     @Override

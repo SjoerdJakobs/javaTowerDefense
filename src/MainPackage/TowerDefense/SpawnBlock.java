@@ -3,7 +3,6 @@ package MainPackage.TowerDefense;
 import OOFramework.Collision2D.Colliders.BoxCollider;
 import OOFramework.Collision2D.Colliders.Collider2D;
 import OOFramework.FXGraphics2dClasses.Rectangle;
-import OOFramework.FrameworkProgram;
 import OOFramework.Maths.Vector2;
 import OOFramework.StandardObject;
 
@@ -24,8 +23,8 @@ public class SpawnBlock extends StandardObject {
     private double spawnTimer = 0;
     private double spawnDelay = 0.05;
     private double spawncounter = 500;
-    public SpawnBlock(FrameworkProgram frameworkProgram, Vector2 pos, double width, double height) {
-        super(frameworkProgram, false, true, true, true, 2000, 1000);
+    public SpawnBlock(Vector2 pos, double width, double height) {
+        super(false, true, true, true, 2000, 1000);
         this.pos = pos;
         this.posFromCorner = new Vector2(this.pos.x - width * 0.5, this.pos.y - height * 0.5);
         this.width = width;
@@ -63,13 +62,13 @@ public class SpawnBlock extends StandardObject {
     private void SpawnUnit() {
         double newX = (this.posFromCorner.x + 15) + ((Math.random() * (width - 15)));
         double newY = (this.posFromCorner.y + 15) + ((Math.random() * (height - 20)));
-        spawnedUnits.add(new EnemyUnit(getFrameworkProgram(), new Vector2(newX, newY), 10, 26, 100, 5, 0.25, "route0"));
+        spawnedUnits.add(new EnemyUnit(frameworkProgram, new Vector2(newX, newY), 10, 26, 100, 5, 0.25, "route0"));
     }
 
     @Override
     protected void RenderLoop(double deltaTime) {
-        getFrameworkProgram().getGraphics2D().setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
-        rectangle.FilledDraw(getFrameworkProgram().getGraphics2D());
+        frameworkProgram.getGraphics2D().setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+        rectangle.FilledDraw(frameworkProgram.getGraphics2D());
     }
 
     public void OnCollision(Collider2D other) {

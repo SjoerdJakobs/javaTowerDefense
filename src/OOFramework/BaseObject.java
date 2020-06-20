@@ -20,13 +20,23 @@ public abstract class BaseObject {
     private final AtomicBoolean shouldDestruct = new AtomicBoolean(false);
 
     /**
+     * this is the program that contains this object in a atomic reference
+     * unsure if it should stay this way
+     */
+    private final AtomicReference<FrameworkProgram> atomicFrameworkProgram = new AtomicReference<FrameworkProgram>();
+
+    /**
      * this is the program that contains this object
      */
-    private final AtomicReference<FrameworkProgram> frameworkProgram = new AtomicReference<FrameworkProgram>();
+    protected final FrameworkProgram frameworkProgram;
 
-    protected BaseObject(FrameworkProgram frameworkProgram, boolean startsActivated) {
+
+
+    protected BaseObject(boolean startsActivated)
+    {
         //System.out.println("base");
-        this.frameworkProgram.set(frameworkProgram);
+        this.frameworkProgram = FrameworkProgram.getProgramInstance();
+        this.atomicFrameworkProgram.set(frameworkProgram);
         this.setShouldDestruct(false);
         this.Start();
 
@@ -108,11 +118,11 @@ public abstract class BaseObject {
         this.shouldDestruct.set(shouldDestruct);
     }
 
-    public FrameworkProgram getFrameworkProgram() {
-        return this.frameworkProgram.get();
+    public FrameworkProgram getAtomicFrameworkProgram() {
+        return this.atomicFrameworkProgram.get();
     }
 
-    public void setFrameworkProgram(FrameworkProgram frameworkProgram) {
-        this.frameworkProgram.set(frameworkProgram);
+    public FrameworkProgram getFrameworkProgram() {
+        return frameworkProgram;
     }
 }

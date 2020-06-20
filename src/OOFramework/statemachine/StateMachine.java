@@ -21,8 +21,8 @@ public final class StateMachine {
         this.deltaTime = deltaTime;
         if (currentState != null) {
             //System.out.println("executeState" + currentState.stateID);
-            currentState.checkForStateSwitch();
-            currentState.logic();
+            currentState.CheckForStateSwitch();
+            currentState.Logic();
         }
     }
 
@@ -44,10 +44,10 @@ public final class StateMachine {
             throw new IllegalArgumentException("State unknown");
         }
         if (currentState != null) {
-            currentState.leave();
+            currentState.Leave();
         }
         currentState = states.get(stateID);
-        currentState.enter();
+        currentState.Enter();
         timeSinceSwitch = System.nanoTime();
     }
 

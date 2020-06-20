@@ -4,8 +4,10 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+
+import static OOFramework.Modules.CONSTANTS.STANDARD_IMAGE_FILENAME_PREFIX;
 
 
 public class Rectangle {
@@ -19,16 +21,16 @@ public class Rectangle {
         this.square2D = new Renderable(new Rectangle2D.Double(-(xSize / 2), -(ySize / 2), xSize, ySize), new Point2D.Double(xPos, yPos), rotation, 1);
         this.xSizeOffset = xSize / 2;
         this.ySizeOffset = ySize / 2;
-        SetImageByFilePath("resources/images/Default.png");
+        SetImageByFileName("Default.png");
     }
 
-    public void SetImageByFilePath(String filePath) {
-        File file = new File(filePath);
-
+    public void SetImageByFileName(String fileName) {
+        InputStream is;
+        is = getClass().getResourceAsStream(STANDARD_IMAGE_FILENAME_PREFIX+fileName);
         try {
-            art = ImageIO.read(file);
-        } catch (IOException ex) {
-            ex.printStackTrace();
+            art = ImageIO.read(is);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

@@ -9,22 +9,22 @@ public class ExampleState extends State {
     }
 
     @Override
-    protected void enter() {
-        super.enter();
+    protected void Enter() {
+        super.Enter();
     }
 
     @Override
-    protected void checkForStateSwitch() {
-        super.checkForStateSwitch();
+    protected void CheckForStateSwitch() {
+        super.CheckForStateSwitch();
     }
 
     @Override
-    protected void logic() {
-        super.logic();
+    protected void Logic() {
+        super.Logic();
     }
 
     @Override
-    protected void leave() {
-        super.leave();
+    protected void Leave() {
+        super.Leave();
     }
 }

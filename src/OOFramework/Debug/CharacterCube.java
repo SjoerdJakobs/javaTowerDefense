@@ -4,17 +4,13 @@ import OOFramework.Collision2D.Colliders.BoxCollider;
 import OOFramework.Collision2D.Colliders.Collider2D;
 import OOFramework.Collision2D.Enums.ColliderTag;
 import OOFramework.FXGraphics2dClasses.Rectangle;
-import OOFramework.FrameworkProgram;
-import OOFramework.InputHandling.Key;
-import OOFramework.InputHandling.KeyState;
-import OOFramework.InputHandling.KeyboardEventCallback;
-import OOFramework.InputHandling.KeyboardInput;
+import OOFramework.InputHandling.*;
 import OOFramework.Maths.Vector2;
 import OOFramework.Sound.SoundPlayer;
 import OOFramework.StandardObject;
-import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -38,11 +34,14 @@ public class CharacterCube extends StandardObject {
     private final BoxCollider collider;
     private final Rectangle rectangle;
     private final Rectangle rectangleSmoll;
+    private final MouseInput mouseInput;
     private Vector2 velocity;
     private double velocitySpeed;
     private double friction = 500;
     private boolean grounded = true;
     private boolean isCollidingWithGround = false;
+    private final Vector2 mousePos;
+    private MouseEventCallback onMouseMoveCallback;
     private ArrayList<Key> keys = new ArrayList<>();
 
     private KeyboardEventCallback keyboardEventCallback;
@@ -53,8 +52,8 @@ public class CharacterCube extends StandardObject {
     private Key keySPACE;
     private KeyboardInput keyboardInput;
 
-    public CharacterCube(FrameworkProgram frameworkProgram, Vector2 pos, double width, double height) {
-        super(frameworkProgram, true, true, true, true, 1000, 1000);
+    public CharacterCube(Vector2 pos, double width, double height) {
+        super(true, true, true, true, 1000, 1000);
         this.pos = pos;
         this.lastPos = new Vector2();
         this.width = width;
@@ -62,6 +61,7 @@ public class CharacterCube extends StandardObject {
         this.height = height;
         this.halfHeight = height * 0.5;
         this.velocity = new Vector2();
+        this.mousePos = new Vector2();
 
         keyboardEventCallback = this::onSpace;
 
@@ -81,6 +81,11 @@ public class CharacterCube extends StandardObject {
             keyboardInput.AddKey(k);
         }
 
+        this.mouseInput = MouseInput.getInstance();
+        onMouseMoveCallback = this::OnMouseMoved;
+        mouseInput.getOnMouseMovedToBeAdded().add(this.onMouseMoveCallback);
+        mouseInput.setShouldAddToOnMouseMoved(true);
+
         //SoundPlayer.Play("bensoundFunnysong.wav", 0.5f);
 
         //this is all the collision code you need to set it up
@@ -94,6 +99,7 @@ public class CharacterCube extends StandardObject {
         this.rectangle = new Rectangle((int) pos.x, (int) pos.y, (int) width, (int) height, 0);
         rectangle.getSquare2D().setPosition(new Point2D.Double(pos.x, pos.y));
         rectangle.setRectangleColor(Color.blue);
+        rectangle.SetImageByFileName("arrow100x100.png");
 
         this.rectangleSmoll = new Rectangle((int) pos.x, (int) pos.y, (int) width / 10, (int) height / 10, 0);
         rectangleSmoll.getSquare2D().setPosition(new Point2D.Double(pos.x, pos.y));
@@ -104,8 +110,16 @@ public class CharacterCube extends StandardObject {
             pos.x = e.getX();
             pos.y = e.getY();
         });
+
     }
 
+    public void OnMouseMoved(MouseEvent e)
+    {
+        //System.out.println(Vector2.AngleBetweenVectors(pos,new Vector2(e.getX()-pos.x,e.getY()-pos.y)));
+        System.out.println(Vector2.LookAtVector(pos,mousePos));
+        mousePos.x = e.getX();
+        mousePos.y = e.getY();
+    }
     private void onSpace(KeyEvent e)
     {
         System.out.println("pressed by event");
@@ -152,9 +166,10 @@ public class CharacterCube extends StandardObject {
 
     @Override
     protected void RenderLoop(double deltaTime) {
-        getFrameworkProgram().getGraphics2D().setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
-        rectangle.FilledDraw(getFrameworkProgram().getGraphics2D());
-        rectangleSmoll.FilledDraw(getFrameworkProgram().getGraphics2D());
+        frameworkProgram.getGraphics2D().setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
+        rectangle.FilledDraw(frameworkProgram.getGraphics2D());
+        rectangle.ImageDraw(frameworkProgram.getGraphics2D());
+        rectangleSmoll.FilledDraw(frameworkProgram.getGraphics2D());
     }
 
     public void PreCollision() {
@@ -178,6 +193,7 @@ public class CharacterCube extends StandardObject {
     @Override
     protected void MainLoop(double deltaTime) {
         super.MainLoop(deltaTime);
+        rectangle.getSquare2D().setRotation((float) Vector2.LookAtVector(pos,mousePos));
         lastPos.x = pos.x;
         lastPos.y = pos.y;
 

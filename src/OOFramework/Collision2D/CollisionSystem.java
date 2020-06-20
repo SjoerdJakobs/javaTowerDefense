@@ -34,7 +34,7 @@ public class CollisionSystem extends StandardObject {
     }
 
     private CollisionSystem(FrameworkProgram frameworkProgram) {
-        super(frameworkProgram, false, true, false, true, 1000, 1_000_000);
+        super(false, true, false, true, 1000, 1_000_000);
         allColliders = new ArrayList<Collider2D>();
         collidersToBeAdded = new ArrayList<Collider2D>();
         collidersToBeRemoved = new ArrayList<Collider2D>();

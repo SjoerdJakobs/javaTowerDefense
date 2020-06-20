@@ -1,5 +1,7 @@
 package MainPackage;
 
+import OOFramework.Maths.Vector2;
+
 import static javafx.application.Application.launch;
 
 public class Main {
@@ -23,6 +25,11 @@ public class Main {
         launch(Program.class);
         //ExampleBFS exampleBFS = new ExampleBFS();
         //exampleBFS.ShowBFS();
+
+        //Vector2 v1 = new Vector2(1,0);
+        //Vector2 v2 = new Vector2(8,-2);
+        //System.out.println(Vector2.AngleBetweenVectors(v1,v2));
+        //180° × π/180 = 3,142rad it works :D
     }
 }
 

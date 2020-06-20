@@ -37,7 +37,7 @@ public class EnemyUnit extends StandardObject {
     private boolean hasAllteredDirection = false;
     private double alignCounter = 0;
     public EnemyUnit(FrameworkProgram frameworkProgram, Vector2 spawnPos, int health, int size, int movSpeed, int damage, double turnDelay, String routeName) {
-        super(frameworkProgram, false, true, true, true, 1500, 1100);
+        super(false, true, true, true, 1500, 1100);
 
         //get get get get get :p
         this.movementGrid = Program.getProgramInstance().getGridManager().getBFS().getTileMap();
@@ -166,8 +166,8 @@ public class EnemyUnit extends StandardObject {
 
     @Override
     protected void RenderLoop(double deltaTime) {
-        getFrameworkProgram().getGraphics2D().setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
-        circle.FilledDraw(getFrameworkProgram().getGraphics2D());
+        frameworkProgram.getGraphics2D().setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+        circle.FilledDraw(frameworkProgram.getGraphics2D());
     }
 
     @Override

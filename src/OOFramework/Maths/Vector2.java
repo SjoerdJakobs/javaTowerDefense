@@ -1,5 +1,7 @@
 package OOFramework.Maths;
 
+import static java.lang.Math.atan2;
+
 public final class Vector2 {
     public double x;
     public double y;
@@ -73,6 +75,22 @@ public final class Vector2 {
     public final static double Dot(Vector2 v1, Vector2 v2) {
         return v1.x * v2.x + v1.y * v2.y;
     }
+
+
+    //https://stackoverflow.com/questions/14066933/direct-way-of-computing-clockwise-angle-between-2-vectors?noredirect=1#16544330
+    public final static double AngleBetweenVectors(Vector2 v1, Vector2 v2)
+    {
+        //Vector2.Dot(v1,v2) / (Vector2.Dot())
+        double dot = v1.x*v2.x + v1.y*v2.y;
+        double det = v1.x*v2.y + v1.y*v2.x;
+        return atan2(det, dot);
+    }
+
+    public final static double LookAtVector(Vector2 looking, Vector2 at)
+    {
+        return -1.5707963268 + AngleBetweenVectors(new Vector2(-1,0),new Vector2(at.x-looking.x,at.y-looking.y));
+    }
+
     //////
 
     public final static double Distance(Vector2 vec1, Vector2 vec2) {

@@ -19,7 +19,7 @@ public class CircleCollisionTestObject extends StandardObject {
     private Circle circle;
 
     public CircleCollisionTestObject(FrameworkProgram frameworkProgram, Vector2 pos, double radius, boolean atMouse) {
-        super(frameworkProgram, true, true, true, true, 1000, 1000);
+        super(true, true, true, true, 1000, 1000);
         this.atMouse = atMouse;
         this.pos = pos;
         this.radius = radius;
@@ -47,8 +47,8 @@ public class CircleCollisionTestObject extends StandardObject {
 
     @Override
     protected void RenderLoop(double deltaTime) {
-        getFrameworkProgram().getGraphics2D().setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
-        circle.FilledDraw(getFrameworkProgram().getGraphics2D());
+        frameworkProgram.getGraphics2D().setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
+        circle.FilledDraw(frameworkProgram.getGraphics2D());
     }
 
     public void OnCollision(Collider2D other) {

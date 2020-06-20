@@ -19,8 +19,8 @@ public class ExampleGoToLessonState extends State {
      * this function gets called when you enter the state and gets called before the loops
      */
     @Override
-    protected void enter() {
-        super.enter();
+    protected void Enter() {
+        super.Enter();
         System.out.println("lets go to the lesson");
     }
 
@@ -29,8 +29,8 @@ public class ExampleGoToLessonState extends State {
      * this function gets called every program cycle
      */
     @Override
-    protected void checkForStateSwitch() {
-        super.checkForStateSwitch();
+    protected void CheckForStateSwitch() {
+        super.CheckForStateSwitch();
         if (Student.getPeeValue() >= Student.getPeeThreshold()) {
             stateMachine.SetState(StateID.ExampleGoToToiletState);
         }
@@ -41,8 +41,8 @@ public class ExampleGoToLessonState extends State {
      * this function gets called every program cycle
      */
     @Override
-    protected void logic() {
-        super.logic();
+    protected void Logic() {
+        super.Logic();
         //deltatime is time inbetween frames
         timer += stateMachine.getDeltaTime();
         if (timer >= 1) {
@@ -56,8 +56,8 @@ public class ExampleGoToLessonState extends State {
      * this function gets called when you leave this state and after all other functions
      */
     @Override
-    protected void leave() {
-        super.leave();
+    protected void Leave() {
+        super.Leave();
         System.out.println("going to 'going to toilet state'");
     }
 }

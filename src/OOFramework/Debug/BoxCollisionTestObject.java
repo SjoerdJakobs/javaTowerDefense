@@ -7,9 +7,6 @@ import OOFramework.FXGraphics2dClasses.Rectangle;
 import OOFramework.FrameworkProgram;
 import OOFramework.Maths.Vector2;
 import OOFramework.StandardObject;
-import javafx.event.EventHandler;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
 import java.awt.*;
@@ -27,7 +24,7 @@ public class BoxCollisionTestObject extends StandardObject {
     private double mouseOfsetY = 0;
 
     public BoxCollisionTestObject(FrameworkProgram frameworkProgram, Vector2 pos, double width, double height, boolean atMouse) {
-        super(frameworkProgram, true, true, true, true, 1000, 1000);
+        super(true, true, true, true, 1000, 1000);
         this.atMouse = atMouse;
         this.pos = pos;
         this.width = width;
@@ -53,8 +50,8 @@ public class BoxCollisionTestObject extends StandardObject {
 
     @Override
     protected void RenderLoop(double deltaTime) {
-        getFrameworkProgram().getGraphics2D().setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
-        rectangle.FilledDraw(getFrameworkProgram().getGraphics2D());
+        frameworkProgram.getGraphics2D().setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
+        rectangle.FilledDraw(frameworkProgram.getGraphics2D());
     }
 
     public void OnMouseDragged(MouseEvent e)

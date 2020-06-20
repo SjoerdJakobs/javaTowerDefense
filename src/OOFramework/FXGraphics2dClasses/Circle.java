@@ -6,6 +6,9 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+
+import static OOFramework.Modules.CONSTANTS.STANDARD_IMAGE_FILENAME_PREFIX;
 
 
 public class Circle {
@@ -21,16 +24,16 @@ public class Circle {
         this.radius = radius;
         this.xPos = xPos;
         this.yPos = yPos;
-        SetImageByFilePath("resources/images/Default.png");
+        SetImageByFileName("Default.png");
     }
 
-    public void SetImageByFilePath(String filePath) {
-        File file = new File(filePath);
-
+    public void SetImageByFileName(String fileName) {
+        InputStream is;
+        is = getClass().getResourceAsStream(STANDARD_IMAGE_FILENAME_PREFIX+fileName);
         try {
-            art = ImageIO.read(file);
-        } catch (IOException ex) {
-            ex.printStackTrace();
+            art = ImageIO.read(is);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

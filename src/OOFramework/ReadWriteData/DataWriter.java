@@ -12,7 +12,7 @@ public class DataWriter {
 
     private SavedData savedData;
 
-    public DataWriter() {
+    protected DataWriter() {
         savedData = SavedData.INSTANCE;
     }
 
@@ -31,29 +31,13 @@ public class DataWriter {
 
         ASSERT_MSG_TERMINATE(!file.canWrite(), "UNABLE TO WRITE TO FILE, " + this.getClass());
 
-        /*
-        ArrayList<TeacherData> teacherDatas = savedData.getTeacherData();
-        ArrayList<StudentData> studentDatas = savedData.getStudentData();
-        ArrayList<LessonData>   lessonDatas = savedData.getLessonData();
-        ArrayList<GroupData>     groupDatas = savedData.getGroupData();
 
-        for(TeacherData td : teacherDatas)
+        //ArrayList<MyData> myDatas = savedData.getMyData();
+
+        /*for(MyData md : myDatas)
         {
-            oos.writeObject(td);
-        }
-        for(StudentData sd : studentDatas)
-        {
-            oos.writeObject(sd);
-        }
-        for(LessonData ld : lessonDatas)
-        {
-            oos.writeObject(ld);
-        }
-        for(GroupData gd : groupDatas)
-        {
-            oos.writeObject(gd);
-        }
-        */
+            oos.writeObject(md);
+        }*/
 
         //this null object lets the data writer know that it is the end of the save file
         oos.writeObject(null);

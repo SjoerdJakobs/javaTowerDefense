@@ -14,7 +14,7 @@ public class DataReader {
     private SavedData savedData;
     private DataWriter dataWriter;
 
-    public DataReader() {
+    protected DataReader() {
         savedData = SavedData.INSTANCE;
     }
 
@@ -43,44 +43,26 @@ public class DataReader {
         Object readCase;
 
         /*
-        ArrayList<TeacherData> teacherData = new ArrayList<TeacherData>();
-        ArrayList<StudentData> studentData = new ArrayList<StudentData>();
-        ArrayList<LessonData>  lessonData  = new ArrayList<LessonData>();
-        ArrayList<GroupData>   groupData   = new ArrayList<GroupData>();
+        ArrayList<MyData> myDatas = new ArrayList<MyData>();
         */
 
         do {
             readCase = (Object) ois.readObject();
-            /*if (readCase != null) {
-                if(readCase instanceof TeacherData)
+            if (readCase != null) {
+                /*if(readCase instanceof MyData)
                 {
-                    teacherData.add((TeacherData) readCase);
-                }
-                else if(readCase instanceof StudentData)
-                {
-                    studentData.add((StudentData) readCase);
-                }
-                else if(readCase instanceof LessonData)
-                {
-                    lessonData.add((LessonData)readCase);
-                }
-                else if(readCase instanceof GroupData)
-                {
-                    groupData.add((GroupData)readCase);
+                    myDatas.add((MyData) readCase);
                 }
                 else
                 {
-                    ASSERT_MSG_TERMINATE(false,"LOADING AN UNKNOWN OBJECT, CLASS: DataReader");
-                }
-            }*/
+                    ASSERT_MSG_TERMINATE(false,"LOADING AN UNKNOWN OBJECT"+this.getClass());
+                }*/
+            }
         } while (readCase != null);
         ois.close();
 
         /*
-        savedData.setTeacherData(teacherData);
-        savedData.setStudentData(studentData);
-        savedData.setLessonData(lessonData);
-        savedData.setGroupData(groupData);
+        savedData.setMyData(myDatas);
         */
     }
 }

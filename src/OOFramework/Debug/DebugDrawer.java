@@ -5,7 +5,6 @@ import OOFramework.Collision2D.Colliders.CircleCollider;
 import OOFramework.Collision2D.Colliders.Collider2D;
 import OOFramework.FXGraphics2dClasses.Rectangle;
 import OOFramework.FrameworkProgram;
-import OOFramework.InputHandling.MouseInput;
 import OOFramework.Pathfinding.BFS.BFSTile;
 import OOFramework.StandardObject;
 import org.jfree.fx.FXGraphics2D;
@@ -48,7 +47,7 @@ public class DebugDrawer extends StandardObject {
     }
 
     private DebugDrawer(FrameworkProgram frameworkProgram) {
-        super(frameworkProgram, true, true, true, true, 10000, 10000);
+        super(true, true, true, true, 10000, 10000);
         if (!DEBUG_MODE) {
             this.setActive(false);
         }
@@ -100,7 +99,7 @@ public class DebugDrawer extends StandardObject {
                         } else {
                             rect = new Rectangle(-64, -64, 32, 32, 0);
                         }
-                        rect.SetImageByFilePath("resources/images/arrow.png");
+                        rect.SetImageByFileName("resources/images/arrow.png");
                         debugBFSPath.add(rect);
                     }
                 }

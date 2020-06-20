@@ -6,7 +6,6 @@ import OOFramework.Collision2D.Colliders.Collider2D;
 import OOFramework.Collision2D.Enums.ColliderTag;
 import OOFramework.FXGraphics2dClasses.Circle;
 import OOFramework.FXGraphics2dClasses.Rectangle;
-import OOFramework.FrameworkProgram;
 import OOFramework.Maths.Vector2;
 import OOFramework.StandardObject;
 
@@ -24,8 +23,8 @@ public class TargetCircle extends StandardObject {
     private Circle circle;
     private Rectangle rectangle;
 
-    public TargetCircle(FrameworkProgram frameworkProgram, Vector2 pos, double radius) {
-        super(frameworkProgram, false, false, true, true, 2000, 1000);
+    public TargetCircle(Vector2 pos, double radius) {
+        super(false, false, true, true, 2000, 1000);
         this.pos = pos;
         this.radius = radius;
         this.fullRadius = radius;
@@ -44,8 +43,8 @@ public class TargetCircle extends StandardObject {
 
     @Override
     protected void RenderLoop(double deltaTime) {
-        getFrameworkProgram().getGraphics2D().setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
-        circle.FilledDraw(getFrameworkProgram().getGraphics2D());
+        frameworkProgram.getGraphics2D().setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+        circle.FilledDraw(frameworkProgram.getGraphics2D());
     }
 
     public void OnCollision(Collider2D other) {

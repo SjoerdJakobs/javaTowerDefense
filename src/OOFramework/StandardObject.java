@@ -7,19 +7,18 @@ public abstract class StandardObject extends BaseObject {
     private int renderPriority = 1000;
     private int objectPriority = 1000;
 
-    protected StandardObject(FrameworkProgram frameworkProgram) {
-        this(frameworkProgram, true, true, true, true, 1000, 1000);
+    protected StandardObject() {
+        this(true, true, true, true, 1000, 1000);
     }
 
-    protected StandardObject(FrameworkProgram frameworkProgram, boolean usesInput, boolean usesMain, boolean usesRenderer, boolean startsActivated) {
-        this(frameworkProgram, usesInput, usesMain, usesRenderer, startsActivated, 1000, 1000);
+    protected StandardObject(boolean usesInput, boolean usesMain, boolean usesRenderer, boolean startsActivated) {
+        this(usesInput, usesMain, usesRenderer, startsActivated, 1000, 1000);
     }
 
     /**
      * look at the exampleObject class for a more extensive explanation of the standard object funtions that a standard object uses
      * you can find it in package OOFramework.ExampleClasses
      *
-     * @param frameworkProgram when you create an object you need to give the framework itself as a variable
      * @param usesInput        put this to true if you want your object to have a update loop.
      * @param usesMain         put this to true if you want your object to have a main/logic loop.
      * @param usesRenderer     put this to true if you want your object to have a render loop.
@@ -29,8 +28,8 @@ public abstract class StandardObject extends BaseObject {
      *                         for the sake of performance, if the render order does not matter give them the same number.
      *                         if you have 1000 objects each with a different number it will take longer to sort them.
      */
-    protected StandardObject(FrameworkProgram frameworkProgram, boolean usesInput, boolean usesMain, boolean usesRenderer, boolean startsActivated, int renderPriority, int objectPriority) {
-        super(frameworkProgram, startsActivated);
+    protected StandardObject(boolean usesInput, boolean usesMain, boolean usesRenderer, boolean startsActivated, int renderPriority, int objectPriority) {
+        super(startsActivated);
         this.usesInput = usesInput;
         this.usesMain = usesMain;
         this.usesRenderer = usesRenderer;
@@ -57,18 +56,18 @@ public abstract class StandardObject extends BaseObject {
     protected void RemoveFromLists() {
         super.RemoveFromLists();
         if (usesInput) {
-            getFrameworkProgram().getInputObjectsToBeRemoved().add(this);
-            getFrameworkProgram().setShouldRemoveFromInputList(true);
+            frameworkProgram.getInputObjectsToBeRemoved().add(this);
+            frameworkProgram.setShouldRemoveFromInputList(true);
         }
 
         if (usesMain) {
-            getFrameworkProgram().getMainObjectsToBeRemoved().add(this);
-            getFrameworkProgram().setShouldRemoveFromMainGroup(true);
+            frameworkProgram.getMainObjectsToBeRemoved().add(this);
+            frameworkProgram.setShouldRemoveFromMainGroup(true);
         }
 
         if (usesRenderer) {
-            getFrameworkProgram().getRenderObjectsToBeRemoved().add(this);
-            getFrameworkProgram().setShouldRemoveFromRenderGroup(true);
+            frameworkProgram.getRenderObjectsToBeRemoved().add(this);
+            frameworkProgram.setShouldRemoveFromRenderGroup(true);
         }
     }
 
@@ -76,18 +75,18 @@ public abstract class StandardObject extends BaseObject {
     protected void AddToLists() {
         super.AddToLists();
         if (usesInput) {
-            getFrameworkProgram().getInputObjectsToBeAdded().add(this);
-            getFrameworkProgram().setShouldAddToInputList(true);
+            frameworkProgram.getInputObjectsToBeAdded().add(this);
+            frameworkProgram.setShouldAddToInputList(true);
         }
 
         if (usesMain) {
-            getFrameworkProgram().getMainObjectsToBeAdded().add(this);
-            getFrameworkProgram().setShouldAddToMainGroup(true);
+            frameworkProgram.getMainObjectsToBeAdded().add(this);
+            frameworkProgram.setShouldAddToMainGroup(true);
         }
 
         if (usesRenderer) {
-            getFrameworkProgram().getRenderObjectsToBeAdded().add(this);
-            getFrameworkProgram().setShouldAddToRenderGroup(true);
+            frameworkProgram.getRenderObjectsToBeAdded().add(this);
+            frameworkProgram.setShouldAddToRenderGroup(true);
         }
     }
 

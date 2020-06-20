@@ -9,8 +9,8 @@ public class ExampleObject extends StandardObject {
      * how often: once
      * execution order: 0
      */
-    protected ExampleObject(FrameworkProgram frameworkProgram) {
-        super(frameworkProgram);
+    protected ExampleObject() {
+        super();
     }
 
     /**
@@ -19,7 +19,7 @@ public class ExampleObject extends StandardObject {
      * execution order: 0
      */
     public ExampleObject(FrameworkProgram frameworkProgram, boolean usesInput, boolean usesMain, boolean usesRenderer, boolean startsActivated) {
-        super(frameworkProgram, usesInput, usesMain, usesRenderer, startsActivated);
+        super(usesInput, usesMain, usesRenderer, startsActivated);
 
         System.out.println("lowest");
     }

@@ -24,14 +24,14 @@ public class ExampleStudent extends StandardObject {
      * decide which loops are used and give the main framework to this object
      */
     public ExampleStudent(FrameworkProgram frameworkProgram, boolean usesInput, boolean usesMain, boolean usesRenderer, boolean startsActivated) {
-        super(frameworkProgram, usesInput, usesMain, usesRenderer, startsActivated);
+        super(usesInput, usesMain, usesRenderer, startsActivated);
     }
 
     /**
      * decide which loops are used and give the main framework to this object
      */
     public ExampleStudent(FrameworkProgram frameworkProgram, double peeThreshold) {
-        super(frameworkProgram, false, true, true, true);
+        super(false, true, true, true);
         this.peeThreshold = peeThreshold;
     }
 
