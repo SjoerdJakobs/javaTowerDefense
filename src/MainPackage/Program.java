@@ -63,25 +63,6 @@ public class Program extends FrameworkProgram {
         towerMenu = new TowerMenu();
 
         towerIcon = new TowerIcon(towerMenu, new Vector2(960, 900));
-
-
-        //EnemyUnit unit = new EnemyUnit(this,new Vector2(32, 492),10,26,100,5,0.25,"route0");
-
-
-        /*
-        //2 test classes
-        //CircleCollisionTestObject circleCollisionTestObject1 = new CircleCollisionTestObject(this,new Vector2(600,500), 100, true);
-        BoxCollisionTestObject boxCollisionTestObject0 = new BoxCollisionTestObject(this, new Vector2(1000, CANVAS_HEIGHT - 1250), 500, 40, false);
-        BoxCollisionTestObject boxCollisionTestObject1 = new BoxCollisionTestObject(this, new Vector2(300, CANVAS_HEIGHT - 950), 500, 40, false);
-        BoxCollisionTestObject boxCollisionTestObject2 = new BoxCollisionTestObject(this, new Vector2(800, CANVAS_HEIGHT - 650), 500, 40, false);
-        BoxCollisionTestObject boxCollisionTestObject3 = new BoxCollisionTestObject(this, new Vector2(600, CANVAS_HEIGHT - 350), 500, 40, false);
-        BoxCollisionTestObject floor = new BoxCollisionTestObject(this, new Vector2(CANVAS_WIDTH / 2, CANVAS_HEIGHT - 70), 999999999, 40, false);
-        //BoxCollisionTestObject wallLeft = new BoxCollisionTestObject(this,new Vector2(0,CANVAS_HEIGHT/2), 50,CANVAS_HEIGHT, false);
-        //BoxCollisionTestObject wallRight = new BoxCollisionTestObject(this,new Vector2(CANVAS_WIDTH,CANVAS_HEIGHT/2), 50,CANVAS_HEIGHT, false);
-
-        CharacterCube testObj = new CharacterCube(new Vector2(CANVAS_WIDTH / 2, CANVAS_HEIGHT - 250), 100, 100);
-        //BoxCollisionTestObject boxCollisionTestObject2 = new BoxCollisionTestObject(this,new Vector2(600,500), 100,100, true);
-        */
     }
 
     @Override
