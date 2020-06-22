@@ -11,7 +11,7 @@ import static OOFramework.Modules.CONSTANTS.STANDARD_SAVE_FILE_PATH;
 
 public class DataReader {
 
-    private SavedData savedData;
+    private final SavedData savedData;
     private DataWriter dataWriter;
 
     protected DataReader() {
@@ -47,7 +47,7 @@ public class DataReader {
         */
 
         do {
-            readCase = (Object) ois.readObject();
+            readCase = ois.readObject();
             if (readCase != null) {
                 /*if(readCase instanceof MyData)
                 {

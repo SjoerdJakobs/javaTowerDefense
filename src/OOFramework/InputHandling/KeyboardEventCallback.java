@@ -2,7 +2,6 @@ package OOFramework.InputHandling;
 
 import javafx.scene.input.KeyEvent;
 
-public interface KeyboardEventCallback
-{
+public interface KeyboardEventCallback {
     void run(KeyEvent e);
 }

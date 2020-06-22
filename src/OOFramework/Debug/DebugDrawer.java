@@ -19,32 +19,20 @@ import static OOFramework.Modules.CONSTANTS.*;
 public class DebugDrawer extends StandardObject {
     //BFS debugging
     private static boolean debugBFS = false;
-    private static BFSTile bfsGrid[][];
+    private static BFSTile[][] bfsGrid;
     private static ArrayList<Rectangle> debugBFSPath;
     private static ArrayList<Rectangle> debugBFSWall;
     private static boolean debugCollision = false;
     private static ArrayList<Collider2D> colliders2D;
+    private static DebugDrawer INSTANCE = null;
     public float updateInterval = 0.5F;
-
-    private Font font = new Font("Serif", Font.PLAIN, 24);
-    private FXGraphics2D graphics2D;
-    private FrameworkProgram frameworkProgram;
+    private final Font font = new Font("Serif", Font.PLAIN, 24);
+    private final FXGraphics2D graphics2D;
+    private final FrameworkProgram frameworkProgram;
     private float accum = 0; // FPS accumulated over the interval
     private int frames = 0; // Frames drawn over the interval
     private float timeleft;    // Left time for current interval
     private float fps = 0f;
-
-    private static DebugDrawer INSTANCE = null;
-    public static DebugDrawer getInstance() {
-        if (INSTANCE == null) {
-            synchronized (DebugDrawer.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = new DebugDrawer(FrameworkProgram.getProgramInstance());
-                }
-            }
-        }
-        return INSTANCE;
-    }
 
     private DebugDrawer(FrameworkProgram frameworkProgram) {
         super(true, true, true, true, 10000, 10000);
@@ -55,9 +43,20 @@ public class DebugDrawer extends StandardObject {
         this.frameworkProgram = frameworkProgram;
         timeleft = updateInterval;
     }
+
+    public static DebugDrawer getInstance() {
+        if (INSTANCE == null) {
+            synchronized (DebugDrawer.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = new DebugDrawer(FrameworkProgram.getProgramInstance());
+                }
+            }
+        }
+        return INSTANCE;
+    }
     ///////////////
 
-    public static void StartDebugBFS(BFSTile bfsGrid[][], String routeName) {
+    public static void StartDebugBFS(BFSTile[][] bfsGrid, String routeName) {
         if (DEBUG_BFS) {
             bfsGrid = bfsGrid;
             debugBFS = true;
@@ -99,7 +98,7 @@ public class DebugDrawer extends StandardObject {
                         } else {
                             rect = new Rectangle(-64, -64, 32, 32, 0);
                         }
-                        rect.SetImageByFileName("resources/images/arrow.png");
+                        rect.SetImageByFileName("arrow.png");
                         debugBFSPath.add(rect);
                     }
                 }

@@ -5,7 +5,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
 public class Renderable {
-    private Shape shape;
+    private final Shape shape;
     private Point2D position;
     private float rotation;
     private float scale;

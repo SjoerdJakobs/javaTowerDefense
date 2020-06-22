@@ -4,7 +4,6 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -15,9 +14,9 @@ public class Circle {
     private Renderable circle2D;
     private Color circleColor;
     private Image art;
-    private int radius;
-    private int xPos;
-    private int yPos;
+    private final int radius;
+    private final int xPos;
+    private final int yPos;
 
     public Circle(int xPos, int yPos, int radius, float rotation) {
         this.circle2D = new Renderable(new Ellipse2D.Double(-radius, -radius, radius + radius, radius + radius), new Point2D.Double(xPos, yPos), rotation, 1);
@@ -29,7 +28,7 @@ public class Circle {
 
     public void SetImageByFileName(String fileName) {
         InputStream is;
-        is = getClass().getResourceAsStream(STANDARD_IMAGE_FILENAME_PREFIX+fileName);
+        is = getClass().getResourceAsStream(STANDARD_IMAGE_FILENAME_PREFIX + fileName);
         try {
             art = ImageIO.read(is);
         } catch (IOException e) {

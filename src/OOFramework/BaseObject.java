@@ -5,35 +5,29 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public abstract class BaseObject {
     /**
+     * this is the program that contains this object
+     */
+    protected final FrameworkProgram frameworkProgram;
+    /**
      * should this object be active
      */
     private final AtomicBoolean active = new AtomicBoolean(false);
-
     /**
      * is this object actually active
      */
     private final AtomicBoolean activated = new AtomicBoolean(false);
-
     /**
      * should this object be destroyed
      */
     private final AtomicBoolean shouldDestruct = new AtomicBoolean(false);
-
     /**
      * this is the program that contains this object in a atomic reference
      * unsure if it should stay this way
      */
     private final AtomicReference<FrameworkProgram> atomicFrameworkProgram = new AtomicReference<FrameworkProgram>();
 
-    /**
-     * this is the program that contains this object
-     */
-    protected final FrameworkProgram frameworkProgram;
 
-
-
-    protected BaseObject(boolean startsActivated)
-    {
+    protected BaseObject(boolean startsActivated) {
         //System.out.println("base");
         this.frameworkProgram = FrameworkProgram.getProgramInstance();
         this.atomicFrameworkProgram.set(frameworkProgram);

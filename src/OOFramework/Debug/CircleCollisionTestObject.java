@@ -4,7 +4,6 @@ import OOFramework.Collision2D.Colliders.CircleCollider;
 import OOFramework.Collision2D.Colliders.Collider2D;
 import OOFramework.Collision2D.Enums.ColliderTag;
 import OOFramework.FXGraphics2dClasses.Circle;
-import OOFramework.FrameworkProgram;
 import OOFramework.Maths.Vector2;
 import OOFramework.StandardObject;
 
@@ -12,13 +11,13 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 
 public class CircleCollisionTestObject extends StandardObject {
-    private CircleCollider collider;
-    private Vector2 pos;
-    private double radius;
-    private boolean atMouse;
-    private Circle circle;
+    private final CircleCollider collider;
+    private final Vector2 pos;
+    private final double radius;
+    private final boolean atMouse;
+    private final Circle circle;
 
-    public CircleCollisionTestObject(FrameworkProgram frameworkProgram, Vector2 pos, double radius, boolean atMouse) {
+    public CircleCollisionTestObject(Vector2 pos, double radius, boolean atMouse) {
         super(true, true, true, true, 1000, 1000);
         this.atMouse = atMouse;
         this.pos = pos;

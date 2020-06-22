@@ -1,12 +1,10 @@
 package OOFramework.InputHandling;
 
-import OOFramework.StandardObject;
 import javafx.scene.input.KeyCode;
 
 import java.util.ArrayList;
 
-public final class KeyGroup
-{
+public final class KeyGroup {
     public KeyCode keyCode;
     public ArrayList<Key> keys;
 

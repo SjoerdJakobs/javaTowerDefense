@@ -5,7 +5,7 @@ import OOFramework.statemachine.StateID;
 
 public class ExampleGoToLessonState extends State {
     double timer = 0;
-    private ExampleStudent Student;
+    private final ExampleStudent Student;
 
     public ExampleGoToLessonState(ExampleStudent exampleStudent) {
         /**

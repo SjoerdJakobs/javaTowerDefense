@@ -4,5 +4,5 @@ public enum ColliderType {
     LINE_COLLIDER,
     CIRCLE_COLLIDER,
     BOX_COLLIDER,
-    DEFAULT;
+    DEFAULT
 }

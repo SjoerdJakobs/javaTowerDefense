@@ -11,9 +11,9 @@ public final class CONSTANTS {
     public static final String STANDARD_SOUND_FILENAME_PREFIX = "sounds/";
     public static final String STANDARD_IMAGE_FILENAME_PREFIX = "/images/";
 
-    public static final boolean DEBUG_MODE = true;
+    public static final boolean DEBUG_MODE = false;
     public static final boolean DEBUG_FPS = true;
     public static final boolean DEBUG_COLLISION = true;
-    public static final boolean DEBUG_BFS = false;
+    public static final boolean DEBUG_BFS = true;
     public static final boolean DEBUG_ASTAR = false;
 }

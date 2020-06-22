@@ -12,9 +12,9 @@ import java.awt.geom.Rectangle2D;
 public class ActiveTDTile extends StandardObject {
     TDTileData tileData;
 
-    private Graphics2D graphics2D;
-    private Renderable square2D;
-    private Canvas canvas;
+    private final Graphics2D graphics2D;
+    private final Renderable square2D;
+    private final Canvas canvas;
 
     public ActiveTDTile(FrameworkProgram frameworkProgram, Graphics2D graphics2D, TDTileData tileData, int xPos, int yPos) {
         super(true, true, true, true, 1000, 1000);

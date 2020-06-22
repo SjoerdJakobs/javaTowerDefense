@@ -19,14 +19,14 @@ public abstract class StandardObject extends BaseObject {
      * look at the exampleObject class for a more extensive explanation of the standard object funtions that a standard object uses
      * you can find it in package OOFramework.ExampleClasses
      *
-     * @param usesInput        put this to true if you want your object to have a update loop.
-     * @param usesMain         put this to true if you want your object to have a main/logic loop.
-     * @param usesRenderer     put this to true if you want your object to have a render loop.
-     *                         if any of these variables are changed during runtime you need to call the AddToLists() method
-     * @param startsActivated  if this is set to true the object starts its work right away otherwise it starts in an sleeping/inactive state
-     * @param renderPriority   this number shows when this object should be rendered. lowest number gets rendered first and highest number last.
-     *                         for the sake of performance, if the render order does not matter give them the same number.
-     *                         if you have 1000 objects each with a different number it will take longer to sort them.
+     * @param usesInput       put this to true if you want your object to have a update loop.
+     * @param usesMain        put this to true if you want your object to have a main/logic loop.
+     * @param usesRenderer    put this to true if you want your object to have a render loop.
+     *                        if any of these variables are changed during runtime you need to call the AddToLists() method
+     * @param startsActivated if this is set to true the object starts its work right away otherwise it starts in an sleeping/inactive state
+     * @param renderPriority  this number shows when this object should be rendered. lowest number gets rendered first and highest number last.
+     *                        for the sake of performance, if the render order does not matter give them the same number.
+     *                        if you have 1000 objects each with a different number it will take longer to sort them.
      */
     protected StandardObject(boolean usesInput, boolean usesMain, boolean usesRenderer, boolean startsActivated, int renderPriority, int objectPriority) {
         super(startsActivated);

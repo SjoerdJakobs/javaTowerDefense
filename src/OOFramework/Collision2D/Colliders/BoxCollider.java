@@ -2,7 +2,6 @@ package OOFramework.Collision2D.Colliders;
 
 import OOFramework.Collision2D.Enums.ColliderType;
 import OOFramework.Maths.Vector2;
-import javafx.scene.input.MouseEvent;
 
 public class BoxCollider extends Collider2D {
     public double width;

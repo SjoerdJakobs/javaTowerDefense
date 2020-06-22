@@ -35,22 +35,22 @@ public class CharacterCube extends StandardObject {
     private final Rectangle rectangle;
     private final Rectangle rectangleSmoll;
     private final MouseInput mouseInput;
+    private final Vector2 mousePos;
     private Vector2 velocity;
     private double velocitySpeed;
-    private double friction = 500;
+    private final double friction = 500;
     private boolean grounded = true;
     private boolean isCollidingWithGround = false;
-    private final Vector2 mousePos;
-    private MouseEventCallback onMouseMoveCallback;
-    private ArrayList<Key> keys = new ArrayList<>();
+    private final MouseEventCallback onMouseMoveCallback;
+    private final ArrayList<Key> keys = new ArrayList<>();
 
-    private KeyboardEventCallback keyboardEventCallback;
-    private Key keyW;
-    private Key keyA;
-    private Key keyS;
-    private Key keyD;
-    private Key keySPACE;
-    private KeyboardInput keyboardInput;
+    private final KeyboardEventCallback keyboardEventCallback;
+    private final Key keyW;
+    private final Key keyA;
+    private final Key keyS;
+    private final Key keyD;
+    private final Key keySPACE;
+    private final KeyboardInput keyboardInput;
 
     public CharacterCube(Vector2 pos, double width, double height) {
         super(true, true, true, true, 1000, 1000);
@@ -70,14 +70,13 @@ public class CharacterCube extends StandardObject {
         keyA = new Key(KeyCode.A);
         keyS = new Key(KeyCode.S);
         keyD = new Key(KeyCode.D);
-        keySPACE = new Key(KeyCode.SPACE,keyboardEventCallback,null,null);
+        keySPACE = new Key(KeyCode.SPACE, keyboardEventCallback, null, null);
         keys.add(keyW);
         keys.add(keyA);
         keys.add(keyS);
         keys.add(keyD);
         keys.add(keySPACE);
-        for (Key k : keys)
-        {
+        for (Key k : keys) {
             keyboardInput.AddKey(k);
         }
 
@@ -113,15 +112,14 @@ public class CharacterCube extends StandardObject {
 
     }
 
-    public void OnMouseMoved(MouseEvent e)
-    {
+    public void OnMouseMoved(MouseEvent e) {
         //System.out.println(Vector2.AngleBetweenVectors(pos,new Vector2(e.getX()-pos.x,e.getY()-pos.y)));
-        System.out.println(Vector2.LookAtVector(pos,mousePos));
+        System.out.println(Vector2.LookAtVector(pos, mousePos));
         mousePos.x = e.getX();
         mousePos.y = e.getY();
     }
-    private void onSpace(KeyEvent e)
-    {
+
+    private void onSpace(KeyEvent e) {
         System.out.println("pressed by event");
         if (grounded) {
             //velocity.y += -jumpPower;
@@ -131,16 +129,13 @@ public class CharacterCube extends StandardObject {
     @Override
     protected void InputLoop(double deltaTime) {
         super.InputLoop(deltaTime);
-        for (Key k : keys)
-        {
-            if(k.getKeyState() == KeyState.PRESSED || k.getKeyState() == KeyState.HOLD)
-            {
-                switch (k.getKeyCode())
-                {
+        for (Key k : keys) {
+            if (k.getKeyState() == KeyState.PRESSED || k.getKeyState() == KeyState.HOLD) {
+                switch (k.getKeyCode()) {
                     case A:
                         //System.out.println(k.getKeyState());
                         if (velocity.x > -maxMovSpeed) {
-                        velocity.x -= accelaration;
+                            velocity.x -= accelaration;
                         }
                         break;
                     case D:
@@ -149,8 +144,7 @@ public class CharacterCube extends StandardObject {
                         }
                         break;
                     case SPACE:
-                        if(k.getKeyState() == KeyState.PRESSED)
-                        {
+                        if (k.getKeyState() == KeyState.PRESSED) {
                             System.out.println("pressed by check");
                         }
                         if (grounded) {
@@ -183,7 +177,7 @@ public class CharacterCube extends StandardObject {
             if (this.pos.y + halfHeight > other.getPos().y - (20) && this.lastPos.y + halfHeight < other.getPos().y - (20)) {
                 velocity.y = 0;
                 //velocity.y += -jumpPower;
-                SoundPlayer.Play("Jump.wav",0.5f);
+                SoundPlayer.Play("Jump.wav", 0.5f);
                 grounded = true;
                 this.pos.y = other.getPos().y - (20 + halfHeight);
             }
@@ -193,7 +187,7 @@ public class CharacterCube extends StandardObject {
     @Override
     protected void MainLoop(double deltaTime) {
         super.MainLoop(deltaTime);
-        rectangle.getSquare2D().setRotation((float) Vector2.LookAtVector(pos,mousePos));
+        rectangle.getSquare2D().setRotation((float) Vector2.LookAtVector(pos, mousePos));
         lastPos.x = pos.x;
         lastPos.y = pos.y;
 

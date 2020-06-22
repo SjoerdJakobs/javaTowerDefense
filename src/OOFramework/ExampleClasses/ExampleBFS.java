@@ -22,7 +22,7 @@ public class ExampleBFS {
         //BFS.Addroute(19,17,"route1");
 
         for (int j = 0; j < 25; j++) {
-            System.out.println("");
+            System.out.println();
             for (int i = 0; i < 25; i++) {
                 if (BFS.getTileMap()[i][j].isWall) {
                     System.out.print("H ");
@@ -42,8 +42,8 @@ public class ExampleBFS {
             }
         }
 
-        System.out.println("");
-        System.out.println("");
+        System.out.println();
+        System.out.println();
 /*
         for (int j = 0; j < 25; j++)
         {

@@ -4,5 +4,5 @@ public enum StateID {
     NullStateID,
     ExampleState,
     ExampleGoToToiletState,
-    ExampleGoToLessonState;
+    ExampleGoToLessonState
 }

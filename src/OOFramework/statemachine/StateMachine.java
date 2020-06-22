@@ -5,7 +5,7 @@ import java.util.Map;
 
 public final class StateMachine {
     public State currentState;
-    private Map<StateID, State> states = new HashMap<StateID, State>();
+    private final Map<StateID, State> states = new HashMap<StateID, State>();
     private double deltaTime;
     private long timeSinceSwitch;
 

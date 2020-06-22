@@ -1,12 +1,14 @@
 package MainPackage.TowerDefense;
 
 import MainPackage.Program;
+import MainPackage.TowerDefense.Units.EnemyUnit;
 import OOFramework.Collision2D.Colliders.CircleCollider;
 import OOFramework.Collision2D.Colliders.Collider2D;
 import OOFramework.Collision2D.Enums.ColliderTag;
 import OOFramework.FXGraphics2dClasses.Circle;
 import OOFramework.FXGraphics2dClasses.Rectangle;
 import OOFramework.Maths.Vector2;
+import OOFramework.Sound.SoundPlayer;
 import OOFramework.StandardObject;
 
 import java.awt.*;
@@ -16,10 +18,10 @@ public class TargetCircle extends StandardObject {
     private int health;
 
 
-    private CircleCollider collider;
-    private Vector2 pos;
+    private final CircleCollider collider;
+    private final Vector2 pos;
     private double radius;
-    private double fullRadius;
+    private final double fullRadius;
     private Circle circle;
     private Rectangle rectangle;
 
@@ -51,6 +53,7 @@ public class TargetCircle extends StandardObject {
         if (other.getColliderTag() == ColliderTag.ENEMY_UNIT) {
             EnemyUnit enemy = (EnemyUnit) other.getOwnerObject();
             health -= enemy.getDamage();
+            SoundPlayer.Play("Explosion39.wav", 0.85f);
             this.radius = health;
             this.circle = new Circle((int) pos.x, (int) pos.y, (int) radius, 0);
             circle.setCircleColor(Color.red);

@@ -10,7 +10,7 @@ import static OOFramework.Modules.CONSTANTS.STANDARD_SAVE_FILE_PATH;
 
 public class DataWriter {
 
-    private SavedData savedData;
+    private final SavedData savedData;
 
     protected DataWriter() {
         savedData = SavedData.INSTANCE;

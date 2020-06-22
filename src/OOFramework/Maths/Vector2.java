@@ -78,17 +78,15 @@ public final class Vector2 {
 
 
     //https://stackoverflow.com/questions/14066933/direct-way-of-computing-clockwise-angle-between-2-vectors?noredirect=1#16544330
-    public final static double AngleBetweenVectors(Vector2 v1, Vector2 v2)
-    {
+    public final static double AngleBetweenVectors(Vector2 v1, Vector2 v2) {
         //Vector2.Dot(v1,v2) / (Vector2.Dot())
-        double dot = v1.x*v2.x + v1.y*v2.y;
-        double det = v1.x*v2.y + v1.y*v2.x;
+        double dot = v1.x * v2.x + v1.y * v2.y;
+        double det = v1.x * v2.y + v1.y * v2.x;
         return atan2(det, dot);
     }
 
-    public final static double LookAtVector(Vector2 looking, Vector2 at)
-    {
-        return -1.5707963268 + AngleBetweenVectors(new Vector2(-1,0),new Vector2(at.x-looking.x,at.y-looking.y));
+    public final static double LookAtVector(Vector2 looking, Vector2 at) {
+        return -1.5707963268 + AngleBetweenVectors(new Vector2(-1, 0), new Vector2(at.x - looking.x, at.y - looking.y));
     }
 
     //////
@@ -97,6 +95,19 @@ public final class Vector2 {
         double xDist = vec2.x - vec1.x;
         double yDist = vec2.y - vec1.y;
         return Math.sqrt(xDist * xDist + yDist * yDist);
+    }
+
+    public final static Vector2 Normalize(Vector2 v) {
+        return v.Normalize();
+    }
+
+    public final static Vector2 Add(Vector2 v1, Vector2 v2) {
+        return new Vector2(v1.x + v2.x, v1.y + v2.y);
+    }
+    //////
+
+    public final static Vector2 Subtract(Vector2 v1, Vector2 v2) {
+        return new Vector2(v1.x - v2.x, v1.y - v2.y);
     }
 
     ///divide
@@ -118,7 +129,6 @@ public final class Vector2 {
             this.y /= divideBy;
         }
     }
-    //////
 
     public final Vector2 DivideXByDouble(double divideBy) {
         if (divideBy == 0) {
@@ -137,6 +147,7 @@ public final class Vector2 {
             return new Vector2(this.x, newY);
         }
     }
+    //////
 
     ///normalize
     public final Vector2 Normalize() {
@@ -144,16 +155,11 @@ public final class Vector2 {
         return new Vector2(this.x /= m, this.y /= m);
     }
 
-    public final static Vector2 Normalize(Vector2 v) {
-        return v.Normalize();
-    }
-
     public final void NormalizeThis() {
         double m = this.GetMagnitude();
         this.x /= m;
         this.y /= m;
     }
-    //////
 
     ///magnitude
     public final double GetMagnitude() {
@@ -164,16 +170,12 @@ public final class Vector2 {
     public final Vector2 Add(Vector2 v) {
         return new Vector2(this.x + v.x, this.y + v.y);
     }
+    //////
 
     public final void AddToThis(Vector2 v) {
         this.x += v.x;
         this.y += v.y;
     }
-
-    public final static Vector2 Add(Vector2 v1, Vector2 v2) {
-        return new Vector2(v1.x + v2.x, v1.y + v2.y);
-    }
-    //////
 
     ///Subtract
     public final Vector2 Subtract(Vector2 v) {
@@ -183,10 +185,6 @@ public final class Vector2 {
     public final void SubtractFromThis(Vector2 v) {
         this.x -= v.x;
         this.y -= v.y;
-    }
-
-    public final static Vector2 Subtract(Vector2 v1, Vector2 v2) {
-        return new Vector2(v1.x - v2.x, v1.y - v2.y);
     }
     //////
 

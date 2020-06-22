@@ -3,16 +3,14 @@ package OOFramework.InputHandling;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
-public class Key
-{
+public class Key {
     private KeyState keyState;
-    private KeyCode keyCode;
-    private KeyboardEventCallback keyPressedCallback;
-    private KeyboardEventCallback keyHoldCallback;
-    private KeyboardEventCallback keyReleasedCallback;
+    private final KeyCode keyCode;
+    private final KeyboardEventCallback keyPressedCallback;
+    private final KeyboardEventCallback keyHoldCallback;
+    private final KeyboardEventCallback keyReleasedCallback;
 
-    public Key(KeyCode keyCode)
-    {
+    public Key(KeyCode keyCode) {
         this.keyCode = keyCode;
 
         this.keyPressedCallback = this::placeholderCallbackMethod;
@@ -25,36 +23,26 @@ public class Key
     public Key(KeyCode keyCode, KeyboardEventCallback kpc, KeyboardEventCallback khc, KeyboardEventCallback krc) {
         this.keyCode = keyCode;
 
-        if(kpc != null)
-        {
+        if (kpc != null) {
             this.keyPressedCallback = kpc;
-        }
-        else
-        {
+        } else {
             this.keyPressedCallback = this::placeholderCallbackMethod;
         }
-        if(khc != null)
-        {
+        if (khc != null) {
             this.keyHoldCallback = khc;
-        }
-        else
-        {
+        } else {
             this.keyHoldCallback = this::placeholderCallbackMethod;
         }
-        if(krc != null)
-        {
+        if (krc != null) {
             this.keyReleasedCallback = krc;
-        }
-        else
-        {
+        } else {
             this.keyReleasedCallback = this::placeholderCallbackMethod;
         }
 
         this.keyState = KeyState.RELEASED;
     }
 
-    private void placeholderCallbackMethod(KeyEvent e)
-    {
+    private void placeholderCallbackMethod(KeyEvent e) {
 
     }
 

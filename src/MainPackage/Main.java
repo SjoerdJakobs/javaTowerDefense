@@ -1,7 +1,5 @@
 package MainPackage;
 
-import OOFramework.Maths.Vector2;
-
 import static javafx.application.Application.launch;
 
 public class Main {

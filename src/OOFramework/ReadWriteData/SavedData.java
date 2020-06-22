@@ -6,13 +6,12 @@ import java.io.IOException;
 public enum SavedData {
     INSTANCE;
 
-    private DataReader dataReader;
-    private DataWriter dataWriter;
+    private final DataReader dataReader;
+    private final DataWriter dataWriter;
 
     //place stuff to be saved and loaded here
 
-    SavedData()
-    {
+    SavedData() {
         this.dataReader = new DataReader();
         this.dataWriter = new DataWriter();
     }

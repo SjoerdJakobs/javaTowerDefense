@@ -8,7 +8,7 @@ public class BreathFirstSearch {
     public ArrayList<BFSTile> nextList;
     int start = 0;
     private BFSTile[][] tileMap;
-    private boolean shouldSwap = true;
+    private final boolean shouldSwap = true;
     private int xSize;
     private int ySize;
 
@@ -63,11 +63,7 @@ public class BreathFirstSearch {
     }
 
     private boolean IsInGrid(int x, int y) {
-        if (x < xSize && x > -1 && y < ySize && y > -1) {
-            return true;
-        } else {
-            return false;
-        }
+        return x < xSize && x > -1 && y < ySize && y > -1;
     }
 
     //check all nondiagonal tiles to see if they have been set and if not if they are able to be set

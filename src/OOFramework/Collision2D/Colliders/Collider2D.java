@@ -7,11 +7,8 @@ import OOFramework.Collision2D.Enums.ColliderType;
 import OOFramework.Maths.Vector2;
 import OOFramework.Modules.ASSERT_MSG;
 import OOFramework.Modules.Callback;
-import OOFramework.InputHandling.MouseEventCallback;
-import javafx.scene.input.MouseEvent;
 
-public abstract class Collider2D
-{
+public abstract class Collider2D {
     public Callback preCollisionCallback;
     public CollisionCallback collisionCallback;
 

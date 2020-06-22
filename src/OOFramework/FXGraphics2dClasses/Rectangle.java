@@ -14,8 +14,8 @@ public class Rectangle {
     private Renderable square2D;
     private Color rectangleColor;
     private Image art;
-    private int xSizeOffset;
-    private int ySizeOffset;
+    private final int xSizeOffset;
+    private final int ySizeOffset;
 
     public Rectangle(int xPos, int yPos, int xSize, int ySize, float rotation) {
         this.square2D = new Renderable(new Rectangle2D.Double(-(xSize / 2), -(ySize / 2), xSize, ySize), new Point2D.Double(xPos, yPos), rotation, 1);
@@ -26,7 +26,7 @@ public class Rectangle {
 
     public void SetImageByFileName(String fileName) {
         InputStream is;
-        is = getClass().getResourceAsStream(STANDARD_IMAGE_FILENAME_PREFIX+fileName);
+        is = getClass().getResourceAsStream(STANDARD_IMAGE_FILENAME_PREFIX + fileName);
         try {
             art = ImageIO.read(is);
         } catch (IOException e) {

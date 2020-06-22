@@ -11,14 +11,21 @@ import java.util.ArrayList;
 
 import static OOFramework.Modules.CONSTANTS.DEBUG_MODE;
 
-public class TowerDefenseDebug extends StandardObject
-{
+public class TowerDefenseDebug extends StandardObject {
     private static ArrayList<Rectangle> debugTDPlacable;
     private static boolean debugTDTiles = false;
-
-    private FXGraphics2D graphics2D;
-    private FrameworkProgram frameworkProgram;
     private static TowerDefenseDebug INSTANCE = null;
+    private final FXGraphics2D graphics2D;
+    private final FrameworkProgram frameworkProgram;
+
+    private TowerDefenseDebug(FrameworkProgram frameworkProgram) {
+        super(true, true, true, true, 10000, 10000);
+        if (!DEBUG_MODE) {
+            this.setActive(false);
+        }
+        graphics2D = frameworkProgram.getGraphics2D();
+        this.frameworkProgram = frameworkProgram;
+    }
 
     public static TowerDefenseDebug getInstance() {
         if (INSTANCE == null) {
@@ -31,16 +38,7 @@ public class TowerDefenseDebug extends StandardObject
         return INSTANCE;
     }
 
-    private TowerDefenseDebug(FrameworkProgram frameworkProgram) {
-        super(true, true, true, true, 10000, 10000);
-        if (!DEBUG_MODE) {
-            this.setActive(false);
-        }
-        graphics2D = frameworkProgram.getGraphics2D();
-        this.frameworkProgram = frameworkProgram;
-    }
-
-    public static void StartDebugTD(TDTileData tdTileData[][]) {
+    public static void StartDebugTD(TDTileData[][] tdTileData) {
         debugTDPlacable = new ArrayList<Rectangle>();
 
         for (int i = 0; i < tdTileData.length; i++) {
@@ -58,13 +56,12 @@ public class TowerDefenseDebug extends StandardObject
 
     @Override
     protected void RenderLoop(double deltaTime) {
-        if(debugTDTiles)
-        {
+        if (debugTDTiles) {
             graphics2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
-            for (Rectangle r : debugTDPlacable)
-            {
+            for (Rectangle r : debugTDPlacable) {
                 r.FilledDraw(graphics2D);
             }
+            graphics2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
         }
     }
 }

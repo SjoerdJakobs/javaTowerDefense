@@ -1,7 +1,5 @@
 package OOFramework.InputHandling;
 
-import OOFramework.Collision2D.Colliders.Collider2D;
-import OOFramework.FrameworkProgram;
 import OOFramework.Maths.Vector2;
 import OOFramework.StandardObject;
 import javafx.event.EventHandler;
@@ -9,50 +7,31 @@ import javafx.scene.input.MouseEvent;
 
 import java.util.ArrayList;
 
-public class MouseInput extends StandardObject
-{
-    private final FrameworkProgram frameworkProgram;
-
+public class MouseInput extends StandardObject {
     private static MouseInput INSTANCE = null;
-
-    public static MouseInput getInstance() {
-        if (INSTANCE == null) {
-            synchronized (MouseInput.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = new MouseInput(FrameworkProgram.getProgramInstance());
-                }
-            }
-        }
-        return INSTANCE;
-    }
-
-    private Vector2 mousePos = new Vector2();
-
-    private ArrayList<MouseEventCallback> onMouseMovedToBeAdded = new ArrayList<MouseEventCallback>();
-    private ArrayList<MouseEventCallback> onMousePressedToBeAdded = new ArrayList<MouseEventCallback>();
-    private ArrayList<MouseEventCallback> onMouseDraggedToBeAdded = new ArrayList<MouseEventCallback>();
-    private ArrayList<MouseEventCallback> onMouseReleasedToBeAdded = new ArrayList<MouseEventCallback>();
+    private final ArrayList<MouseEventCallback> onMouseMoved = new ArrayList<>();
+    private final ArrayList<MouseEventCallback> onMousePressed = new ArrayList<>();
+    private final ArrayList<MouseEventCallback> onMouseDragged = new ArrayList<>();
+    private final ArrayList<MouseEventCallback> onMouseReleased = new ArrayList<>();
+    private final Vector2 mousePos = new Vector2();
+    private final ArrayList<MouseEventCallback> onMouseMovedToBeAdded = new ArrayList<MouseEventCallback>();
+    private final ArrayList<MouseEventCallback> onMousePressedToBeAdded = new ArrayList<MouseEventCallback>();
+    private final ArrayList<MouseEventCallback> onMouseDraggedToBeAdded = new ArrayList<MouseEventCallback>();
+    private final ArrayList<MouseEventCallback> onMouseReleasedToBeAdded = new ArrayList<MouseEventCallback>();
     private boolean shouldAddToOnMouseMoved = false;
     private boolean shouldAddToOnMousePressed = false;
     private boolean shouldAddToOnMouseDragged = false;
     private boolean shouldAddToOnMouseReleased = false;
-    private ArrayList<MouseEventCallback> onMouseMovedToBeRemoved = new ArrayList<MouseEventCallback>();
-    private ArrayList<MouseEventCallback> onMousePressedToBeRemoved = new ArrayList<MouseEventCallback>();
-    private ArrayList<MouseEventCallback> onMouseDraggedToBeRemoved = new ArrayList<MouseEventCallback>();
-    private ArrayList<MouseEventCallback> onMouseReleasedToBeRemoved = new ArrayList<MouseEventCallback>();
+    private final ArrayList<MouseEventCallback> onMouseMovedToBeRemoved = new ArrayList<MouseEventCallback>();
+    private final ArrayList<MouseEventCallback> onMousePressedToBeRemoved = new ArrayList<MouseEventCallback>();
+    private final ArrayList<MouseEventCallback> onMouseDraggedToBeRemoved = new ArrayList<MouseEventCallback>();
+    private final ArrayList<MouseEventCallback> onMouseReleasedToBeRemoved = new ArrayList<MouseEventCallback>();
     private boolean shouldRemoveFromOnMouseMoved = false;
     private boolean shouldRemoveFromOnMousePressed = false;
     private boolean shouldRemoveFromOnMouseDragged = false;
     private boolean shouldRemoveFromOnMouseReleased = false;
-    private final ArrayList<MouseEventCallback> onMouseMoved    = new ArrayList<>();
-    private final ArrayList<MouseEventCallback> onMousePressed  = new ArrayList<>();
-    private final ArrayList<MouseEventCallback> onMouseDragged  = new ArrayList<>();
-    private final ArrayList<MouseEventCallback> onMouseReleased = new ArrayList<>();
-
-    private MouseInput(FrameworkProgram frameworkProgram)
-    {
+    private MouseInput() {
         super(false, true, false, true, 1000, 1_000_000);
-        this.frameworkProgram = frameworkProgram;
         frameworkProgram.getStage().addEventFilter(MouseEvent.MOUSE_MOVED,
                 new EventHandler<MouseEvent>() {
                     public void handle(MouseEvent e) {
@@ -66,6 +45,8 @@ public class MouseInput extends StandardObject
         frameworkProgram.getStage().addEventFilter(MouseEvent.MOUSE_PRESSED,
                 new EventHandler<MouseEvent>() {
                     public void handle(MouseEvent e) {
+                        mousePos.x = e.getX();
+                        mousePos.y = e.getY();
                         for (MouseEventCallback mec : onMousePressed) {
                             mec.run(e);
                         }
@@ -82,11 +63,24 @@ public class MouseInput extends StandardObject
         frameworkProgram.getStage().addEventFilter(MouseEvent.MOUSE_RELEASED,
                 new EventHandler<MouseEvent>() {
                     public void handle(MouseEvent e) {
+                        mousePos.x = e.getX();
+                        mousePos.y = e.getY();
                         for (MouseEventCallback mec : onMouseReleased) {
                             mec.run(e);
                         }
                     }
                 });
+    }
+
+    public static MouseInput getInstance() {
+        if (INSTANCE == null) {
+            synchronized (MouseInput.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = new MouseInput();
+                }
+            }
+        }
+        return INSTANCE;
     }
 
     @Override

@@ -13,12 +13,12 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 
 public class BoxCollisionTestObject extends StandardObject {
-    private BoxCollider collider;
-    private Vector2 pos;
-    private double width;
-    private double height;
-    private boolean atMouse;
-    private Rectangle rectangle;
+    private final BoxCollider collider;
+    private final Vector2 pos;
+    private final double width;
+    private final double height;
+    private final boolean atMouse;
+    private final Rectangle rectangle;
 
     private double mouseOfsetX = 0;
     private double mouseOfsetY = 0;
@@ -54,16 +54,14 @@ public class BoxCollisionTestObject extends StandardObject {
         rectangle.FilledDraw(frameworkProgram.getGraphics2D());
     }
 
-    public void OnMouseDragged(MouseEvent e)
-    {
-        pos.x = e.getX()-mouseOfsetX;
-        pos.y = e.getY()-mouseOfsetY;
+    public void OnMouseDragged(MouseEvent e) {
+        pos.x = e.getX() - mouseOfsetX;
+        pos.y = e.getY() - mouseOfsetY;
         rectangle.getSquare2D().setPosition(new Point2D.Double(pos.x, pos.y));
         collider.setPos(pos);
     }
 
-    public void OnMousePressed(MouseEvent e)
-    {
+    public void OnMousePressed(MouseEvent e) {
         mouseOfsetX = e.getX() - pos.x;
         mouseOfsetY = e.getY() - pos.y;
     }

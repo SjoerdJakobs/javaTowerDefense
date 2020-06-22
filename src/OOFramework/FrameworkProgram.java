@@ -1,6 +1,5 @@
 package OOFramework;
 
-import MainPackage.Program;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -20,51 +19,45 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import static OOFramework.Modules.CONSTANTS.*;
 
-public abstract class FrameworkProgram extends Application implements EventHandler<KeyEvent>
-{
+public abstract class FrameworkProgram extends Application implements EventHandler<KeyEvent> {
+    private static FrameworkProgram programInstance;
     private final AtomicBoolean running = new AtomicBoolean(false);
     private final AtomicBoolean paused = new AtomicBoolean(false);
-
     private final AtomicReference<ArrayList<BaseObject>> objects = new AtomicReference<>(new ArrayList<BaseObject>());
     private final AtomicReference<ArrayList<RunnableObject>> runnableObjects = new AtomicReference<>(new ArrayList<RunnableObject>());
-
     //the current scale for delata time, 2 would speed everything up and 0.5 would slow everything down
     protected double timeScale = 1;
     protected Stage stage;
     protected Canvas canvas;
     protected FXGraphics2D graphics2D;
     long lastTime = System.nanoTime();
-
-    private ArrayList<StandardObject> inputObjects = new ArrayList<StandardObject>();
-    private ArrayList<PriorityGroup> mainGroups = new ArrayList<PriorityGroup>();
-    private ArrayList<PriorityGroup> renderGroups = new ArrayList<PriorityGroup>();
-    private ArrayList<StandardObject> inputObjectsToBeAdded = new ArrayList<StandardObject>();
-    private ArrayList<StandardObject> mainObjectsToBeAdded = new ArrayList<StandardObject>();
-    private ArrayList<StandardObject> renderObjectsToBeAdded = new ArrayList<StandardObject>();
+    private final ArrayList<StandardObject> inputObjects = new ArrayList<StandardObject>();
+    private final ArrayList<PriorityGroup> mainGroups = new ArrayList<PriorityGroup>();
+    private final ArrayList<PriorityGroup> renderGroups = new ArrayList<PriorityGroup>();
+    private final ArrayList<StandardObject> inputObjectsToBeAdded = new ArrayList<StandardObject>();
+    private final ArrayList<StandardObject> mainObjectsToBeAdded = new ArrayList<StandardObject>();
+    private final ArrayList<StandardObject> renderObjectsToBeAdded = new ArrayList<StandardObject>();
     private boolean shouldAddToInputList = false;
     private boolean shouldAddToMainGroup = false;
     private boolean shouldAddToRenderGroup = false;
-    private ArrayList<StandardObject> inputObjectsToBeRemoved = new ArrayList<StandardObject>();
-    private ArrayList<StandardObject> mainObjectsToBeRemoved = new ArrayList<StandardObject>();
-    private ArrayList<StandardObject> renderObjectsToBeRemoved = new ArrayList<StandardObject>();
+    private final ArrayList<StandardObject> inputObjectsToBeRemoved = new ArrayList<StandardObject>();
+    private final ArrayList<StandardObject> mainObjectsToBeRemoved = new ArrayList<StandardObject>();
+    private final ArrayList<StandardObject> renderObjectsToBeRemoved = new ArrayList<StandardObject>();
     private boolean shouldRemoveFromInputList = false;
     private boolean shouldRemoveFromMainGroup = false;
     private boolean shouldRemoveFromRenderGroup = false;
-
-
     //deltatime influenced by timeScale and if the program is paused or not
     private double deltaTime = 0;
     //deltatime that will always give the time between frames
     private double unscaledDeltaTime = 0;
 
-    private static FrameworkProgram programInstance;
     public static FrameworkProgram getProgramInstance() {
         return programInstance;
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        this.programInstance = this;
+        programInstance = this;
         this.stage = primaryStage;
         this.canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
         this.graphics2D = new FXGraphics2D(canvas.getGraphicsContext2D());
@@ -250,8 +243,7 @@ public abstract class FrameworkProgram extends Application implements EventHandl
         }
     }
 
-    protected void Handle(KeyEvent event)
-    {
+    protected void Handle(KeyEvent event) {
 
     }
 
