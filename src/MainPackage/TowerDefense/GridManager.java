@@ -4,7 +4,7 @@ import OOFramework.Collision2D.Colliders.BoxCollider;
 import OOFramework.Collision2D.Enums.ColliderTag;
 import OOFramework.Debug.DebugDrawer;
 import OOFramework.Maths.Vector2;
-import OOFramework.Pathfinding.BFS.BreathFirstSearchT2;
+import OOFramework.Pathfinding.BFS.BreathFirstSearch;
 import OOFramework.StandardObject;
 
 import java.awt.*;
@@ -18,14 +18,14 @@ public class GridManager extends StandardObject {
     private BufferedImage mapImage;
     private final Graphics2D graphics2D;
 
-    private final BreathFirstSearchT2 BFS;
+    private final BreathFirstSearch BFS;
 
     private TDTileData[][] mapData;
 
     public GridManager() {
         super(false, true, true, true, 10, 100);
         this.graphics2D = frameworkProgram.getGraphics2D();
-        this.BFS = new BreathFirstSearchT2();
+        this.BFS = new BreathFirstSearch();
         LoadMap();
     }
 
@@ -151,8 +151,13 @@ public class GridManager extends StandardObject {
             for (int j = 0; j < 34; j++) {
                 if (j == 5) {
                     BFS.SetWall(i, j);
+                    BoxCollider boxCollider = new BoxCollider(new Vector2(i * 32 + 16, j*32+12), 31, 31);
+                    boxCollider.setColliderTag(ColliderTag.WALL);
+
                 } else if (j == 25) {
                     BFS.SetWall(i, j);
+                    BoxCollider boxCollider = new BoxCollider(new Vector2(i * 32 + 16, j*32+12), 31, 31);
+                    boxCollider.setColliderTag(ColliderTag.WALL);
                 }
             }
         }
@@ -160,62 +165,96 @@ public class GridManager extends StandardObject {
         //mirrored L
         for (int i = 0; i < 15; i++) {
             BFS.SetWall(33, 6 + i);
+            BoxCollider boxCollider = new BoxCollider(new Vector2(33 * 32 + 16, (6*32)+(i*32)+12), 31, 31);
+            boxCollider.setColliderTag(ColliderTag.WALL);
         }
         for (int i = 0; i < 10; i++) {
             BFS.SetWall(28, 6 + i);
+            BoxCollider boxCollider = new BoxCollider(new Vector2(28 * 32 + 16, (6*32)+(i*32)+12), 31, 31);
+            boxCollider.setColliderTag(ColliderTag.WALL);
         }
         for (int i = 0; i < 5; i++) {
             BFS.SetWall(21, 16 + i);
+            BoxCollider boxCollider = new BoxCollider(new Vector2(21 * 32 + 16, (16*32)+(i*32)+12), 31, 31);
+            boxCollider.setColliderTag(ColliderTag.WALL);
         }
         for (int i = 0; i < 8; i++) {
             BFS.SetWall(21 + i, 16);
+            BoxCollider boxCollider = new BoxCollider(new Vector2((21+i) * 32 + 16, (16*32)+12), 31, 31);
+            boxCollider.setColliderTag(ColliderTag.WALL);
         }
         for (int i = 0; i < 13; i++) {
             BFS.SetWall(21 + i, 21);
+            BoxCollider boxCollider = new BoxCollider(new Vector2((21+i) * 32 + 16, (21*32)+12), 31, 31);
+            boxCollider.setColliderTag(ColliderTag.WALL);
         }
         ///////////////
 
         //upsideDown L1
         for (int i = 0; i < 12; i++) {
             BFS.SetWall(17, 13 + i);
+            BoxCollider boxCollider = new BoxCollider(new Vector2(17 * 32 + 16, (13*32)+(i*32)+12), 31, 31);
+            boxCollider.setColliderTag(ColliderTag.WALL);
         }
         for (int i = 0; i < 15; i++) {
             BFS.SetWall(13, 10 + i);
+            BoxCollider boxCollider = new BoxCollider(new Vector2(13 * 32 + 16, (10*32)+(i*32)+12), 31, 31);
+            boxCollider.setColliderTag(ColliderTag.WALL);
         }
         for (int i = 0; i < 3; i++) {
             BFS.SetWall(24, 10 + i);
+            BoxCollider boxCollider = new BoxCollider(new Vector2(24 * 32 + 16, (10*32)+(i*32)+12), 31, 31);
+            boxCollider.setColliderTag(ColliderTag.WALL);
         }
         for (int i = 0; i < 8; i++) {
             BFS.SetWall(17 + i, 12);
+            BoxCollider boxCollider = new BoxCollider(new Vector2((17+i) * 32 + 16, (12*32)+12), 31, 31);
+            boxCollider.setColliderTag(ColliderTag.WALL);
         }
         for (int i = 0; i < 12; i++) {
             BFS.SetWall(13 + i, 9);
+            BoxCollider boxCollider = new BoxCollider(new Vector2((13+i) * 32 + 16, (9*32)+12), 31, 31);
+            boxCollider.setColliderTag(ColliderTag.WALL);
         }
         ///////////////
 
         //upsideDown L2
         for (int i = 0; i < 12; i++) {
             BFS.SetWall(41, 13 + i);
+            BoxCollider boxCollider = new BoxCollider(new Vector2(41 * 32 + 16, (13*32)+(i*32)+12), 31, 31);
+            boxCollider.setColliderTag(ColliderTag.WALL);
         }
         for (int i = 0; i < 15; i++) {
             BFS.SetWall(37, 10 + i);
+            BoxCollider boxCollider = new BoxCollider(new Vector2(37 * 32 + 16, (10*32)+(i*32)+12), 31, 31);
+            boxCollider.setColliderTag(ColliderTag.WALL);
         }
         for (int i = 0; i < 3; i++) {
             BFS.SetWall(48, 10 + i);
+            BoxCollider boxCollider = new BoxCollider(new Vector2(48 * 32 + 16, (10*32)+(i*32)+12), 31, 31);
+            boxCollider.setColliderTag(ColliderTag.WALL);
         }
         for (int i = 0; i < 8; i++) {
             BFS.SetWall(41 + i, 12);
+            BoxCollider boxCollider = new BoxCollider(new Vector2((41+i) * 32 + 16, (12*32)+12), 31, 31);
+            boxCollider.setColliderTag(ColliderTag.WALL);
         }
         for (int i = 0; i < 12; i++) {
             BFS.SetWall(37 + i, 9);
+            BoxCollider boxCollider = new BoxCollider(new Vector2((37+i) * 32 + 16, (9*32)+12), 31, 31);
+            boxCollider.setColliderTag(ColliderTag.WALL);
         }
         ///////////////
 
         for (int i = 0; i < 16; i++) {
             BFS.SetWall(60 - i, 6 + i);
+            BoxCollider boxCollider = new BoxCollider(new Vector2((60-i) * 32 + 16, (6*32)+(i*32)+12), 31, 31);
+            boxCollider.setColliderTag(ColliderTag.WALL);
         }
         for (int i = 0; i < 15; i++) {
             BFS.SetWall(60 - i, 7 + i);
+            BoxCollider boxCollider = new BoxCollider(new Vector2((60-i) * 32 + 16, (7*32)+(i*32)+12), 31, 31);
+            boxCollider.setColliderTag(ColliderTag.WALL);
         }
 
         BFS.Addroute(59, 17, "route0");
@@ -235,7 +274,7 @@ public class GridManager extends StandardObject {
             closed.add(checkTDT);
             checkTDT.canPlaceTower = true;
             checkTDT.SetImage(TileArtEnum.GRASS);
-            BoxCollider boxCollider = new BoxCollider(new Vector2(checkTDT.mapPos.x + (checkTDT.getWidth() * 0.5), checkTDT.mapPos.y + (checkTDT.getHeight() * 0.5)), 32, 32);
+            BoxCollider boxCollider = new BoxCollider(new Vector2(checkTDT.mapPos.x + (checkTDT.getWidth() * 0.5), checkTDT.mapPos.y + (checkTDT.getHeight() * 0.5)), 31, 31);
             boxCollider.setColliderTag(ColliderTag.PLACEABLE_AREA);
             //down
             neighbourTDT = tdTileDatas[(int) checkTDT.gridPos.x][(int) checkTDT.gridPos.y + 1];
@@ -273,7 +312,7 @@ public class GridManager extends StandardObject {
         graphics2D.drawImage(mapImage, 0, 0, null);
     }
 
-    public BreathFirstSearchT2 getBFS() {
+    public BreathFirstSearch getBFS() {
         return BFS;
     }
 

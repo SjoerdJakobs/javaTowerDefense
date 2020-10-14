@@ -64,14 +64,11 @@ public abstract class FrameworkProgram extends Application implements EventHandl
         this.stage.setScene(new Scene(new Group(canvas)));
         this.stage.setTitle(TITLE);
         this.stage.setMaximized(true);
-        //this.stage.setFullScreen(true);
-        //this.stage.setResizable(false);
+        this.stage.setFullScreen(false);
+        this.stage.setResizable(false);
         this.stage.show();
         stage.getScene().setOnKeyPressed(this);
 
-
-        //addKeyListener( keyboard );
-        //canvas.addKeyListener( keyboard );
 
         Init();
 
@@ -128,14 +125,24 @@ public abstract class FrameworkProgram extends Application implements EventHandl
         }
 
         //clear screen
+
+        long startTime = System.nanoTime();
+
         g2d.setBackground(Color.white);
         g2d.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
         for (PriorityGroup group : renderGroups) {
             for (StandardObject object : group.standardObjects) {
-                object.RenderLoop(deltaTime);
+                //object.RenderLoop(deltaTime);
+                if(object.UsesDebugRenderer())
+                {
+                    object.RenderLoop(deltaTime);
+                }
             }
         }
+
+        long elapsedTime = System.nanoTime() - startTime;
+        System.out.println("time used for rendering checking in millis "+elapsedTime/1000000.0);
 
         Iterator<BaseObject> it = objects.get().iterator();
         while (it.hasNext()) {

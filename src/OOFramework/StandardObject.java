@@ -4,6 +4,7 @@ public abstract class StandardObject extends BaseObject {
     private boolean usesInput;
     private boolean usesMain;
     private boolean usesRenderer;
+    private boolean usesDebugRenderer;
     private int renderPriority = 1000;
     private int objectPriority = 1000;
 
@@ -35,6 +36,7 @@ public abstract class StandardObject extends BaseObject {
         this.usesRenderer = usesRenderer;
         this.objectPriority = objectPriority;
         this.renderPriority = renderPriority;
+        this.usesDebugRenderer = false;
         this.AddToLists();
 
         //System.out.println("Standard");
@@ -127,6 +129,14 @@ public abstract class StandardObject extends BaseObject {
 
     public void setUsesRenderer(boolean usesRenderer) {
         this.usesRenderer = usesRenderer;
+    }
+
+    public boolean UsesDebugRenderer() {
+        return usesDebugRenderer;
+    }
+
+    public void setUsesDebugRenderer(boolean usesDebugRenderer) {
+        this.usesDebugRenderer = usesRenderer;
     }
 }
 

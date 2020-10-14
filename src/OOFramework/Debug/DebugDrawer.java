@@ -42,6 +42,7 @@ public class DebugDrawer extends StandardObject {
         graphics2D = frameworkProgram.getGraphics2D();
         this.frameworkProgram = frameworkProgram;
         timeleft = updateInterval;
+        setUsesDebugRenderer(true);
     }
 
     public static DebugDrawer getInstance() {

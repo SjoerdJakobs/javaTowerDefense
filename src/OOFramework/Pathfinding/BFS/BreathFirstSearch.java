@@ -6,9 +6,7 @@ import java.util.ArrayList;
 
 public class BreathFirstSearch {
     public ArrayList<BFSTile> nextList;
-    int start = 0;
     private BFSTile[][] tileMap;
-    private final boolean shouldSwap = true;
     private int xSize;
     private int ySize;
 
@@ -19,6 +17,7 @@ public class BreathFirstSearch {
         for (int i = 0; i < xSize; i++) {
             for (int j = 0; j < ySize; j++) {
                 tileMap[i][j] = new BFSTile(new Vector2(i, j), false);
+                tileMap[i][j].tilesFromTarget = -2;
             }
         }
     }
@@ -42,15 +41,14 @@ public class BreathFirstSearch {
 
             while (!nextList.isEmpty()) {
                 BFSTile checkTile = nextList.get(0);
-                for (BFSTile tile : nextList) {
-                    if (tile.tilesFromTarget <= checkTile.tilesFromTarget) {
-                        checkTile = tile;
-                    }
-                }
+                //for (BFSTile tile : nextList) {
+                    //if (tile.tilesFromTarget <= checkTile.tilesFromTarget) {
+                        //checkTile = tile;
+                    //}
+                //}
                 nextList.remove(checkTile);
                 CheckNonDiagonalNeighbours((int) checkTile.gridPos.x, (int) checkTile.gridPos.y, route, checkTile.tilesFromTarget);
             }
-
 
             tileMap[x][y].isDestination = false;
 
@@ -68,54 +66,72 @@ public class BreathFirstSearch {
 
     //check all nondiagonal tiles to see if they have been set and if not if they are able to be set
     private void CheckNonDiagonalNeighbours(int x, int y, String route, int distance) {
-        for (int i = 0; i < 4; i++) {
-            //System.out.print((start + i)%4 );
-            if ((start + i) % 4 == 0) {
-                if (IsInGrid(x + 1, y)) {
-                    final BFSTile checkTile = tileMap[x + 1][y];
-                    if (!checkTile.isWall && !checkTile.hasBeenSet && !checkTile.isDestination) {
-                        checkTile.routes.put(route, new Vector2(-1, 0));
-                        checkTile.hasBeenSet = true;
-                        checkTile.tilesFromTarget = distance + 1;
-                        nextList.add(checkTile);
-                    }
-                }
-            } else if ((start + i) % 4 == 2) {
-                if (IsInGrid(x, y + 1)) {
-                    final BFSTile checkTile = tileMap[x][y + 1];
-                    if (!checkTile.isWall && !checkTile.hasBeenSet && !checkTile.isDestination) {
-                        checkTile.routes.put(route, new Vector2(0, -1));
-                        checkTile.hasBeenSet = true;
-                        checkTile.tilesFromTarget = distance + 1;
-                        nextList.add(checkTile);
-                    }
-                }
-            } else if ((start + i) % 4 == 3) {
-                if (IsInGrid(x, y - 1)) {
-                    final BFSTile checkTile = tileMap[x][y - 1];
-                    if (!checkTile.isWall && !checkTile.hasBeenSet && !checkTile.isDestination) {
-                        checkTile.routes.put(route, new Vector2(0, 1));
-                        checkTile.hasBeenSet = true;
-                        checkTile.tilesFromTarget = distance + 1;
-                        nextList.add(checkTile);
-                    }
-                }
-            } else if ((start + i) % 4 == 1) {
-                if (IsInGrid(x - 1, y)) {
-                    final BFSTile checkTile = tileMap[x - 1][y];
-                    if (!checkTile.isWall && !checkTile.hasBeenSet && !checkTile.isDestination) {
-                        checkTile.routes.put(route, new Vector2(1, 0));
-                        checkTile.hasBeenSet = true;
-                        checkTile.tilesFromTarget = distance + 1;
-                        nextList.add(checkTile);
-                    }
-                }
+        if ((x + y) % 2 == 0)
+        {
+            checkDownNeighbour (x,  y, route, distance);//S
+            checkUpNeighbour   (x,  y, route, distance);//N
+            checkLeftNeighbour (x,  y, route, distance);//W
+            checkRightNeighbour(x,  y, route, distance);//E
+        }
+        else
+        {
+            checkLeftNeighbour (x,  y, route, distance);//E
+            checkRightNeighbour(x,  y, route, distance);//W
+            checkUpNeighbour   (x,  y, route, distance);//N
+            checkDownNeighbour (x,  y, route, distance);//S
+        }
+
+    }
+
+    private void checkRightNeighbour(int x, int y, String route, int distance)
+    {
+        if (IsInGrid(x + 1, y)) {
+            final BFSTile checkTile = tileMap[x + 1][y];
+            if (!checkTile.isWall && !checkTile.hasBeenSet && !checkTile.isDestination) {
+                checkTile.routes.put(route, new Vector2(-1, 0));
+                checkTile.hasBeenSet = true;
+                checkTile.tilesFromTarget = distance + 1;
+                nextList.add(checkTile);
             }
         }
-        //System.out.println(" ");
-        start += 1;
-        if (start == 4) {
-            start = 0;
+    }
+
+    private void checkLeftNeighbour(int x, int y, String route, int distance)
+    {
+        if (IsInGrid(x - 1, y)) {
+            final BFSTile checkTile = tileMap[x - 1][y];
+            if (!checkTile.isWall && !checkTile.hasBeenSet && !checkTile.isDestination) {
+                checkTile.routes.put(route, new Vector2(1, 0));
+                checkTile.hasBeenSet = true;
+                checkTile.tilesFromTarget = distance + 1;
+                nextList.add(checkTile);
+            }
+        }
+    }
+
+    private void checkUpNeighbour(int x, int y, String route, int distance)
+    {
+        if (IsInGrid(x, y + 1)) {
+            final BFSTile checkTile = tileMap[x][y + 1];
+            if (!checkTile.isWall && !checkTile.hasBeenSet && !checkTile.isDestination) {
+                checkTile.routes.put(route, new Vector2(0, -1));
+                checkTile.hasBeenSet = true;
+                checkTile.tilesFromTarget = distance + 1;
+                nextList.add(checkTile);
+            }
+        }
+    }
+
+    private void checkDownNeighbour(int x, int y, String route, int distance)
+    {
+        if (IsInGrid(x, y - 1)) {
+            final BFSTile checkTile = tileMap[x][y - 1];
+            if (!checkTile.isWall && !checkTile.hasBeenSet && !checkTile.isDestination) {
+                checkTile.routes.put(route, new Vector2(0, 1));
+                checkTile.hasBeenSet = true;
+                checkTile.tilesFromTarget = distance + 1;
+                nextList.add(checkTile);
+            }
         }
     }
 

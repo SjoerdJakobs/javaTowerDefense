@@ -1,12 +1,15 @@
 package MainPackage;
 
 import MainPackage.TowerDefense.GridManager;
+import MainPackage.TowerDefense.Menu.MainMenu;
 import MainPackage.TowerDefense.Menu.TowerIcon;
 import MainPackage.TowerDefense.Menu.TowerMenu;
 import MainPackage.TowerDefense.TargetCircle;
 import MainPackage.TowerDefense.TowerDefenseDebug;
 import MainPackage.TowerDefense.Units.SpawnBlock;
 import OOFramework.Collision2D.CollisionSystem;
+import OOFramework.Debug.BoxCollisionTestObject;
+import OOFramework.Debug.CharacterCube;
 import OOFramework.Debug.DebugDrawer;
 import OOFramework.FrameworkProgram;
 import OOFramework.InputHandling.KeyboardInput;
@@ -15,6 +18,9 @@ import OOFramework.Maths.Vector2;
 import OOFramework.Sound.SoundPlayer;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+
+import static OOFramework.Modules.CONSTANTS.CANVAS_HEIGHT;
+import static OOFramework.Modules.CONSTANTS.CANVAS_WIDTH;
 
 public class Program extends FrameworkProgram {
     private static Program programInstance = null;
@@ -37,7 +43,7 @@ public class Program extends FrameworkProgram {
     public void start(Stage stage) throws Exception {
         super.start(stage);
         programInstance = this;
-        SoundPlayer.Loop("bensound-evolution.wav", 0.7f);
+        //SoundPlayer.Loop("bensound-evolution.wav", 0.7f);
 
         //used by other classes to get mouse input
         mouseInput = MouseInput.getInstance();
@@ -50,23 +56,11 @@ public class Program extends FrameworkProgram {
         //this manages all the collisions
         collisionSystem = CollisionSystem.getInstance();
 
-        //creates the map and movement grid
-        gridManager = new GridManager();
-
-        //the target which the units will have to kill, also has the health bar in it
-        targetCircleObject = new TargetCircle(new Vector2(1904, 556), 150);
-
-        //object respongsible for spawning the enemy units
-        spawnBlockObject = SpawnBlock.getInstance();
-
-        //this handles placing and buying towers
-        towerMenu = new TowerMenu();
-
-        towerIcon = new TowerIcon(towerMenu, new Vector2(960, 900));
+        //loadMainMenu();
+        loadLevelOne();
 
 
         //EnemyUnit unit = new EnemyUnit(this,new Vector2(32, 492),10,26,100,5,0.25,"route0");
-
 
         /*
         //2 test classes
@@ -84,10 +78,24 @@ public class Program extends FrameworkProgram {
         */
     }
 
-    @Override
-    protected void Init() {
-        super.Init();
+    public void loadMainMenu()
+    {
+        MainMenu menu = new MainMenu();
+    }
 
+    public void loadLevelOne()
+    {
+        //creates the map and movement grid
+        gridManager = new GridManager();
+        //the target which the units will have to kill, also has the health bar in it
+        targetCircleObject = new TargetCircle(new Vector2(1904, 556), 150);
+        //object respongsible for spawning the enemy units
+        spawnBlockObject = SpawnBlock.getInstance();
+
+        //this handles placing and buying towers
+        towerMenu = new TowerMenu();
+
+        towerIcon = new TowerIcon(towerMenu, new Vector2(960, 900));
     }
 
     @Override

@@ -18,10 +18,17 @@ public class ExampleObject extends StandardObject {
      * how often: once
      * execution order: 0
      */
-    public ExampleObject(FrameworkProgram frameworkProgram, boolean usesInput, boolean usesMain, boolean usesRenderer, boolean startsActivated) {
+    public ExampleObject(boolean usesInput, boolean usesMain, boolean usesRenderer, boolean startsActivated) {
         super(usesInput, usesMain, usesRenderer, startsActivated);
+    }
 
-        System.out.println("lowest");
+    /**
+     * happens at: when this object is made
+     * how often: once
+     * execution order: 0
+     */
+    public ExampleObject(boolean usesInput, boolean usesMain, boolean usesRenderer, boolean startsActivated, int renderPriority, int objectPriority) {
+        super(usesInput, usesMain, usesRenderer, startsActivated, renderPriority, objectPriority);
     }
 
     /**

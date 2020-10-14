@@ -24,17 +24,19 @@ public class EnemyUnit extends StandardObject {
     private Circle circle;
     private Vector2 direction;
     private Vector2 avoidUnitAdjustment;
-    private Vector2 avoidWallAdjustment;
+    private Vector2 tempAvoidUnitAdjustment;
+    private Vector2 routeDirection;
     private final String routeName;
+    private CollidesWithWall collidesWithWallHorizontal = CollidesWithWall.NONE;
+    private CollidesWithWall collidesWithWallVertical = CollidesWithWall.NONE;
 
     private final BFSTile[][] movementGrid;
-    private boolean startCheckingForWallCollision;
     private double health;
     private final double startHealth;
     private int movSpeed;
     private int damage;
     private final double size;
-    private boolean hasAllteredDirection = false;
+    private boolean hasAlteredDirection = false;
     private double alignCounter = 0;
 
     public EnemyUnit(Vector2 spawnPos, int health, int size, int movSpeed, int damage, double turnDelay, String routeName) {
@@ -55,7 +57,9 @@ public class EnemyUnit extends StandardObject {
 
         direction = new Vector2();
         avoidUnitAdjustment = new Vector2();
-        avoidWallAdjustment = new Vector2();
+        tempAvoidUnitAdjustment = new Vector2();
+
+        routeDirection = new Vector2();
 
         //this is all the collision code you need to set it up/
         this.collider = new CircleCollider(pos, radius);      //
@@ -74,7 +78,7 @@ public class EnemyUnit extends StandardObject {
         nextGridPosX = (int) Math.floor(pos.x / 32);
         nextGridPosY = (int) Math.floor((pos.y + 4) / 32);
 
-        if (nextGridPosY != gridPosY || gridPosX != nextGridPosX || hasAllteredDirection) {
+        if (nextGridPosY != gridPosY || gridPosX != nextGridPosX || hasAlteredDirection) {
             alignCounter += deltaTime;
             if (alignCounter >= turnDelay) {
                 gridPosY = nextGridPosY;
@@ -85,12 +89,13 @@ public class EnemyUnit extends StandardObject {
                 if (gridPosY < 0) {
                     gridPosY = 0;
                 }
-                hasAllteredDirection = false;
+                hasAlteredDirection = false;
                 alignCounter = 0;
             }
         }
     }
 
+    /*
     public void AvoidWalls() {
         nextGridPosX = (int) Math.floor(pos.x / 32);
         nextGridPosY = (int) Math.floor((pos.y + 4) / 32);
@@ -136,23 +141,46 @@ public class EnemyUnit extends StandardObject {
                 avoidWallAdjustment.AddToThis(new Vector2(-10, 10));
             }
         }
-    }
+    }*/
 
     public void TakeDamage(int dmg) {
         health -= dmg;
+        hasAlteredDirection = true;
         if (health <= 0) {
             health = 0;
             Destroy();
         }
         circle.getCircle2D().setScale((float) (health / startHealth));
         circle.setCircleColor(LerpBetweenColors(Color.red, Color.green, (float) (health / startHealth)));
+        collider.radius = radius * (health / startHealth);
     }
 
     public void OnCollision(Collider2D other) {
         if (other.getColliderTag() == ColliderTag.ENEMY_UNIT) {
-            //avoidUnitAdjustment = this.pos.subtract(other.getPos());
-            //avoidUnitAdjustment.NormalizeThis();
-            //avoidUnitAdjustment.MultiplyThisByDouble(2);
+            tempAvoidUnitAdjustment = this.pos.Subtract(other.getPos());
+            hasAlteredDirection = true;
+            //alignCounter += turnDelay*0.5;
+        }
+        if (other.getColliderTag() == ColliderTag.WALL) {
+
+            hasAlteredDirection = true;
+            if(other.getPos().x > this.pos.x)
+            {
+                collidesWithWallHorizontal = CollidesWithWall.RIGHT;
+            }
+            else
+            {
+                collidesWithWallHorizontal = CollidesWithWall.LEFT;
+            }
+            if(other.getPos().y < this.pos.y)
+            {
+                collidesWithWallVertical = CollidesWithWall.UP;
+            }
+            else
+            {
+                collidesWithWallVertical = CollidesWithWall.DOWN;
+            }
+
             //hasAllteredDirection = true;
             //alignCounter += turnDelay*0.5;
         }
@@ -163,10 +191,41 @@ public class EnemyUnit extends StandardObject {
 
     @Override
     protected void MainLoop(double deltaTime) {
-        AvoidWalls();
+        //AvoidWalls();
+        avoidUnitAdjustment = tempAvoidUnitAdjustment.Normalize();
+        avoidUnitAdjustment.MultiplyThisByDouble(1.3);
+        routeDirection = movementGrid[gridPosX][gridPosY].routes.get(routeName);
         if (movementGrid[gridPosX][gridPosY].routes.get(routeName) != null) {
 
-            direction = movementGrid[gridPosX][gridPosY].routes.get(routeName).Add(avoidWallAdjustment);//.Add(avoidUnitAdjustment.Add(avoidWallAdjustment));
+            if(collidesWithWallVertical == CollidesWithWall.UP)
+            {
+                if(avoidUnitAdjustment.y < 0)
+                {
+                    avoidUnitAdjustment.y = 0;
+                }
+            }
+            else if(collidesWithWallVertical == CollidesWithWall.DOWN)
+            {
+                if(avoidUnitAdjustment.y > 0)
+                {
+                    avoidUnitAdjustment.y = 0;
+                }
+            }
+            if(collidesWithWallHorizontal == CollidesWithWall.LEFT)
+            {
+                if(avoidUnitAdjustment.x < 0)
+                {
+                    avoidUnitAdjustment.x = 0;
+                }
+            }
+            else if(collidesWithWallHorizontal == CollidesWithWall.RIGHT)
+            {
+                if(avoidUnitAdjustment.x > 0)
+                {
+                    avoidUnitAdjustment.x = 0;
+                }
+            }
+            direction = routeDirection.Add(avoidUnitAdjustment);
             direction.NormalizeThis();
             this.pos = this.pos.Add(direction.MultiplyByDouble((deltaTime * movSpeed)));
             circle.getCircle2D().setPosition(new Point2D.Double(pos.x, pos.y));
@@ -174,13 +233,17 @@ public class EnemyUnit extends StandardObject {
             AlignWithGridPos(deltaTime);
             direction = new Vector2();
             avoidUnitAdjustment = new Vector2();
+            tempAvoidUnitAdjustment = new Vector2();
+            routeDirection = new Vector2();
+            collidesWithWallHorizontal = CollidesWithWall.NONE;
+            collidesWithWallVertical = CollidesWithWall.NONE;
         }
     }
 
     @Override
     protected void RenderLoop(double deltaTime) {
         frameworkProgram.getGraphics2D().setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
-        circle.FilledDraw(frameworkProgram.getGraphics2D());
+        circle.FilledDrawWithLine(frameworkProgram.getGraphics2D(),Color.black);
     }
 
     //http://www.java2s.com/example/csharp/system.drawing/lerp-between-two-color.html
@@ -254,4 +317,12 @@ public class EnemyUnit extends StandardObject {
     public void setCircle(Circle circle) {
         this.circle = circle;
     }
+}
+enum CollidesWithWall
+{
+    NONE,
+    LEFT,
+    RIGHT,
+    UP,
+    DOWN
 }

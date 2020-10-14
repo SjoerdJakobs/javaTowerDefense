@@ -56,11 +56,25 @@ public final class Vector2 {
     //////
 
     public final static Vector2 MultiplyByInt(Vector2 v, int m) {
-        return new Vector2(v.x * m, v.y * m);
+        if(m == 0)
+        {
+            return new Vector2(0,0);
+        }
+        else
+        {
+            return new Vector2(v.x * m, v.y * m);
+        }
     }
 
     public final static Vector2 MultiplyByDouble(Vector2 v, double m) {
-        return new Vector2(v.x * m, v.y * m);
+        if(m == 0)
+        {
+            return new Vector2(0,0);
+        }
+        else
+        {
+            return new Vector2(v.x * m, v.y * m);
+        }
     }
 
     public final static boolean IsZero(Vector2 v) {
@@ -152,18 +166,47 @@ public final class Vector2 {
     ///normalize
     public final Vector2 Normalize() {
         double m = this.GetMagnitude();
-        return new Vector2(this.x /= m, this.y /= m);
+        if(m == 0) {
+            return new Vector2(0,0);
+        }
+        else {
+            return new Vector2(this.x /= m, this.y /= m);
+        }
     }
 
     public final void NormalizeThis() {
         double m = this.GetMagnitude();
-        this.x /= m;
-        this.y /= m;
+        if(m == 0)
+        {
+            this.x = m;
+            this.y = m;
+        }
+        else
+        {
+            this.x/=m;
+            this.y/=m;
+        }
     }
 
     ///magnitude
-    public final double GetMagnitude() {
-        return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2));
+    public final double GetMagnitude()
+    {
+        if(this.x == 0 && this.y == 0)
+        {
+            return 0;
+        }
+        else if(this.x == 0)
+        {
+            return Math.abs(this.y);
+        }
+        else if(this.y == 0)
+        {
+            return Math.abs(this.x);
+        }
+        else
+        {
+            return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2));
+        }
     }
 
     ///add

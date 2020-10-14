@@ -39,6 +39,7 @@ public class BoxCollisionTestObject extends StandardObject {
         this.rectangle = new Rectangle((int) pos.x, (int) pos.y, (int) width, (int) height, 0);
         rectangle.getSquare2D().setPosition(new Point2D.Double(pos.x, pos.y));
         rectangle.setRectangleColor(Color.blue);
+
         if (atMouse) {
             frameworkProgram.getCanvas().setOnMouseDragged(e ->
             {
