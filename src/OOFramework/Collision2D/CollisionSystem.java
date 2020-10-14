@@ -44,7 +44,7 @@ public class CollisionSystem extends StandardObject {
     @Override
     protected void MainLoop(double deltaTime) {
         super.MainLoop(deltaTime);
-        long startTime = System.nanoTime();
+        //long startTime = System.nanoTime();
         boolean hasCollided;
         for (int i = 0; i < allColliders.size(); i++) {
             allColliders.get(i).getPreCollisionCallback().run();
@@ -63,8 +63,8 @@ public class CollisionSystem extends StandardObject {
             }
             allColliders.get(i).setIsColliding(hasCollided);
         }
-        long elapsedTime = System.nanoTime() - startTime;
-        System.out.println("time used for collision checking in millis "+elapsedTime/1000000.0);
+        //long elapsedTime = System.nanoTime() - startTime;
+        //System.out.println("time used for collision checking in millis "+elapsedTime/1000000.0);
 
         DebugDrawer.DebugCollision(allColliders);
 

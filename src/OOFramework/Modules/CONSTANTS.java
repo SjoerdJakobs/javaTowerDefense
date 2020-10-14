@@ -14,6 +14,6 @@ public final class CONSTANTS {
     public static final boolean DEBUG_MODE = true;
     public static final boolean DEBUG_FPS  = true;
     public static final boolean DEBUG_BFS  = false;
-    public static final boolean DEBUG_COLLISION = false;
+    public static final boolean DEBUG_COLLISION = true;
     public static final boolean DEBUG_ASTAR = false;
 }

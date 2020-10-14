@@ -126,23 +126,23 @@ public abstract class FrameworkProgram extends Application implements EventHandl
 
         //clear screen
 
-        long startTime = System.nanoTime();
+        //long startTime = System.nanoTime();
 
         g2d.setBackground(Color.white);
         g2d.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
         for (PriorityGroup group : renderGroups) {
             for (StandardObject object : group.standardObjects) {
-                //object.RenderLoop(deltaTime);
-                if(object.UsesDebugRenderer())
-                {
-                    object.RenderLoop(deltaTime);
-                }
+                object.RenderLoop(deltaTime);
+                //if(object.UsesDebugRenderer())
+                //{
+                //    object.RenderLoop(deltaTime);
+                //}
             }
         }
 
-        long elapsedTime = System.nanoTime() - startTime;
-        System.out.println("time used for rendering checking in millis "+elapsedTime/1000000.0);
+        //long elapsedTime = System.nanoTime() - startTime;
+        //System.out.println("time used for rendering checking in millis "+elapsedTime/1000000.0);
 
         Iterator<BaseObject> it = objects.get().iterator();
         while (it.hasNext()) {

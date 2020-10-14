@@ -151,16 +151,17 @@ public class GridManager extends StandardObject {
             for (int j = 0; j < 34; j++) {
                 if (j == 5) {
                     BFS.SetWall(i, j);
-                    BoxCollider boxCollider = new BoxCollider(new Vector2(i * 32 + 16, j*32+12), 31, 31);
-                    boxCollider.setColliderTag(ColliderTag.WALL);
 
                 } else if (j == 25) {
                     BFS.SetWall(i, j);
-                    BoxCollider boxCollider = new BoxCollider(new Vector2(i * 32 + 16, j*32+12), 31, 31);
-                    boxCollider.setColliderTag(ColliderTag.WALL);
                 }
             }
         }
+        BoxCollider boxColliderUpperWall = new BoxCollider(new Vector2(30 * 32, 5*32+12), 31*62, 31);
+        boxColliderUpperWall.setColliderTag(ColliderTag.WALL);
+
+        BoxCollider boxColliderLowerWall = new BoxCollider(new Vector2(30 * 32, 25*32+12), 31*62, 31);
+        boxColliderLowerWall.setColliderTag(ColliderTag.WALL);
 
         //mirrored L
         for (int i = 0; i < 15; i++) {

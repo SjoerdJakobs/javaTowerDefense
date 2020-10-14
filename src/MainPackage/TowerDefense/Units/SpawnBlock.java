@@ -22,8 +22,8 @@ public class SpawnBlock extends StandardObject {
     private final Rectangle rectangle;
     private final ArrayList<EnemyUnit> spawnedUnits;
     private double spawnTimer = 0;
-    private final double spawnDelay = 0.05;
-    private double spawncounter = 1500;
+    private final double spawnDelay = 0.5;
+    private double spawncounter = 500;
 
     private SpawnBlock(Vector2 pos, double width, double height) {
         super(false, true, true, true, 2000, 1000);
@@ -74,7 +74,7 @@ public class SpawnBlock extends StandardObject {
     private void SpawnUnit() {
         double newX = (this.posFromCorner.x + 15) + ((Math.random() * (width - 15)));
         double newY = (this.posFromCorner.y + 15) + ((Math.random() * (height - 20)));
-        spawnedUnits.add(new EnemyUnit(new Vector2(newX, newY), 100, 30, 100, 5, 0.30, "route0"));
+        spawnedUnits.add(new EnemyUnit(new Vector2(newX, newY), 100, 40, 100, 5, 0.30, "route0"));
     }
 
     @Override
