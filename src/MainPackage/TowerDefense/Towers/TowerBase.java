@@ -44,7 +44,7 @@ public abstract class TowerBase extends StandardObject {
     private final int width;
     private final int height;
 
-    protected TowerBase(Vector2 pos, int size, int gunOffset, int colliderOffset, int range) {
+    protected TowerBase(Vector2 _pos, int size, int gunOffset, int colliderOffset, int range) {
         super(false, true, true, true, 1000, 1000);
 
         this.mouseInput = MouseInput.getInstance();
@@ -52,7 +52,7 @@ public abstract class TowerBase extends StandardObject {
         this.mouseInput.getOnMousePressedToBeAdded().add(this.onMousePressCallback);
         this.mouseInput.setShouldAddToOnMousePressed(true);
 
-        this.pos = new Vector2(pos);
+        this.pos = new Vector2(_pos);
         this.width = size;
         this.height = size;
         this.range = range;
@@ -139,7 +139,7 @@ public abstract class TowerBase extends StandardObject {
                 } else {
                     SoundPlayer.Play("cannon_shot_1.wav", 0.80f);
                 }
-                Bullet b = new Bullet(target, new Vector2(pos), damage, 1000);
+                Bullet b = new Bullet(target, new Vector2(pos), damage, 2000);
                 hasTarget = false;
 
                 break;

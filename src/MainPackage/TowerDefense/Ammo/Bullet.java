@@ -39,9 +39,9 @@ public class Bullet extends AmmoBase {
     protected void MainLoop(double deltaTime) {
         super.MainLoop(deltaTime);
         if (enemyTarget.getHealth() > 0) {
-            direction = enemyTarget.getPos().Subtract(this.pos);
-            direction.NormalizeThis();
-            bulletArt.getSquare2D().setRotation((float) Vector2.LookAtVector(pos, enemyTarget.getPos()));
+            //direction = enemyTarget.getPos().Subtract(this.pos);
+            //direction.NormalizeThis();
+            //bulletArt.getSquare2D().setRotation((float) Vector2.LookAtVector(pos, enemyTarget.getPos()));
         }
 
         this.pos.AddToThis(direction.MultiplyByDouble(moveSpeed * deltaTime));

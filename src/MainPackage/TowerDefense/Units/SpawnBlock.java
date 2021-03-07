@@ -22,7 +22,7 @@ public class SpawnBlock extends StandardObject {
     private final Rectangle rectangle;
     private final ArrayList<EnemyUnit> spawnedUnits;
     private double spawnTimer = 0;
-    private final double spawnDelay = 0.5;
+    private final double spawnDelay = 0.1;
     private double spawncounter = 500;
 
     private SpawnBlock(Vector2 pos, double width, double height) {
