@@ -9,7 +9,7 @@ public class BulletTower extends TowerBase {
         this.towerBuilding.SetImageByFileName("towerDefense_tile181.png");
         this.towerGun.SetImageByFileName("towerDefense_tile249.png");
         this.damage = 34;
-        this.attackCooldown = 0.04;
+        this.attackCooldown = 0.4;
         this.upgradeLevel = 1;
         this.ammo = AmmoTypeEnum.BULLETS;
     }

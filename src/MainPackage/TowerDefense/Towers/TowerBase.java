@@ -139,7 +139,7 @@ public abstract class TowerBase extends StandardObject {
                 } else {
                     SoundPlayer.Play("cannon_shot_1.wav", 0.80f);
                 }
-                Bullet b = new Bullet(target, new Vector2(pos), damage, 2000);
+                Bullet b = new Bullet(target, new Vector2(pos), damage, 1200);
                 hasTarget = false;
 
                 break;

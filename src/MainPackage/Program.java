@@ -43,7 +43,7 @@ public class Program extends FrameworkProgram {
     public void start(Stage stage) throws Exception {
         super.start(stage);
         programInstance = this;
-        //SoundPlayer.Loop("bensound-evolution.wav", 0.7f);
+        SoundPlayer.Loop("bensound-evolution.wav", 0.7f);
 
         //used by other classes to get mouse input
         mouseInput = MouseInput.getInstance();

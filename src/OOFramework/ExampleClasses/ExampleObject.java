@@ -61,6 +61,7 @@ public class ExampleObject extends StandardObject {
     @Override
     protected void InputLoop(double deltaTime) {
         super.InputLoop(deltaTime);
+
     }
 
     /**
@@ -72,6 +73,7 @@ public class ExampleObject extends StandardObject {
     @Override
     protected void MainLoop(double deltaTime) {
         super.MainLoop(deltaTime);
+
     }
 
     /**

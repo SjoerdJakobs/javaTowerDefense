@@ -5,16 +5,20 @@ import OOFramework.Collision2D.Colliders.Collider2D;
 import OOFramework.Collision2D.Enums.ColliderTag;
 import OOFramework.FXGraphics2dClasses.Rectangle;
 import OOFramework.FrameworkProgram;
+import OOFramework.InputHandling.*;
+import OOFramework.InputHandling.KeyboardEventCallback;
+import OOFramework.InputHandling.MouseEventCallback;
 import OOFramework.Maths.Vector2;
 import OOFramework.StandardObject;
 import javafx.scene.input.MouseEvent;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 
 public class BoxCollisionTestObject extends StandardObject {
     private final BoxCollider collider;
-    private final Vector2 pos;
+    private Vector2 pos;
     private final double width;
     private final double height;
     private final boolean atMouse;

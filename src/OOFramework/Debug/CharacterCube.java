@@ -148,7 +148,7 @@ public class CharacterCube extends StandardObject {
                             System.out.println("pressed by check");
                         }
                         if (grounded) {
-                            velocity.y += -jumpPower;
+                            velocity.y -= jumpPower;
                             grounded = false;
                         }
                         break;
@@ -157,6 +157,7 @@ public class CharacterCube extends StandardObject {
             }
         }
     }
+
 
     @Override
     protected void RenderLoop(double deltaTime) {
@@ -173,6 +174,7 @@ public class CharacterCube extends StandardObject {
     public void OnCollision(Collider2D other) {
         if (other.getColliderTag() == ColliderTag.TEST) {
             isCollidingWithGround = true;
+
             //if(this.pos.y + halfHeight-10 < other.getPos().y-(20)&&velocity.y > 0)
             if (this.pos.y + halfHeight > other.getPos().y - (20) && this.lastPos.y + halfHeight < other.getPos().y - (20)) {
                 velocity.y = 0;
